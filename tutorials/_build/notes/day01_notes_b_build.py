@@ -94,7 +94,7 @@ P.append(("The Raspberry Pi", f'''
 <tr><td>RAM</td><td>512 MB</td><td>up to 8 GB</td><td>2 / 4 / 8 GB (16 GB later)</td></tr>
 <tr><td>Wi-Fi / BT</td><td>2.4 GHz only, BT 4.2</td><td>dual-band, BT 5.0</td><td>dual-band, BT 5.0</td></tr>
 <tr><td>Power</td><td>5 V / 2.5 A micro-USB, ~0.6 W idle</td><td>5 V / 3 A USB-C</td><td>5 V / 5 A (27 W) USB-C, ~3-3.5 W idle</td></tr>
-<tr><td>Best for</td><td>tiny battery projects, small models</td><td>vision projects, small SLMs</td><td>vision + the largest SLMs (8 GB best)</td></tr></table>
+<tr><td>Best for</td><td>tiny battery projects, small models</td><td>vision projects (language models: only tiny ones)</td><td>vision + the largest SLMs (8 GB best)</td></tr></table>
 {mn(50)}
 '''))
 # ---------------------------------------------------------------- 4
@@ -110,7 +110,7 @@ P.append(("Pi 4 or Pi 5: what changes", f'''
 <tr><td>Operating system</td><td>older and newer releases</td><td>needs a recent Raspberry Pi OS</td></tr>
 <tr><td>In Imager</td><td>Device = Raspberry Pi 4</td><td>Device = Raspberry Pi 5</td></tr>
 <tr><td>SSH, commands, updates, shutdown</td><td colspan="2"><b>identical</b> on both boards</td></tr></table>
-<div class="bbox small"><b>Which one?</b> This course works on either. Vision runs well on a Pi 4. For language models a Pi 4 needs smaller models and longer waits; a Pi 5 is more comfortable.</div>
+<div class="bbox small"><b>Which one?</b> The vision phases run well on both boards. A <b>Pi 4 does not run language models well</b> (only very small ones, slowly); for Phase 3 use a <b>Pi 5, 8 GB recommended</b>. With only a Pi 4, do the whole course and treat Phase 3 as a guided demonstration.</div>
 {mn(50)}
 <div class="sh y">12. Anatomy of the Raspberry Pi 4</div>
 <div data-draw="pi"></div>

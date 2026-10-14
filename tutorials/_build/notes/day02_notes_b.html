@@ -1,0 +1,316 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Day 02 - notebook notes</title>
+<link rel="stylesheet" href="notes_b.css"><script src="notes_b.js"></script><script src="notes_b_day02.js"></script></head><body>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 1</div></div>
+<div class="title">Plan for today</div>
+
+<div class="sh b">1. By the end of today I can...</div>
+<div class="cols">
+ <div class="c1"><ul class="ck small"><li>log in with <code>ssh lab</code> (a nickname)</li><li>log in with an SSH key, no password</li><li>keep a long job running with tmux</li><li>copy files both ways: <code>scp</code> and an SFTP program</li><li>sync code and notes with git</li><li>open the Pi desktop with VNC</li><li>add a second Wi-Fi to a Pi; find a Pi when <code>.local</code> fails</li><li>choose a safe way to reach a Pi in another network</li></ul></div>
+ <div class="c2"><div class="ybox small"><b>My 2 hours</b><table class="t" style="margin:2px 0"><tr><td><b>A</b> review + plan</td><td>10</td></tr><tr><td><b>B</b> smarter SSH</td><td>25</td></tr><tr><td><b>C</b> moving files</td><td>25</td></tr><tr><td><b>D</b> remote desktop</td><td>25</td></tr><tr><td><b>E</b> more networks</td><td>20</td></tr><tr><td><b>F</b> security</td><td>15</td></tr></table></div></div>
+</div>
+<div class="mn" style="height:50px"></div>
+<div class="sh g">2. Day 1 rough edges, today's remedies</div>
+<table class="t small"><tr><th>Rough edge</th><th>Remedy</th><th style="width:9%">Part</th></tr>
+<tr><td>long command to type</td><td>nickname in the SSH configuration file</td><td>B</td></tr><tr><td>password every time</td><td>an SSH key pair</td><td>B</td></tr>
+<tr><td>job dies when connection drops</td><td>tmux</td><td>B</td></tr><tr><td>no way to move files</td><td><code>scp</code>, an SFTP program, git</td><td>C</td></tr>
+<tr><td>only a command line</td><td>VNC: the desktop in a window</td><td>D</td></tr><tr><td>one Wi-Fi network only</td><td>more than one Wi-Fi profile on the Pi</td><td>E</td></tr>
+<tr><td>laptop and Pi on different networks</td><td>remote-access options (and what to avoid)</td><td>E, F</td></tr></table>
+<div class="mn" style="height:50px"></div>
+<div class="sh p">3. A naming plan for several Pis</div>
+<table class="t small"><tr><th style="width:24%">Item</th><th>Suggestion</th><th style="width:34%">Example</th></tr>
+<tr><td>host name</td><td><code>raspi-</code> + place or owner</td><td><code>raspi-lab</code>, <code>raspi-home</code></td></tr><tr><td>user name</td><td>the same on every Pi</td><td><code>piuser</code></td></tr>
+<tr><td>SSH nickname</td><td>short, easy to type</td><td><code>lab</code>, <code>home</code></td></tr><tr><td>connection card</td><td>one per Pi</td><td>board, name, IP, Wi-Fi</td></tr></table>
+<div class="bbox small"><b>Rename a Pi:</b> <code>sudo raspi-config</code> -&gt; System Options -&gt; Hostname -&gt; reboot.</div>
+<div class="mn" style="height:50px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 2</div></div>
+<div class="title">B. A nickname for each Pi</div>
+
+<div class="sh g">4. The SSH configuration file</div>
+<ul class="bl small"><li>A small text file where I describe each machine once. Then <code>ssh</code>, <code>scp</code> and other tools accept the nickname.</li></ul>
+<div class="term"><span class="dim"># 1  create the folder and an empty file named exactly "config" (no .txt), open it</span><br>New-Item -ItemType Directory -Force $env:USERPROFILE\.ssh | Out-Null<br>New-Item -ItemType File -Force $env:USERPROFILE\.ssh\config | Out-Null<br>notepad $env:USERPROFILE\.ssh\config</div>
+<div class="ybox"><b>2  type one block per Pi</b> (indent with spaces) <span class="small">- file: C:\Users\me\.ssh\config</span><br><span class="mono">Host lab<br>&nbsp;&nbsp;&nbsp;&nbsp;HostName raspi-lab.local<br>&nbsp;&nbsp;&nbsp;&nbsp;User piuser<br><br>Host home<br>&nbsp;&nbsp;&nbsp;&nbsp;HostName raspi-home.local<br>&nbsp;&nbsp;&nbsp;&nbsp;User piuser<br><br>Host *<br>&nbsp;&nbsp;&nbsp;&nbsp;ServerAliveInterval 60</span></div>
+<div class="term"><span class="dim"># 3  test: only the nickname</span><br>ssh lab</div>
+<table class="t small"><tr><td style="width:36%"><code>Host lab</code></td><td>starts a block; <code>lab</code> is the nickname</td></tr><tr><td><code>HostName</code></td><td>the real destination: a <code>.local</code> name or an IP address (IP if <code>.local</code> is unreliable)</td></tr><tr><td><code>User</code></td><td>who I log in as; no need for <code>piuser@</code></td></tr><tr><td><code>Host *</code> / <code>ServerAliveInterval 60</code></td><td>for all hosts: a signal every 60 s keeps idle connections open</td></tr></table>
+<div class="small">Mac / Linux: <code>~/.ssh/config</code>, same contents (<code>mkdir -p ~/.ssh; nano ~/.ssh/config</code>).</div>
+<div class="mn" style="height:60px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 3</div></div>
+<div class="title">B. SSH keys</div>
+
+<div class="sh g">5. Log in without a password</div>
+<ul class="bl small"><li>A password can be guessed, mistyped or stolen. A <b>key pair</b> is stronger: a <b>private key</b> (secret, stays on the laptop) and a <b>public key</b> (harmless to share) placed on the Pi.</li></ul>
+<div data-draw="keys2"></div>
+<div class="term"><span class="dim"># 1  create the pair on the laptop (Enter = default file; passphrase optional but protective)</span><br>ssh-keygen -t ed25519 -C "office-laptop"<br><span class="dim"># creates id_ed25519 (private, secret) and id_ed25519.pub (public) in .ssh</span></div>
+<div class="term"><span class="dim"># 2  send the PUBLIC key to the Pi (asks the password one last time)</span><br>type $env:USERPROFILE\.ssh\id_ed25519.pub | ssh lab "mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys"<br><span class="dim"># Mac / Linux:  ssh-copy-id lab</span><br><span class="dim"># 3  test</span><br>ssh lab</div>
+<div class="pbox small"><b>Rules:</b> never copy the private key anywhere. <b>One key per laptop</b>: with two laptops, create a key on each and add <b>both</b> public keys to each Pi. A re-written card loses its <code>authorized_keys</code>: repeat step 2. Keep password login on until the key works.</div>
+<div class="mn" style="height:50px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 4</div></div>
+<div class="title">B. tmux and small habits</div>
+
+<div class="sh g">6. tmux: sessions that survive a dropped connection</div>
+<ul class="bl small"><li>A long job over SSH (download, training) normally dies with the terminal if the connection drops. <b>tmux</b> keeps the terminal alive on the Pi.</li></ul>
+<div class="cols"><div class="c1 term" style="background:#2a1620"><b>Without tmux</b><br>training... epoch 12/50<br><span class="dim">&lt;connection drops&gt;</span><br><span style="color:#ff8aa8">-&gt; the job is killed</span></div>
+<div class="c2 term"><b>With tmux</b><br><span class="g2">tmux new -s train</span><br>training... epoch 12/50<br><span class="dim">&lt;connection drops&gt;</span><br><span class="g2">-&gt; keeps running</span><br><span class="g2">tmux attach -t train</span></div></div>
+<div class="term">sudo apt install tmux &nbsp;<span class="dim"># once</span><br>tmux new -s work &nbsp;<span class="dim"># start a session named work</span><br><span class="dim"># run the long command inside it; press Ctrl+b then d to DETACH</span><br>tmux ls &nbsp;<span class="dim"># list sessions</span><br>tmux attach -t work &nbsp;<span class="dim"># come back, from any laptop</span><br>exit &nbsp;<span class="dim"># inside tmux: end the session</span></div>
+<table class="t small"><tr><th>Press Ctrl+b, then</th><th>Does</th></tr><tr><td><code>d</code></td><td>detach: leave the session running</td></tr><tr><td><code>[</code></td><td>scroll with the arrows; <code>q</code> to leave</td></tr><tr><td><code>c</code> / <code>n</code> / <code>p</code></td><td>new window / next / previous</td></tr></table>
+<div class="mn" style="height:50px"></div>
+<div class="sh y">7. Small habits that save time</div>
+<table class="t small"><tr><td style="width:44%">Up arrow</td><td>recall previous commands</td></tr><tr><td>Tab while typing a name</td><td>complete file and folder names</td></tr><tr><td><code>history</code></td><td>list past commands</td></tr><tr><td>Ctrl+C</td><td>stop the running command</td></tr><tr><td><code>clear</code> or Ctrl+L</td><td>clean the screen</td></tr><tr><td><code>exit</code> or Ctrl+D</td><td>leave the SSH session</td></tr></table>
+<div class="mn" style="height:60px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 5</div></div>
+<div class="title">C. Moving files with scp</div>
+
+<div class="sh g">8. scp: copy over SSH</div>
+<ul class="bl small"><li>Same encrypted channel as SSH: nothing extra on the Pi. Pattern: <b>scp SOURCE DESTINATION</b>. <code>name:path</code> = on the Pi; a plain path = on this computer.</li></ul>
+<div data-draw="scp2"></div>
+<div class="sh y">Practice (10 min)</div>
+<div class="term"><span class="dim"># 1  a test file on the laptop (in a writable folder)</span><br>"Hello from my laptop" | Out-File test.txt -Encoding ascii<br><span class="dim"># 2  send it (the colon is required; ~/ = my home folder on the Pi)</span><br>scp test.txt lab:~/<br><span class="dim"># 3  check on the Pi</span><br>ssh lab<br>ls -l ; cat test.txt ; cp test.txt test_2.txt ; exit<br><span class="dim"># 4  fetch a file (the dot = the current folder here)</span><br>scp lab:test_2.txt .</div>
+<div class="bbox small"><b>Windows paths:</b> open PowerShell in the folder that holds the file and use short names. A path like <code>C:\Users\me\f.txt</code> contains a colon that can confuse scp about what is local.</div>
+<div class="mn" style="height:50px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 6</div></div>
+<div class="title">C. More scp</div>
+
+<div class="sh b">9. More scp</div>
+<table class="t small"><tr><th style="width:22%">Task</th><th style="width:44%">Command</th><th>Notes</th></tr>
+<tr><td>a folder</td><td><code>scp -r photos lab:~/images/</code></td><td><code>-r</code> = recursive; destination must exist</td></tr>
+<tr><td>create a folder first</td><td><code>ssh lab "mkdir -p ~/images"</code></td><td>scp never creates folders</td></tr>
+<tr><td>several files</td><td><code>scp a.jpg b.jpg lab:~/images/</code></td><td>or <code>scp *.jpg lab:~/images/</code></td></tr>
+<tr><td>wildcard from the Pi</td><td><code>scp "lab:~/images/*.jpg" .</code></td><td>quote it so the Pi expands the <code>*</code></td></tr>
+<tr><td>spaces in names</td><td><code>scp "my file.txt" lab:~/</code></td><td>quote, or avoid spaces</td></tr>
+<tr><td>another port</td><td><code>scp -P 2222 test.txt lab:~/</code></td><td>capital P for scp (ssh: lowercase p)</td></tr></table>
+<div class="mn" style="height:56px"></div>
+<div class="sh p">10. SFTP program with two panes</div>
+<ul class="bl small"><li>Drag and drop: <b>FileZilla</b> or <b>WinSCP</b> (free; download from the official site and decline extra software).</li></ul>
+<table class="t small"><tr><th style="width:30%">Field</th><th>Value</th></tr><tr><td>Host</td><td><code>sftp://raspi-lab.local</code> (or the IP)</td></tr><tr><td>Protocol (WinSCP)</td><td>SFTP</td></tr><tr><td>User / password</td><td>my Pi user and password (or a key file)</td></tr><tr><td>Port</td><td>22 (blank = default)</td></tr></table>
+<div class="small">Press Quickconnect (FileZilla) or Login (WinSCP); accept the unknown-host message the first time; save the connection in the site manager. Left pane = laptop, right pane = Pi.</div>
+<div class="fig" style="margin-top:4px"><img src="../../_assets/figures_adapted/filezilla.png" width="470"></div><div class="cap">FileZilla connected to a Pi (example on a Mac)</div>
+<div class="mn" style="height:50px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 7</div></div>
+<div class="title">C. Sync with git; which tool?</div>
+
+<div class="sh g">11. Several computers in sync with git</div>
+<ul class="bl small"><li>With two laptops and two Pis, hand copying gets confusing. Keep <b>code and notes in an online repository</b> and let every computer sync with it.</li></ul>
+<div data-draw="sync2"></div>
+<div class="term">sudo apt install git &nbsp;<span class="dim"># once, on the Pi</span><br>git config --global user.name "Your Name"<br>git config --global user.email "you@example.com"<br>git clone https://github.com/YOU/REPO.git &nbsp;<span class="dim"># first time</span><br>git pull &nbsp;<span class="dim"># get the latest</span><br>git add . ; git commit -m "Describe the change" ; git push &nbsp;<span class="dim"># share</span></div>
+<div class="bbox small"><b>Signing in to GitHub:</b> GitHub no longer accepts the account password for <code>git push</code> over HTTPS. Create a <b>personal access token</b> (or an SSH key for the Pi) and give the token when git asks for a password. Keep it private.</div>
+<div class="pbox small"><b>Not in git:</b> large files (models of hundreds of MB, datasets, videos). Use a <code>.gitignore</code> and move them with scp or SFTP.</div>
+<div class="mn" style="height:40px"></div>
+<div class="sh y">12. Which tool when?</div>
+<table class="t small"><tr><th style="width:20%">Tool</th><th>Best for</th><th style="width:34%">Remember</th></tr><tr><td><code>scp</code></td><td>a few files or a folder, scripts</td><td>quick to type</td></tr><tr><td>SFTP program</td><td>browsing, many files, drag and drop</td><td>save the connection</td></tr><tr><td>git</td><td>code and notes shared by computers</td><td>history; not for big files</td></tr><tr><td>USB drive</td><td>very large data on a slow network</td><td>remove only after <code>sync</code> or shutdown</td></tr></table>
+<div class="mn" style="height:50px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 8</div></div>
+<div class="title">D. The Pi desktop in a window</div>
+
+<div class="sh g">13. SSH or desktop?</div>
+<table class="t small"><tr><th style="width:24%"></th><th>SSH</th><th>VNC</th></tr><tr><td>sees</td><td>text only</td><td>the whole desktop, windows, mouse</td></tr><tr><td>load on the Pi</td><td>very small</td><td>noticeably more</td></tr><tr><td>network</td><td>very little</td><td>much more bandwidth</td></tr><tr><td>best for</td><td>install, run, edit, automate</td><td>browser, images, plots, graphical tools</td></tr><tr><td>needs full OS image</td><td>no (Lite works)</td><td>yes: the Pi runs a desktop</td></tr></table>
+<div data-draw="vnc2"></div>
+<div class="mn" style="height:50px"></div>
+<div class="sh b">14. Turn on VNC on the Pi</div>
+<ol class="st small"><li><code>sudo raspi-config</code></li><li>Interface Options -&gt; <b>VNC</b> -&gt; Yes; finish; reboot if offered (desktop: Raspberry Pi Configuration, Interfaces tab).</li><li>Know the address: <code>hostname -I</code> or <code>raspi-lab.local</code>.</li></ol>
+<div class="cols"><div class="c1"><div class="fig"><img src="../../_assets/figures_adapted/raspiconfig_menu.png" width="240"></div></div><div class="c2"><div class="fig"><img src="../../_assets/figures_adapted/raspiconfig_interfaces.png" width="240"></div></div></div><div class="cap">raspi-config: top menu and interface options (example screens)</div>
+<div class="mn" style="height:40px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 9</div></div>
+<div class="title">D. Connect from the laptop</div>
+
+<div class="sh b">15. Steps</div>
+<ol class="st small"><li>Install <b>RealVNC Viewer</b> (free) or another VNC viewer.</li><li>Type the Pi's address in the address bar; accept the identity (fingerprint) message once.</li><li>Sign in with the <b>Pi</b> user name and password (not an account of the VNC company). The desktop appears in a window.</li></ol>
+<div class="cols"><div class="c1"><div class="fig"><img src="../../_assets/figures_adapted/vnc_viewer.png" width="250"></div><div class="cap">viewer with a saved Pi</div></div><div class="c2"><div class="fig"><img src="../../_assets/figures_adapted/vnc_auth.png" width="215"></div><div class="cap">sign in with the Pi's account</div></div></div>
+<div class="fig" style="margin-top:4px"><img src="../../_assets/figures_adapted/vnc_desktop.png" width="330"></div><div class="cap">the Pi desktop in a window (example on a Mac)</div>
+<div class="mn" style="height:40px"></div>
+<div class="sh y">16. A comfortable desktop</div>
+<ul class="bl small"><li><b>Resolution:</b> Preferences -&gt; Screen Configuration (or Display Options in raspi-config).</li><li><b>Speed:</b> on a slow network lower picture quality / colour depth in the viewer; remove the wallpaper.</li><li><b>Copy and paste</b> usually works through the viewer.</li><li><b>Close it when finished:</b> the desktop uses memory that models will need.</li><li><b>Never</b> open VNC's port (5900) to the Internet.</li></ul>
+<div class="bbox small"><b>Black or tiny desktop with no monitor?</b> There is no real screen: in <code>sudo raspi-config</code> -&gt; Display Options set a resolution (e.g. 1920x1080). The VNC server depends on the OS release (RealVNC Server on older ones; wayvnc possible with the Wayland desktop). If the viewer refuses or shows nothing, raspi-config -&gt; Advanced Options lets me switch between Wayland and X11; X11 with RealVNC is the best-documented pair.</div>
+<div class="mn" style="height:50px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 10</div></div>
+<div class="title">E. More than one network</div>
+
+<div class="sh g">17. A Pi can remember several Wi-Fi networks</div>
+<ul class="bl small"><li>Imager stored one network. Like a phone, a Pi can remember many and join whichever it finds, so the same Pi works at the lab and at home without re-writing the card.</li><li>Current Raspberry Pi OS uses <b>NetworkManager</b>, driven by <code>nmcli</code>.</li></ul>
+<div class="term">nmcli connection show &nbsp;<span class="dim"># saved connections</span><br>nmcli device status &nbsp;<span class="dim"># devices; wlan0 = Wi-Fi</span><br>nmcli device wifi list &nbsp;<span class="dim"># networks in range now</span><br><span class="dim"># network in range now:</span><br>sudo nmcli device wifi connect "HomeWiFi" password "the-password"<br><span class="dim"># network NOT in range (prepare a saved profile):</span><br>sudo nmcli connection add type wifi con-name home ifname wlan0 ssid "HomeWiFi" \<br>&nbsp;&nbsp;&nbsp;wifi-sec.key-mgmt wpa-psk wifi-sec.psk "the-password"<br>sudo nmcli connection modify home connection.autoconnect yes connection.autoconnect-priority 10</div>
+<table class="t small"><tr><td style="width:46%"><code>autoconnect-priority 10</code></td><td>higher number = preferred when several are in range</td></tr><tr><td><code>sudo nmcli connection delete home</code></td><td>forget a profile</td></tr><tr><td><code>sudo nmtui</code></td><td>menu version: Edit a connection -&gt; Add -&gt; Wi-Fi</td></tr></table>
+<div class="pbox small"><b>Do not cut my own branch:</b> if I am connected over Wi-Fi and switch the Pi to another network, my SSH session ends. Add profiles first, test later, keep a monitor, keyboard or Ethernet cable as a way back.</div>
+<div class="bbox small"><b>Older OS (before Bookworm):</b> Wi-Fi lives in <code>/etc/wpa_supplicant/wpa_supplicant.conf</code> (one <code>network={ ssid="..." psk="..." }</code> block each) or raspi-config's Wireless LAN. Check with <code>cat /etc/os-release</code>.</div>
+<div class="mn" style="height:40px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 11</div></div>
+<div class="title">E. Finding the Pi; stable addresses</div>
+
+<div class="sh p">18. When <code>.local</code> does not work, find the IP</div>
+<ul class="bl small"><li><b>Router page</b> (often 192.168.1.1 or 192.168.0.1): the list of connected devices shows the host name.</li><li><b>From Windows:</b> <code>ping raspi-lab.local</code> shows the address if the name works; <code>arp -a</code> lists devices my laptop met recently. Raspberry Pi MAC addresses often start with <code>b8-27-eb</code>, <code>dc-a6-32</code> or <code>e4-5f-01</code> (newer boards use more).</li><li><b>With a screen:</b> plug a monitor in and run <code>hostname -I</code>.</li><li>Then put the IP in the <code>HostName</code> line of my SSH config.</li></ul>
+<div class="mn" style="height:50px"></div>
+<div class="sh y">19. Keep the address stable</div>
+<ul class="bl small"><li>The router (DHCP) may give the Pi a new address after a reboot.</li><li>Best fix: a <b>DHCP reservation</b> (static lease): tell the router to always give this Pi's MAC address the same IP. Prefer this to a fixed address on the Pi: the router stays in charge of the numbers.</li></ul>
+<div class="mn" style="height:50px"></div>
+<div class="sh g">20. Two fallbacks</div>
+<ul class="bl small"><li><b>Phone hotspot:</b> Pi and laptop on the phone's hotspot avoid guest and enterprise restrictions.</li><li><b>Ethernet cable straight between laptop and Pi:</b> after about a minute both sides self-assign <code>169.254.x.x</code> addresses and <code>raspi-lab.local</code> often works. Useful with no Wi-Fi at all.</li></ul>
+<div class="pbox small"><b>Office and campus networks:</b> many allow only registered devices or block device-to-device traffic. If the Pi will not join, ask the administrator about a guest / IoT network or registering the MAC address. Do not work around the rules.</div>
+<div class="mn" style="height:70px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 12</div></div>
+<div class="title">F. Reaching a Pi in another network</div>
+
+<div class="sh b">21. Why it is hard</div>
+<ul class="bl small"><li>Laptop at home and Pi in the lab = two private networks. Each router hides its devices behind one public address and refuses unsolicited connections, and <code>.local</code> names never leave their network. Something must connect the two sides.</li></ul>
+<div data-draw="twonets2"></div>
+<div class="mn" style="height:40px"></div>
+<div class="sh y">22. Choosing an approach</div>
+<div data-draw="decide2"></div>
+<div class="mn" style="height:40px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 13</div></div>
+<div class="title">F. The options</div>
+
+<div class="sh p">23. The options</div>
+<table class="t small"><tr><th style="width:21%">Option</th><th style="width:31%">How it works</th><th style="width:24%">Good</th><th>Careful</th></tr>
+<tr><td><b>Carry the Pi</b>, add the other Wi-Fi</td><td>Pi joins whichever network it finds</td><td>simplest</td><td>must move the Pi</td></tr>
+<tr><td><b>Private-network service</b> (e.g. Tailscale)</td><td>each device installs a small program and signs in with one account; devices get private addresses and names that work from anywhere</td><td>works through home and office routers unchanged</td><td>software on devices; needs an account; check policy first</td></tr>
+<tr><td><b>Raspberry Pi Connect</b></td><td>the Pi maker's service: remote screen and shell in a browser; needs a recent OS</td><td>from the maker; no router changes</td><td>follow current official steps; account + Internet</td></tr>
+<tr><td><b>VPN</b> of my organisation</td><td>once connected, my laptop acts as if inside that network</td><td>no extra Pi software; approved</td><td>only if provided</td></tr>
+<tr><td><b>Port forwarding</b> on the router</td><td>opens SSH to the whole Internet</td><td>-</td><td class="red"><b>avoid</b>: automated attacks within minutes</td></tr></table>
+<div class="mn" style="height:50px"></div>
+<div class="sh g">24. Example idea: a private network (Tailscale)</div>
+<div class="small">Create a free account; install the program on the laptop and sign in; install it on each Pi and sign in with the same account; then the devices reach each other by the names in the service's device list. Details change: read the vendor's current instructions.</div>
+<div class="term"><span class="dim"># on the Pi (the vendor's installer; read the script first if you can)</span><br>curl -fsSL https://tailscale.com/install.sh | sh<br>sudo tailscale up &nbsp;<span class="dim"># prints a web address; open it and sign in</span><br>tailscale ip -4 &nbsp;<span class="dim"># the Pi's private address, e.g. 100.x.y.z</span></div>
+<div class="pbox small"><b>Piping a script into the shell</b> (<code>curl ... | sh</code>) runs downloaded code with my privileges: only for sources I trust, and never on a work computer without permission.<br><b>Policy first:</b> installing remote-access software on a work laptop, or opening a path into a work network, can break the rules. Ask IT before trying Part F on any work device or network.</div>
+<div class="mn" style="height:50px"></div>
+<div class="sh y">25. A sensible plan for two Pis and two laptops</div>
+<ul class="bl small"><li>Keep each Pi in <b>one place</b> and add the other place's Wi-Fi as a second profile, so I can also carry it.</li><li>Nickname every Pi in the SSH config on every laptop; use key login.</li><li>Code and notes in git; big files with scp.</li><li>For access from outside choose <b>one</b> approved method; do not combine several.</li></ul>
+<div class="mn" style="height:50px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 14</div></div>
+<div class="title">G. Security habits</div>
+
+<div class="sh p">26. Habits</div>
+<table class="t small"><tr><th style="width:36%">Habit</th><th>Why and how</th></tr>
+<tr><td><b>Change weak passwords</b></td><td>long, unique password; <code>passwd</code></td></tr><tr><td><b>Keep the system updated</b></td><td><code>sudo apt-get update &amp;&amp; sudo apt upgrade</code> regularly</td></tr>
+<tr><td><b>Use keys</b></td><td>a key cannot be guessed over the network; keep the private key private</td></tr><tr><td><b>Never expose SSH or VNC to the Internet</b></td><td>own network or a private connection only</td></tr>
+<tr><td><b>Know who is logged in</b></td><td><code>who</code>, <code>last</code></td></tr><tr><td><b>Keep secrets out of git and screenshots</b></td><td>passwords, Wi-Fi keys, access tokens</td></tr><tr><td><b>Back up my work</b></td><td>git for code and notes; scp for important data; SD cards fail</td></tr></table>
+<div class="mn" style="height:50px"></div>
+<div class="sh y">27. Optional: turn password login off</div>
+<div class="small">Only after key login works from <b>every</b> computer I use. A mistake can lock me out of a Pi with no screen.</div>
+<div class="term">sudo nano /etc/ssh/sshd_config &nbsp;<span class="dim"># set the line:  PasswordAuthentication no</span><br>sudo systemctl restart ssh<br><span class="dim"># keep the current SSH window open; open a NEW window and confirm that ssh lab still works before closing the first</span></div>
+<div class="mn" style="height:80px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 15</div></div>
+<div class="title">When something does not work</div>
+
+<div class="sh p">28. Troubleshooting</div>
+<table class="t small" style="font-size:13px"><tr><th style="width:27%">I see</th><th style="width:32%">probably</th><th>try</th></tr>
+<tr><td><code>Could not resolve hostname lab</code></td><td>config file missing / wrong place / has .txt</td><td><code>dir $env:USERPROFILE\.ssh</code>; check the <code>Host</code> line</td></tr>
+<tr><td><code>Bad configuration option</code></td><td>typo in the config file</td><td>indent with spaces; check spelling</td></tr>
+<tr><td><code>Connection refused</code></td><td>no SSH server listening, or still booting</td><td>wait; enable SSH (raspi-config) or re-write the card with SSH on</td></tr>
+<tr><td><code>Connection timed out</code></td><td>different networks, VPN, isolation</td><td>same network; VPN off; hotspot; Parts E, F</td></tr>
+<tr><td><code>Permission denied (publickey)</code></td><td>key not installed / wrong permissions</td><td>repeat B2 step 2; <code>chmod 700 ~/.ssh; chmod 600 ~/.ssh/authorized_keys</code></td></tr>
+<tr><td>still asks the password</td><td>key not appended, other key offered</td><td><code>ssh -v lab</code>; repeat step 2; use <code>&gt;&gt;</code> not <code>&gt;</code></td></tr>
+<tr><td><code>HOST IDENTIFICATION HAS CHANGED</code></td><td>Pi was re-written</td><td><code>ssh-keygen -R raspi-lab.local</code></td></tr>
+<tr><td><code>scp: No such file or directory</code></td><td>wrong path / folder missing</td><td><code>ssh lab "ls ~"</code>; create with <code>mkdir -p</code></td></tr>
+<tr><td>scp made a file called <code>lab</code></td><td>colon missing</td><td>write <code>lab:~/</code></td></tr>
+<tr><td>VNC cannot connect</td><td>not enabled / wrong address / other network / viewer-server mismatch</td><td>enable VNC; <code>hostname -I</code>; Wayland/X11 note</td></tr>
+<tr><td>VNC black or tiny</td><td>no monitor, no resolution</td><td>raspi-config -&gt; Display Options</td></tr>
+<tr><td>Pi does not join Wi-Fi 2</td><td>typo, country, band, enterprise</td><td><code>nmcli connection show</code>, <code>nmcli device wifi list</code>; hotspot to test</td></tr>
+<tr><td><code>nmcli: command not found</code></td><td>older OS</td><td>see the older-OS note (page 10)</td></tr></table>
+<div class="mn" style="height:70px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 16</div></div>
+<div class="title">Quiz &amp; cheat sheet</div>
+
+<div class="sh y">29. Check myself (answer here first!)</div>
+<ol class="st small"><li>Why is <code>ssh lab</code> shorter than the long form? Where does the extra information come from?</li><li>Private versus public key: which may I share?</li><li>Two laptops: how do both get key access to one Pi?</li><li>What does tmux do; which keys detach?</li><li>In <code>scp a.txt lab:~/</code> what is source and destination? How to copy from the Pi to the current folder?</li><li>Why not put a 500 MB model in git? What instead?</li><li>When is SSH enough, when VNC?</li><li>No monitor, VNC shows black or tiny: what to change?</li><li>How to add a Wi-Fi to a Pi not in range of it?</li><li><code>.local</code> fails on a guest Wi-Fi: two ways to find the Pi?</li><li>Two safe ways and one unsafe way to reach a Pi in another network?</li><li>Three security habits?</li></ol>
+<div class="mn" style="height:90px"></div>
+<div class="sh b">30. Answers</div>
+<div class="bbox small">1 the config file maps the nickname to host name and user. 2 private = secret, stays on the laptop; public goes on the Pi and may be shared. 3 a key pair per laptop; append both public keys to the Pi's <code>authorized_keys</code>. 4 keeps a terminal session alive on the Pi; Ctrl+b then d. 5 source <code>a.txt</code>, destination the Pi's home folder; <code>scp lab:file .</code> 6 big files do not suit git: scp / SFTP and <code>.gitignore</code>. 7 SSH for commands, installs, scripts; VNC for graphical programs and previews. 8 set a resolution in raspi-config, Display Options. 9 <code>nmcli connection add type wifi ...</code>. 10 router device list; <code>arp -a</code> / <code>ping</code>; a monitor with <code>hostname -I</code>. 11 safe: private-network service, approved VPN, carrying the Pi; unsafe: port forwarding. 12 strong password, updates, keys, no Internet exposure, backups.</div>
+<div class="mn" style="height:50px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 17</div></div>
+<div class="title">Command cheat sheet</div>
+
+<div class="sh g">31. Cheat sheet</div>
+<table class="t small"><tr><th style="width:34%">Task</th><th>Command</th></tr>
+<tr><td>connect with a nickname</td><td><code>ssh lab</code></td></tr><tr><td>create a key pair</td><td><code>ssh-keygen -t ed25519</code></td></tr><tr><td>file to the Pi / from the Pi</td><td><code>scp file.txt lab:~/</code> / <code>scp lab:file.txt .</code></td></tr><tr><td>a folder</td><td><code>scp -r folder lab:~/</code></td></tr>
+<tr><td>one command on the Pi</td><td><code>ssh lab "hostname -I"</code></td></tr><tr><td>tmux start / detach / resume</td><td><code>tmux new -s work</code> / Ctrl+b d / <code>tmux attach -t work</code></td></tr><tr><td>enable VNC</td><td><code>sudo raspi-config</code> -&gt; Interface Options -&gt; VNC</td></tr>
+<tr><td>Wi-Fi in range / saved</td><td><code>nmcli device wifi list</code> / <code>nmcli connection show</code></td></tr><tr><td>add a Wi-Fi profile</td><td><code>sudo nmcli connection add type wifi con-name NAME ifname wlan0 ssid "SSID" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "PASSWORD"</code></td></tr>
+<tr><td>the Pi's IP</td><td><code>hostname -I</code></td></tr><tr><td>update / shut down</td><td><code>sudo apt-get update &amp;&amp; sudo apt upgrade</code> / <code>sudo shutdown -h now</code></td></tr><tr><td>sync code</td><td><code>git pull</code> / <code>git add .</code> <code>git commit -m "..."</code> <code>git push</code></td></tr></table>
+<div class="mn" style="height:50px"></div>
+<div class="sh y">32. Day 2 is done when...</div>
+<ul class="ck small"><li><code>ssh lab</code> logs me in with no password</li><li>a file travelled to the Pi and another came back</li><li>I saw the Pi desktop in a VNC window</li><li>the Pi has a second Wi-Fi profile (or I know how to add one)</li><li>my "Pis and laptops" table is filled in</li></ul>
+<div class="mn" style="height:60px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 18</div></div>
+<div class="title">Glossary &amp; my Pis</div>
+
+<div class="sh g">33. Glossary</div>
+<table class="t small" style="font-size:13.5px"><tr><th style="width:28%">Term</th><th>Meaning</th></tr><tr><td>SSH config file</td><td><code>~/.ssh/config</code>: nicknames and options for SSH destinations</td></tr><tr><td>key pair</td><td>private key (secret) + public key (shareable): identity without a password</td></tr><tr><td><code>authorized_keys</code></td><td>file on the Pi listing the public keys allowed to log in</td></tr><tr><td>tmux</td><td>keeps terminal sessions alive on the Pi</td></tr><tr><td>scp / SFTP</td><td>copy over SSH on the command line / file transfer with two-pane programs</td></tr><tr><td>git, repository</td><td>version control; the shared online store of a project</td></tr><tr><td>VNC</td><td>remote control of a graphical desktop</td></tr><tr><td>NetworkManager, nmcli</td><td>network service of current Raspberry Pi OS and its command-line tool</td></tr><tr><td>DHCP reservation</td><td>router setting: same IP for the same device, always</td></tr><tr><td>NAT</td><td>router technique hiding private addresses behind one public address</td></tr><tr><td>link-local address</td><td><code>169.254.x.x</code>: self-assigned when no DHCP server answers</td></tr><tr><td>VPN / overlay network</td><td>private network over the Internet; distant devices behave as if together</td></tr><tr><td>port forwarding</td><td>router rule exposing a port to the Internet (not for SSH)</td></tr></table>
+<div class="mn" style="height:40px"></div>
+<div class="sh b">34. My Pis and laptops</div>
+<table class="t small" style="font-size:13.5px"><tr><th style="width:30%"></th><th>Pi 1</th><th>Pi 2</th><th>Laptop 1</th><th>Laptop 2</th></tr><tr><td>board / RAM</td><td>&nbsp;</td><td></td><td></td><td></td></tr><tr><td>host name</td><td>&nbsp;</td><td></td><td></td><td></td></tr><tr><td>SSH nickname</td><td>&nbsp;</td><td></td><td></td><td></td></tr><tr><td>where it lives</td><td>&nbsp;</td><td></td><td></td><td></td></tr><tr><td>IP (can change)</td><td>&nbsp;</td><td></td><td></td><td></td></tr><tr><td>Wi-Fi saved</td><td>&nbsp;</td><td></td><td></td><td></td></tr><tr><td>key added? VNC on?</td><td>&nbsp;</td><td></td><td></td><td></td></tr></table>
+<div class="mn" style="height:40px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 2: Remote access like a pro</div><div class="p">PAGE 19</div></div>
+<div class="title">Instructor notes</div>
+
+<div class="sh y">35. A 60-minute lab</div>
+<div class="ybox small"><b>10 min</b> the rough edges; demonstrate <code>ssh lab</code> versus the long form. <b>15 min</b> students create the config file and a key. <b>15 min</b> scp both ways and an SFTP program. <b>15 min</b> VNC. <b>5 min</b> where networks break.</div>
+<ul class="bl small"><li><b>Typical mistakes:</b> config saved as <code>config.txt</code>; colon missing in scp; the private key copied instead of the public key; <code>&gt;</code> instead of <code>&gt;&gt;</code> when adding a key (overwrites other keys); VNC with no resolution set.</li><li><b>Mini-assessment:</b> <code>ssh lab</code> works without a password, and a screenshot of <code>ls -l</code> and the scp lines for a file copied both ways.</li><li><b>Policy:</b> warn students not to install remote-access software on school or work computers without permission.</li></ul>
+<div class="mn" style="height:150px"></div>
+<div class="sh b">36. My own notes, ideas, questions</div>
+<div class="mn" style="height:300px"></div>
+<div class="note">Tomorrow, Day 3: the Linux command line.</div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">References</div><div class="p">PAGE 20</div></div>
+<div class="title">Acknowledgments &amp; references</div>
+
+<div class="small">This course is a compilation: it combines material from the sources below with new explanations, examples, diagrams, exercises and comments written for this course. The original authors are gratefully acknowledged.</div>
+<ol class="refs"><li>Rovai, M. (2025). Edge AI Engineering: Hands-on with the Raspberry Pi. Open textbook for the course IESTI05, Federal University of Itajubá (UNIFEI), Brazil. Version of 23 October 2025. Online edition: https://mjrovai.github.io/EdgeML_Made_Ease_ebook/</li><li>Rovai, M. (2026). IESTI05 - Edge AI: Edge Machine Learning Systems Engineering. Course slides, notebooks and video lectures (second semester 2026), UNIFEI, Brazil. Course videos listed by the author: Class 1 (course introduction) https://youtu.be/QAb3MFHwe78 ; Class 2 (Introduction to Linux) https://youtu.be/QkIHILtl0h4 ; Class 3 (Raspberry Pi setup walkthrough) https://youtu.be/YtjsM36LzVE (lectures in Portuguese).</li><li>Rovai, M. (2026). IESTI01 - TinyML: Machine Learning for Embedding Devices. Course materials (first semester 2026), UNIFEI, Brazil. https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML</li><li>Rovai, M. TinyML4D: lectures, books, papers and tutorials for embedded machine-learning education. https://github.com/Mjrovai/TinyML4D</li><li>Raspberry Pi Ltd. Raspberry Pi documentation (operating system, remote access, Raspberry Pi Connect, hardware). https://www.raspberrypi.com/documentation/</li><li>OpenSSH project. OpenSSH: the SSH client and server used by Windows, macOS, Linux and Raspberry Pi OS (manual pages ssh, ssh_config, scp, ssh-keygen). https://www.openssh.com/</li><li>FileZilla Project. FileZilla Client, a free SFTP program. https://filezilla-project.org/</li><li>RealVNC. VNC Viewer and VNC Server. https://www.realvnc.com/</li><li>Tailscale Inc. Tailscale documentation (private network between your own devices). https://tailscale.com/</li></ol>
+<div class="small" style="margin-top:8px"><i>The screenshots of the scp transfer, FileZilla, raspi-config and the VNC viewer are adapted from reference [1]. All other figures and the animation were created for this course.</i></div>
+<div class="mn" style="height:300px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 02 &middot; notebook notes</div></div>
+
+</body></html>

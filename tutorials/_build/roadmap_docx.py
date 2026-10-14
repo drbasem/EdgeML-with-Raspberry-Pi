@@ -24,7 +24,7 @@ def build():
         "**Lesson sizes** are estimates. A day that needs longer is simply continued the next day.",
     ], size=10)
     d.callout("warn", "Notes on hardware and software", [
-        "- **Pi 4 and Pi 5 speed and memory:** the vision phase runs well on both. In the language-model phase a Pi 5 (8 GB is best) runs larger models; a Pi 4 uses smaller models and longer waits. Each lesson recommends a model size per board.",
+        "- **Pi 4 and Pi 5:** the vision phases run well on both. A **Pi 4 does not run language models well** (only very small models, slowly), so Phase 3 is best done on a **Pi 5 (8 GB recommended)**. With only a Pi 4 you still complete the course and treat Phase 3 as a guided demonstration with the smallest models.",
         "- **Software versions:** a newer Raspberry Pi OS may ship a newer Python than some machine-learning packages support. Days 4 and 5 include the check and the remedy (virtual environments, or an older OS image).",
         "- **Online services** (Colab, Edge Impulse, model downloads) need Internet access; if your network restricts them, use a phone hotspot on those days.",
         "- **Arduino UNO Q** is an optional extension; the core course does not need it.",

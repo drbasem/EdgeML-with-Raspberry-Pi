@@ -1,0 +1,41 @@
+// Day 02 diagrams (clean line art, same helpers as notes_b.js)
+function laptopN(s, x, y, label) { R(s, x, y, 70, 46, { fill: "#e3eaf4" }); R(s, x + 6, y + 6, 58, 34, { fill: "#cfe8fb", sw: 1 }); L(s, x - 8, y + 54, x + 78, y + 54, { sw: 5, stroke: "#8896a8" }); T(s, x + 35, y + 76, label, { size: 15, anchor: "middle", weight: "bold" }); }
+function piN(s, x, y, label) { R(s, x, y, 70, 44, { fill: "#1e7b4a", stroke: "#14532f" }); R(s, x + 24, y + 14, 18, 16, { fill: "#b8bec4", stroke: "#7c858d", sw: 1.2 }); T(s, x + 35, y + 68, label, { size: 15, anchor: "middle", weight: "bold" }); }
+DRAW.keys2 = (h) => { const s = S(694, 230); laptopN(s, 10, 76, "Laptop"); piN(s, 612, 78, "Pi");
+  R(s, 4, 6, 190, 50, { fill: "#e3eaf4" }); T(s, 99, 26, "private key", { size: 17, anchor: "middle", weight: "bold" }); T(s, 99, 46, "secret: never leaves the laptop", { size: 13, anchor: "middle" });
+  R(s, 480, 6, 210, 50, { fill: "#fff4db", stroke: "#c77a00" }); T(s, 585, 26, "public key", { size: 17, anchor: "middle", weight: "bold" }); T(s, 585, 46, "~/.ssh/authorized_keys (shareable)", { size: 13, anchor: "middle" });
+  A(s, 100, 100, 600, 100, "#1f7a4d"); T(s, 350, 92, "1  I own this key pair", { size: 15, anchor: "middle", fill: "#1f7a4d" });
+  A(s, 600, 132, 100, 132, "#1d2f6f"); T(s, 350, 124, "2  Pi sends a random challenge", { size: 15, anchor: "middle", fill: "#1d2f6f" });
+  A(s, 100, 164, 600, 164, "#c0194a"); T(s, 350, 156, "3  laptop signs it; Pi checks with the public key", { size: 15, anchor: "middle", fill: "#c0194a" });
+  T(s, 347, 214, "access without sending a secret over the network", { size: 14, anchor: "middle", fill: "#777" }); h.appendChild(s); };
+DRAW.scp2 = (h) => { const s = S(694, 250); laptopN(s, 6, 66, "Laptop"); piN(s, 618, 70, "Raspberry Pi");
+  R(s, 130, 34, 440, 74, { fill: "#e3f4dc", stroke: "#1f7a4d" }); T(s, 350, 56, "laptop  ->  Pi", { size: 17, anchor: "middle", weight: "bold", fill: "#1f7a4d" }); T(s, 350, 88, "scp  file.txt  lab:~/", { font: "Architects Daughter", size: 18, anchor: "middle" });
+  A(s, 100, 24, 600, 24, "#1f7a4d", 2.4);
+  R(s, 130, 130, 440, 74, { fill: "#fbe3ea", stroke: "#c0194a" }); T(s, 350, 152, "Pi  ->  laptop", { size: 17, anchor: "middle", weight: "bold", fill: "#c0194a" }); T(s, 350, 184, "scp  lab:file.txt  .", { font: "Architects Daughter", size: 18, anchor: "middle" });
+  A(s, 600, 218, 100, 218, "#c0194a", 2.4);
+  T(s, 6, 244, "scp  SOURCE  DESTINATION      'name:path' = on the Pi;  plain path = on this computer", { size: 14, fill: "#555" }); h.appendChild(s); };
+DRAW.vnc2 = (h) => { const s = S(694, 190); laptopN(s, 10, 30, "Laptop"); piN(s, 612, 34, "Pi");
+  R(s, 24, 42, 42, 28, { fill: "#bfddf5", sw: 1 }); T(s, 45, 60, "desktop", { size: 11, anchor: "middle" });
+  A(s, 600, 58, 110, 58, "#1f7a4d", 2.4); T(s, 355, 48, "pictures of the Pi's screen", { size: 15, anchor: "middle", fill: "#1f7a4d" });
+  A(s, 110, 108, 600, 108, "#c0194a", 2.4); T(s, 355, 128, "your mouse clicks and key presses", { size: 15, anchor: "middle", fill: "#c0194a" });
+  T(s, 347, 12, "VNC = Virtual Network Computing: remote control of a graphical desktop", { size: 15, anchor: "middle", weight: "bold" }); T(s, 347, 178, "SSH carries text only; VNC carries the whole desktop picture", { size: 14, anchor: "middle", fill: "#777" }); h.appendChild(s); };
+DRAW.twonets2 = (h) => { const s = S(694, 232);
+  R(s, 4, 4, 230, 224, { fill: "#f3f8f2", stroke: "#1f7a4d", dash: "6 5" }); T(s, 14, 26, "Network A (lab)", { size: 16, weight: "bold", fill: "#1f7a4d" }); piN(s, 64, 80, "Pi in the lab");
+  R(s, 460, 4, 230, 224, { fill: "#fff5f5", stroke: "#c0194a", dash: "6 5" }); T(s, 470, 26, "Network B (home)", { size: 16, weight: "bold", fill: "#c0194a" }); laptopN(s, 540, 64, "Laptop at home");
+  E(s, "path", { d: "M300 70 q-26 0 -26 -16 q0 -14 22 -15 q4 -9 22 -8 q18 -7 32 4 q24 0 26 16 q4 14 -16 19 z", fill: "#d8ebfb", stroke: "#2b6cb0", "stroke-width": 1.6 }); T(s, 348, 56, "Internet", { size: 15, anchor: "middle" });
+  A(s, 236, 98, 290, 74, "#555"); A(s, 410, 74, 536, 98, "#555");
+  L(s, 236, 150, 460, 150, { stroke: "#c0194a", dash: "5 4" }); T(s, 348, 142, "raspi-lab.local does NOT work here", { size: 14, anchor: "middle", fill: "#c0194a" });
+  R(s, 262, 176, 170, 44, { fill: "#fff4db", stroke: "#c77a00" }); T(s, 347, 196, "remote-access service", { size: 15, anchor: "middle", weight: "bold" }); T(s, 347, 212, "(virtual network or relay)", { size: 12, anchor: "middle" });
+  A(s, 200, 160, 262, 190, "#c77a00"); A(s, 432, 190, 530, 160, "#c77a00"); h.appendChild(s); };
+DRAW.decide2 = (h) => { const s = S(694, 250); const b = (x, y, w, hh, t, f, st) => { R(s, x, y, w, hh, { fill: f, stroke: st }); T(s, x + w / 2, y + hh / 2 + 5, t, { size: 14, anchor: "middle", lh: 15 }); };
+  b(170, 4, 360, 40, "Are the laptop and the Pi on the same network?", "#e3eaf4", "#1d2f6f");
+  b(4, 100, 290, 56, "YES: use the nickname or IP.\nssh, scp, SFTP and VNC all work.", "#d6efc9", "#1f7a4d");
+  b(380, 100, 310, 56, "NO: can I carry the Pi (or laptop)\nto the other network?", "#e3eaf4", "#1d2f6f");
+  b(310, 188, 180, 56, "YES: add the other\nWi-Fi to the Pi (Part E)", "#d6efc9", "#1f7a4d"); b(504, 188, 186, 56, "NO: use a remote-access\nservice (Part F)", "#fff4db", "#c77a00");
+  A(s, 250, 46, 160, 98, "#1f7a4d"); T(s, 190, 76, "yes", { size: 14, fill: "#1f7a4d" }); A(s, 450, 46, 530, 98, "#c0194a"); T(s, 506, 76, "no", { size: 14, fill: "#c0194a" });
+  A(s, 450, 158, 410, 186, "#1f7a4d"); T(s, 420, 176, "yes", { size: 14, fill: "#1f7a4d" }); A(s, 620, 158, 600, 186, "#c0194a"); T(s, 618, 176, "no", { size: 14, fill: "#c0194a" }); h.appendChild(s); };
+DRAW.sync2 = (h) => { const s = S(694, 250);
+  R(s, 240, 70, 220, 90, { fill: "#f0eaf6", stroke: "#7a4fa0", sw: 2.4 }); T(s, 350, 105, "Online repository", { size: 18, anchor: "middle", weight: "bold" }); T(s, 350, 128, "(for example GitHub)", { size: 14, anchor: "middle" }); T(s, 350, 146, "the single source of truth", { size: 14, anchor: "middle" });
+  laptopN(s, 20, 20, "Laptop"); laptopN(s, 604, 20, "Laptop 2"); piN(s, 40, 164, "Pi in the lab"); piN(s, 590, 166, "Pi at home");
+  A(s, 100, 70, 236, 98, "#555"); A(s, 236, 98, 100, 70, "#555", 0); A(s, 600, 70, 464, 98, "#555"); A(s, 120, 190, 270, 164, "#555"); A(s, 580, 190, 430, 164, "#555");
+  T(s, 347, 246, "git pull = get the latest      git push = share my changes", { size: 15, anchor: "middle", fill: "#555" }); h.appendChild(s); };

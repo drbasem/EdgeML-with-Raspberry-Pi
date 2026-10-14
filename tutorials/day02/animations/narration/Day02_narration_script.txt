@@ -1,0 +1,16 @@
+Day 02 animation - English narration script (voice: "Aaron - Educational", ElevenLabs v4)
+
+Scene 1 - A nickname for each Pi
+Typing a long SSH command every time is tedious. Give each Pi a short nickname in a small configuration file, and then you simply type SSH, followed by the nickname.
+
+Scene 2 - Laptop to Pi with scp
+To send a file from your laptop to the Pi, use SCP. Write the source first, then the destination: the user name, the Pi, a colon, and the folder on the Pi.
+
+Scene 3 - Pi to laptop with scp
+To fetch a file from the Pi, swap the order. The file on the Pi comes first, then the folder on your laptop. A single dot means the current folder.
+
+Scene 4 - The Pi desktop over VNC
+For a full graphical desktop, enable VNC on the Pi, open a VNC viewer on your laptop, and sign in. You then see the Pi's desktop in a window, and you can use your mouse and keyboard on it.
+
+Scene 5 - Same network or a remote-access service
+Remember: all of these need your laptop and the Pi to reach each other, either on the same network, or through a remote-access service when they are in different places.

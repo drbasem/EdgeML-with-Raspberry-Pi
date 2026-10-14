@@ -46,7 +46,7 @@ ROWS = {
  "P3": [
   (27, "Text generation with an RNN", "Tokens, embeddings, training a small text generator", "A tiny text generator"),
   (28, "Knowledge distillation", "Teach a small student model from a larger teacher", "A distilled model"),
-  (29, "Small language models: first model with Ollama", "Install Ollama; choose a model that fits your board; chat", "A language model answering on the Pi"),
+  (29, "Small language models: first model with Ollama", "Install Ollama; choose a model that fits your board (Pi 5 recommended); chat", "A language model answering on the Pi"),
   (30, "Ollama with Python", "Use the Python library; build a chat script", "A Python chat program"),
   (31, "Function (tool) calling", "Let the model call Python functions", "A tool-using model"),
   (32, "Retrieval-augmented generation (RAG)", "Build a vector store; retrieve context for answers", "Question answering over your documents"),

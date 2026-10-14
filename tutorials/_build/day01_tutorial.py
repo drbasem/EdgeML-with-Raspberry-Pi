@@ -157,10 +157,10 @@ def build():
         ["**Wi-Fi / Bluetooth**", "2.4 GHz only, Bluetooth 4.2", "dual-band 802.11ac, Bluetooth 5.0", "dual-band 802.11ac, Bluetooth 5.0"],
         ["**Main ports**", "mini-HDMI, micro-USB OTG, camera connector", "2 x micro-HDMI, 2 x USB 3 + 2 x USB 2, Ethernet, camera + display", "2 x micro-HDMI, 2 x USB 3 + 2 x USB 2, Ethernet, 2 camera/display connectors, PCIe"],
         ["**Power**", "5 V / 2.5 A via micro-USB; about 0.6 W idle", "5 V / 3 A via USB-C", "5 V / 5 A (27 W) via USB-C; about 3 to 3.5 W idle"],
-        ["**Best for**", "Tiny, battery-powered embedded projects and small models", "All-round: the vision projects of this course; small language models", "Edge computing, vision and the largest language models; 8 GB recommended for AI"],
+        ["**Best for**", "Tiny, battery-powered embedded projects and small models", "All-round: the vision projects of this course (language models: only the very smallest)", "Edge computing, vision and the largest language models; 8 GB recommended for AI"],
     ], [2.6, 4.2, 5.2, 5.2], size=9)
     d.callout("note", "Which board do I use?", [
-        "This course works on a **Pi 4 or a Pi 5**. The Pi 5 is clearly faster and can have more RAM, so large language models are more comfortable there. On a Pi 4 everything in the vision phase runs well; in the language-model phase you choose smaller models and accept longer response times. Wherever the choice matters, the lesson says so."])
+        "This course works on a **Pi 4 or a Pi 5**, and the boards differ most in **Phase 3 (language models)**. The vision phase (Phases 0, 2, 4, 5) runs well on both. A **Pi 4 does not run language models well**: only very small models, and slowly. For Phase 3 the right board is a **Pi 5 (8 GB recommended)**. With only a Pi 4 you still do the whole course, and treat Phase 3 as a guided demonstration with the smallest models (or run it on a Pi 5 in the lab)."])
     d.h2("B5. Anatomy of the Raspberry Pi 4 and Raspberry Pi 5")
     d.figure(f"{FIG}/d1_pi4_anatomy.png", 16.0, "Raspberry Pi 4 Model B (schematic; port positions are simplified: compare with your real board).")
     d.figure(f"{FIG}/d1_pi5_anatomy.png", 16.0, "Raspberry Pi 5 (schematic; positions simplified). Note the power button, the PCIe connector, the fan connector and the two small camera/display connectors.")
@@ -185,6 +185,7 @@ def build():
     d.table(["Topic", "Pi 4", "Pi 5", "What it means for you"], [
         ["Speed", "Cortex-A72, 1.5 GHz", "Cortex-A76, 2.4 GHz", "The Pi 5 is clearly faster. Timings differ: models run slower on a Pi 4."],
         ["Memory", "up to 8 GB", "2, 4, 8 GB", "More RAM = bigger models. Matters most for language models."],
+        ["Language models (Phase 3)", "only very small models, slowly: not recommended", "comfortable with small models; 8 GB recommended", "Use a Pi 5 for Phase 3 if you can."],
         ["Power supply", "USB-C, 5 V / 3 A", "USB-C, 5 V / 5 A (27 W) recommended. A 3 A supply works but limits USB devices to 600 mA.", "A weak charger causes random crashes on both boards."],
         ["Power button", "none: plugging in switches it on", "yes", "To restart a halted Pi 4, unplug and replug. On a Pi 5 press the button."],
         ["Cooling", "heatsink or fan case advisable for long runs", "runs hotter; has a fan connector; an active cooler is advisable for long runs", "Check temperatures while a model runs (`vcgencmd measure_temp`)."],

@@ -1,0 +1,47 @@
+1
+00:00:00,400 --> 00:00:03,947
+Typing a long SSH command every time is tedious.
+
+2
+00:00:03,947 --> 00:00:12,520
+Give each Pi a short nickname in a small configuration file, and then you simply type SSH, followed by the nickname.
+
+3
+00:00:14,120 --> 00:00:18,083
+To send a file from your laptop to the Pi, use SCP.
+
+4
+00:00:18,083 --> 00:00:21,580
+Write the source first, then the destination:
+
+5
+00:00:21,580 --> 00:00:26,010
+the user name, the Pi, a colon, and the folder on the Pi.
+
+6
+00:00:27,410 --> 00:00:30,405
+To fetch a file from the Pi, swap the order.
+
+7
+00:00:30,405 --> 00:00:34,693
+The file on the Pi comes first, then the folder on your laptop.
+
+8
+00:00:34,693 --> 00:00:37,280
+A single dot means the current folder.
+
+9
+00:00:38,680 --> 00:00:45,404
+For a full graphical desktop, enable VNC on the Pi, open a VNC viewer on your laptop, and sign in.
+
+10
+00:00:45,404 --> 00:00:51,510
+You then see the Pi's desktop in a window, and you can use your mouse and keyboard on it.
+
+11
+00:00:53,110 --> 00:00:53,643
+Remember:
+
+12
+00:00:53,643 --> 00:01:03,060
+all of these need your laptop and the Pi to reach each other, either on the same network, or through a remote-access service when they are in different places.

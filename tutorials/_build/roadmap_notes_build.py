@@ -44,7 +44,7 @@ P.append(("How the course works", f'''
 <li>Day sizes are estimates; a long day simply continues the next day.</li></ul>
 {mn(52)}
 <div class="sh p">4. Notes on hardware and software</div>
-<div class="pbox small"><b>Speed and memory:</b> vision runs well on both boards. In the language-model phase a Pi 5 (8 GB best) runs larger models; a Pi 4 uses smaller models and longer waits.<br><b>Python:</b> a newer Raspberry Pi OS may ship a newer Python than some ML packages support; days 4-5 include the check and the remedy.<br><b>Online services</b> (Colab, Edge Impulse, model downloads) need Internet; use a phone hotspot if the network restricts them.<br><b>UNO Q</b> is an optional extension.</div>
+<div class="pbox small"><b>Pi 4 and Pi 5:</b> the vision phases run well on both. A Pi 4 does not run language models well (only very small ones, slowly): do Phase 3 on a Pi 5 (8 GB recommended), or treat it as a guided demonstration.<br><b>Python:</b> a newer Raspberry Pi OS may ship a newer Python than some ML packages support; days 4-5 include the check and the remedy.<br><b>Online services</b> (Colab, Edge Impulse, model downloads) need Internet; use a phone hotspot if the network restricts them.<br><b>UNO Q</b> is an optional extension.</div>
 {mn(52)}
 <div class="sh g">5. Get ready (by day)</div>
 <ul class="ck small">{prep}</ul>
