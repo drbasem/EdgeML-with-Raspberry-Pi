@@ -1,0 +1,71 @@
+1
+00:00:00,400 --> 00:00:04,518
+First, we write the operating system onto the microSD card.
+
+2
+00:00:04,518 --> 00:00:10,940
+Raspberry Pi Imager copies a ready-to-run system onto the card, together with your settings:
+
+3
+00:00:10,940 --> 00:00:14,430
+the computer name, your user, your Wi-Fi, and SSH.
+
+4
+00:00:16,030 --> 00:00:20,000
+Next, we slide the card into the slot under the Raspberry Pi.
+
+5
+00:00:21,400 --> 00:00:22,839
+Now plug in the power.
+
+6
+00:00:22,839 --> 00:00:28,139
+The red light stays on, and the green light flickers while the Pi reads the card.
+
+7
+00:00:28,139 --> 00:00:30,429
+The first boot takes a few minutes:
+
+8
+00:00:30,429 --> 00:00:34,158
+the Pi resizes the file system and applies your settings.
+
+9
+00:00:34,158 --> 00:00:35,270
+Do not unplug it.
+
+10
+00:00:36,870 --> 00:00:42,510
+Then the Pi joins your Wi-Fi network by itself, and receives its own address on the network.
+
+11
+00:00:43,910 --> 00:00:50,340
+Finally, on your laptop, open PowerShell and type ssh, your user name, at raspi4.local.
+
+12
+00:00:50,340 --> 00:00:53,591
+Type yes the first time, then your password.
+
+13
+00:00:53,591 --> 00:00:55,882
+Nothing appears while you type;
+
+14
+00:00:55,882 --> 00:00:56,991
+that is normal.
+
+15
+00:00:56,991 --> 00:01:00,834
+When you see the Pi's prompt, you are inside the Pi.
+
+16
+00:01:00,834 --> 00:01:04,086
+Check its address with the hostname command.
+
+17
+00:01:04,086 --> 00:01:05,047
+And remember:
+
+18
+00:01:05,047 --> 00:01:08,520
+always shut down properly before you unplug it.

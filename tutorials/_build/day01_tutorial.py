@@ -126,7 +126,7 @@ def build():
         "So 'installing the OS' means **writing an image** - a complete copy of a ready-to-run system - onto the card. "
         "We use **Raspberry Pi Imager** for that, and, very usefully, we also use it to bake in our **settings** (computer name, user, Wi-Fi, SSH) so that the Pi comes up already configured and needs **no monitor and no keyboard** (this is called a *headless* setup).")
     d.figure(f"{FIG}/d1_flash_flow.png", 16.2, "The whole procedure in five steps. Today you do all five.")
-    d.figure(f"{FIG}/d1_filmstrip.png", 16.6, "Key frames of the animation 'Day01_flash_boot_ssh.mp4' (27 s): write the card, insert it, power on and first boot, join Wi-Fi, SSH from the laptop. Play the video file for the full story.")
+    d.figure(f"{FIG}/d1_filmstrip.png", 16.6, "Key frames of the narrated animation 'Day01_flash_boot_ssh.mp4' (about 70 s, English voice-over + subtitles): write the card, insert it, power on and first boot, join Wi-Fi, SSH from the laptop. Play the video file for the full story.")
     d.h2("C2. Which operating system?")
     d.p("The OS for the Pi is **Raspberry Pi OS**, a version of Linux (Debian). The book explains OS, kernel, shell and file system on PDF p. 34; skim it now.")
     d.table(["Choice in Imager", "What it is", "Our decision"], [
@@ -171,7 +171,7 @@ def build():
     ])
     d.step(5, "Write the card", ["Confirm the warning that all data on the card will be erased. Imager now **writes** and then **verifies**. This takes several minutes - do not remove the card or close Imager.",
                                   "When you see **'Write successful'**, click Continue and remove the card (Imager ejects it for you)."])
-    d.callout("tip", "While you wait", ["Play the animation (tutorials/day01/animations) or read Part E ahead of time."])
+    d.callout("tip", "While you wait", ["Watch the narrated animation (tutorials/day01/animations) or read Part E ahead of time."])
 
     # ------------------------------------------------------------------ PART D
     d.h1("Part D  -  First boot (15 min)")
@@ -262,7 +262,7 @@ def build():
         ["Video: Class 2 - Introduction to Linux", "https://youtu.be/QkIHILtl0h4", "Same note. Good preview for Day 3."],
         ["Video: Class 1 - Course introduction", "https://youtu.be/QAb3MFHwe78", "Same note."],
         ["Raspberry Pi Imager download", "https://www.raspberrypi.com/software/", "Address used in the course slides."],
-        ["Animation for today", "tutorials/day01/animations/Day01_flash_boot_ssh.mp4 (and .gif)", "27 seconds: write the card, boot, Wi-Fi, SSH."],
+        ["Animation for today", "tutorials/day01/animations/Day01_flash_boot_ssh.mp4 (silent copy and .gif also there)", "About 70 s with English narration and subtitles (script in animations/narration/): write the card, boot, Wi-Fi, SSH."],
     ], [4.6, 6.9, 5.7], size=8.8)
 
     d.h1("Appendix A  -  My connection card")

@@ -1,0 +1,16 @@
+Day 01 animation - English narration script (voice: "Aaron - Educational", ElevenLabs v4)
+
+Scene 1 - Write the OS image to the microSD card
+First, we write the operating system onto the micro S D card. Raspberry Pi Imager copies a ready-to-run system onto the card, together with your settings: the computer name, your user, your Wi-Fi, and S S H.
+
+Scene 2 - Put the card into the Pi
+Next, we slide the card into the slot under the Raspberry Pi.
+
+Scene 3 - Plug in power: first boot
+Now plug in the power. The red light stays on, and the green light flickers while the Pi reads the card. The first boot takes a few minutes: the Pi resizes the file system and applies your settings. Do not unplug it.
+
+Scene 4 - The Pi joins your Wi-Fi
+Then the Pi joins your Wi-Fi network by itself, and receives its own address on the network.
+
+Scene 5 - Connect from the laptop with SSH
+Finally, on your laptop, open PowerShell and type S S H, your user name, at raspi four dot local. Type yes the first time, then your password. Nothing appears while you type; that is normal. When you see the Pi's prompt, you are inside the Pi. Check its address with the hostname command. And remember: always shut down properly before you unplug it.

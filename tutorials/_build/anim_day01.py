@@ -15,7 +15,20 @@ SCENES = [(0, 6, "1  Write the OS image to the microSD card"),
           (10, 16, "3  Plug in power: first boot"),
           (16, 20, "4  The Pi joins your Wi-Fi"),
           (20, 27, "5  Connect from the laptop with SSH")]
-TOTAL = SCENES[-1][1] + 1.5
+NARR = os.path.join(ROOT, "day01", "animations", "narration")
+NARR_DUR = [14.03, 3.97, 13.87, 5.64, 24.61]          # measured with ffprobe
+PAD = [1.2, 1.0, 1.2, 1.0, 2.0]                        # silence after each clip
+LEAD = 0.4                                              # silence before each clip
+OUT_LEN = [LEAD + d + p for d, p in zip(NARR_DUR, PAD)]
+OUT_START = [sum(OUT_LEN[:i]) for i in range(len(OUT_LEN))]
+ORIG_END = [b for (_, b, _) in SCENES]; ORIG_END[-1] = 28.5   # last scene keeps its 1.5 s tail
+TOTAL = sum(OUT_LEN)
+TOUT = 0.0
+def warp(t):
+    for i, L in enumerate(OUT_LEN):
+        if t < OUT_START[i] + L or i == len(OUT_LEN) - 1:
+            a = SCENES[i][0]; b = ORIG_END[i]
+            return a + min(max((t - OUT_START[i]) / L, 0.0), 1.0) * (b - a)
 W, H = 160, 90
 rnd = random.Random(4)
 flick = [rnd.random() for _ in range(2000)]
@@ -58,7 +71,7 @@ def draw(ax, t):
         if t > 22.0: T(sc_x + 2, sc_y + 18, "password: " + "*" * min(8, int((t - 22.0) * 6)), color="#E7EEF5", **mono)
         if t > 23.6:
             T(sc_x + 2, sc_y + 12.5, "Linux raspi4 ... aarch64", color="#9BB4CC", **{**mono, "fontsize": 6.8})
-            T(sc_x + 2, sc_y + 7.5, "user@raspi4:~ $" + (" _" if int(t * 2) % 2 == 0 else ""), color="#7CE0A3", **mono)
+            T(sc_x + 2, sc_y + 7.5, "user@raspi4:~ $" + (" _" if int(TOUT * 2) % 2 == 0 else ""), color="#7CE0A3", **mono)
         if t > 25.0: T(sc_x + 2, sc_y + 3, "hostname -I  ->  192.168.1.57", color="#E7EEF5", **{**mono, "fontsize": 6.6})
     # ---- router
     rb(ax, 120, 66, 30, 9, "#4A5568", r=1.2, z=3)
@@ -114,7 +127,7 @@ def draw(ax, t):
     # LEDs
     powered = t >= 11.4
     red_on = powered
-    green_on = powered and (t < 15.2 and flick[int(t * FPS) % len(flick)] > 0.35 or (t >= 15.2 and flick[int(t * FPS) % len(flick)] > 0.85))
+    green_on = powered and (t < 15.2 and flick[int(TOUT * FPS) % len(flick)] > 0.35 or (t >= 15.2 and flick[int(TOUT * FPS) % len(flick)] > 0.85))
     ax.add_patch(Circle((px + 6, py + 8.2), 1.0, fc=("#FF3B3B" if red_on else "#5b2a2a"), ec="none", zorder=4))
     ax.add_patch(Circle((px + 6, py + 5.2), 1.0, fc=("#3BFF6B" if green_on else "#27472f"), ec="none", zorder=4))
     if powered:
@@ -148,37 +161,69 @@ def draw(ax, t):
         ax.plot([62, 120], [48, 66], color="#9AA5B1", lw=1.6, ls=(0, (4, 3)), zorder=1)
         ax.plot([120, 98], [66, 48], color="#9AA5B1", lw=1.6, ls=(0, (4, 3)), zorder=1)
         for k in range(4):
-            f = (t * 0.7 + k / 4.0) % 1.0
+            f = (TOUT * 0.7 + k / 4.0) % 1.0
             ax.add_patch(Circle((62 + 58 * f, 48 + 18 * f), 1.1, fc=GREEN, ec="none", zorder=6))
-            f2 = (t * 0.7 + k / 4.0 + 0.5) % 1.0
+            f2 = (TOUT * 0.7 + k / 4.0 + 0.5) % 1.0
             ax.add_patch(Circle((120 - 22 * f2, 66 - 18 * f2), 1.1, fc=NAVY, ec="none", zorder=6))
         T(88, 56, "encrypted SSH tunnel", fontsize=8.2, color=GREEN, fontweight="bold", ha="center", zorder=7, bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=GREEN, lw=1))
     # title top-left
     T(4, 85, "Edge AI study course - Day 01", fontsize=8.5, color=GREY, va="center")
 
 def render(path_mp4):
+    global TOUT
     fig = plt.figure(figsize=(12.8, 7.2), dpi=100); ax = fig.add_axes([0, 0, 1, 1])
     n = int(TOTAL * FPS)
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgba", "-s", "1280x720", "-r", str(FPS), "-i", "-",
            "-an", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", path_mp4]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
-    key = {}
+    targets = (5.5, 9.4, 14.5, 18.8, 25.8); best = {k: (9e9, None) for k in targets}
     for i in range(n):
-        t = i / FPS
+        TOUT = i / FPS; t = warp(TOUT)
         draw(ax, t); fig.canvas.draw()
         buf = np.asarray(fig.canvas.buffer_rgba())
         p.stdin.write(buf.tobytes())
-        for kt in (5.5, 9.4, 14.5, 18.8, 25.8):
-            if abs(t - kt) < 0.5 / FPS: key[kt] = buf.copy()
+        for kt in targets:
+            d = abs(t - kt)
+            if d < best[kt][0]: best[kt] = (d, buf.copy())
     p.stdin.close(); p.wait(); plt.close(fig)
-    return key
+    return {k: v[1] for k, v in best.items()}
+
+def srt_time(x):
+    ms = int(round(x * 1000)); h, ms = divmod(ms, 3600000); m, ms = divmod(ms, 60000); sec, ms = divmod(ms, 1000)
+    return f"{h:02d}:{m:02d}:{sec:02d},{ms:03d}"
+
+TEXTS = [
+    "First, we write the operating system onto the microSD card. Raspberry Pi Imager copies a ready-to-run system onto the card, together with your settings: the computer name, your user, your Wi-Fi, and SSH.",
+    "Next, we slide the card into the slot under the Raspberry Pi.",
+    "Now plug in the power. The red light stays on, and the green light flickers while the Pi reads the card. The first boot takes a few minutes: the Pi resizes the file system and applies your settings. Do not unplug it.",
+    "Then the Pi joins your Wi-Fi network by itself, and receives its own address on the network.",
+    "Finally, on your laptop, open PowerShell and type ssh, your user name, at raspi4.local. Type yes the first time, then your password. Nothing appears while you type; that is normal. When you see the Pi's prompt, you are inside the Pi. Check its address with the hostname command. And remember: always shut down properly before you unplug it.",
+]
 
 if __name__ == "__main__":
+    silent = os.path.join(OUT, "Day01_flash_boot_ssh_silent.mp4")
+    key = render(silent)
+    # subtitles: split each scene text into sentences, share the clip time by character count
+    import re
+    srt, n = [], 1
+    for i, txt in enumerate(TEXTS):
+        sents = re.split(r"(?<=[.:;])\s+", txt); tot = sum(len(x) for x in sents); t0 = OUT_START[i] + LEAD
+        for sn in sents:
+            d = NARR_DUR[i] * len(sn) / tot
+            srt.append(f"{n}\n{srt_time(t0)} --> {srt_time(t0 + d)}\n{sn}\n"); n += 1; t0 += d
+    srt_path = os.path.join(OUT, "Day01_flash_boot_ssh.en.srt"); open(srt_path, "w").write("\n".join(srt))
+    # audio track: each clip delayed to its scene start
     mp4 = os.path.join(OUT, "Day01_flash_boot_ssh.mp4")
-    key = render(mp4)
+    ins, fl, labs = [], [], []
+    for i in range(5):
+        ins += ["-i", os.path.join(NARR, f"s{i+1}.mp3")]
+        ms = int((OUT_START[i] + LEAD) * 1000); fl.append(f"[{i+1}:a]adelay={ms}|{ms}[a{i}]"); labs.append(f"[a{i}]")
+    fc = ";".join(fl) + ";" + "".join(labs) + "amix=inputs=5:normalize=0,apad[aout]"
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", silent, *ins, "-i", srt_path, "-filter_complex", fc,
+                    "-map", "0:v", "-map", "[aout]", "-map", "6:s", "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-c:s", "mov_text",
+                    "-metadata:s:s:0", "language=eng", "-t", f"{TOTAL:.2f}", mp4], check=True)
     gif = os.path.join(OUT, "Day01_flash_boot_ssh.gif")
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", mp4, "-vf", "fps=10,scale=800:-1:flags=lanczos,split[a][b];[a]palettegen[p];[b][p]paletteuse", gif], check=True)
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", silent, "-vf", "fps=8,scale=720:-1:flags=lanczos,split[a][b];[a]palettegen[p];[b][p]paletteuse", gif], check=True)
     from PIL import Image
-    frames = [Image.fromarray(key[k]).convert("RGB") for k in sorted(key)]
-    for i, f in enumerate(frames): f.save(os.path.join(FIG, f"d1_anim_f{i+1}.png"))
-    print("anim done", len(frames), "keyframes")
+    for i, k in enumerate(sorted(key)): Image.fromarray(key[k]).convert("RGB").save(os.path.join(FIG, f"d1_anim_f{i+1}.png"))
+    print("anim done; total %.1fs" % TOTAL)
