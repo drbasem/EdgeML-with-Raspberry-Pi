@@ -12,6 +12,7 @@ cp "$TMP/n.pdf" ../day01/Day01_Meet_Your_Raspberry_Pi_SKETCH-NOTES.pdf
 $PY -I make_notes_docx.py ../day01/Day01_Meet_Your_Raspberry_Pi_SKETCH-NOTES.docx "$TMP"/n_p*.png
 # notebook-style edition (style B)
 TMPB=$(mktemp -d)
+( cd notes && python3 day01_notes_b_build.py )
 node notes/render_notes.js notes/day01_notes_b.html "$TMPB/b"
 cp "$TMPB/b.pdf" ../day01/Day01_Meet_Your_Raspberry_Pi_NOTEBOOK-NOTES.pdf
 $PY -I make_notes_docx.py ../day01/Day01_Meet_Your_Raspberry_Pi_NOTEBOOK-NOTES.docx "$TMPB"/b_p*.png

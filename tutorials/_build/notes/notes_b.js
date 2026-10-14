@@ -95,5 +95,13 @@ DRAW.pi = (host) => {
 window.addEventListener("load", async () => {
   await document.fonts.ready; await Promise.all([...document.fonts].map(f => f.load().catch(() => {})));
   document.querySelectorAll("[data-draw]").forEach(h => DRAW[h.dataset.draw](h));
+  // give every blank "my notes" box a fair share of the free space left on its page
+  document.querySelectorAll(".pg").forEach(pg => {
+    const c = pg.querySelector(".content"), boxes = [...pg.querySelectorAll(".mn")]; if (!boxes.length) return;
+    const pr = pg.getBoundingClientRect(), limit = pr.top + pr.height - 17 * 3.78;   // keep the bottom 17 mm for the reading code
+    let last = 0; [...c.children].forEach(e => { last = Math.max(last, e.getBoundingClientRect().bottom); });
+    const free = limit - last; if (free <= 12) return;
+    const add = Math.min(free / boxes.length, 150) - 2; boxes.forEach(b => { b.style.height = (b.offsetHeight + add) + "px"; });
+  });
   document.body.dataset.ready = "1";
 });

@@ -47,3 +47,5 @@ code { font-family: "Architect"; background: rgba(60, 90, 160, .10); padding: 0 
 .small { font-size: 14.5px; } .note { font-family: "Caveat"; font-weight: 700; font-size: 20px; color: #c0194a; }
 .folio { position: absolute; left: 0; right: 0; bottom: 3mm; text-align: center; font-size: 13px; color: #8aa0c8; }
 svg text { font-family: "PatrickHand"; }
+.reading { position: absolute; left: 14mm; bottom: 9mm; font-family: "Caveat"; font-weight: 700; font-size: 25px; color: #c0194a; z-index: 3; letter-spacing: .5px; }
+.folio { bottom: 2.5mm; }
