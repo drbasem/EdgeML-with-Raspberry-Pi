@@ -5,7 +5,7 @@ to use these files.
 
 ```
 tutorials/
-  00_roadmap/            overview and day-by-day plan (coming)
+  00_roadmap/            overview and day-by-day plan (standard + sketch notes)
   day01/                 Day 01 - tutorial, sketch notes, animation, figures
   my_screenshots/dayNN/  your own captures; picked up automatically when you rebuild
   _build/                scripts that generate everything (Python, rough.js, Playwright, ffmpeg)
