@@ -85,7 +85,7 @@ P.append(("Why the Raspberry Pi?", f'''
   <li><b>Power efficiency:</b> low consumption, good for battery-powered designs.</li></ul></div>
 </div>
 <div class="small">Plus: a full Linux OS, a huge community, and low cost. That combination is why it is a good Edge AI platform.</div>
-{mn(50)}
+{mn(40)}
 <div class="sh b">8. Pi models compared</div>
 <table class="t small"><tr><th style="width:17%"></th><th>Zero 2 W</th><th>Pi 4 (my board)</th><th>Pi 5</th></tr>
 <tr><td>CPU</td><td>1 GHz quad-core Cortex-A53 (64-bit)</td><td>quad-core Cortex-A72, 1.5 GHz</td><td>quad-core Cortex-A76, 2.4 GHz</td></tr>
@@ -93,15 +93,25 @@ P.append(("Why the Raspberry Pi?", f'''
 <tr><td>Wi-Fi / BT</td><td>2.4 GHz only, BT 4.2</td><td>dual-band, BT 5.0</td><td>dual-band 802.11ac, BT 5.0</td></tr>
 <tr><td>Ports</td><td>mini-HDMI, micro-USB OTG, CSI camera</td><td>2 micro-HDMI, 2 USB 3 + 2 USB 2, CSI, DSI</td><td>2 micro-HDMI, 2 USB 3 + 2 USB 2, CSI, DSI, PCIe</td></tr>
 <tr><td>Power</td><td>5 V / 2.5 A micro-USB</td><td>5 V / 3 A USB-C</td><td>5 V / 5 A USB-C (27 W)</td></tr>
-<tr><td>Typical</td><td>tiny embedded, ~0.6 W idle</td><td>vision projects, small SLMs</td><td>edge computing, vision, bigger SLMs (~3-3.5 W idle)</td></tr></table>
-<div class="bbox small"><b>For me:</b> everything in the vision phase runs well on the Pi 4. For language models I stay with small ones and expect them to be slower than on a Pi 5.</div>
-{mn(50)}
+</table>
+<div class="sub">Pi 4 vs Pi 5 - what changes in practice</div>
+<table class="t small"><tr><th style="width:22%">Topic</th><th style="width:39%">Pi 4 (mine)</th><th>Pi 5</th></tr>
+<tr><td>Speed</td><td>A72, 1.5 GHz</td><td>A76, 2.4 GHz: clearly faster</td></tr>
+<tr><td>Power button</td><td>none - plug in = on</td><td>yes</td></tr>
+<tr><td>Charger</td><td>5 V / 3 A</td><td>5 V / 5 A (27 W); 3 A limits USB to 600 mA</td></tr>
+<tr><td>Cooling</td><td>heatsink / fan case advisable</td><td>hotter, fan connector, active cooler advisable</td></tr>
+<tr><td>Camera ports</td><td>1 CSI + 1 DSI (15-pin)</td><td>two 4-lane ports, smaller connector - check cable</td></tr>
+<tr><td>OS</td><td>old and new releases</td><td>needs Bookworm or newer</td></tr>
+<tr><td>Imager step</td><td>Device = Raspberry Pi 4</td><td>Device = Raspberry Pi 5</td></tr>
+<tr><td>Everything else</td><td colspan="2">SSH, commands, updates, shutdown: <b>identical</b></td></tr></table>
+<div class="bbox small"><b>For me:</b> vision runs well on the Pi 4. For language models I stay with small ones and expect them slower than on a Pi 5 (more RAM and a faster CPU there).</div>
+{mn(40)}
 <div class="sh g">9. What I can build with a Pi</div>
 <div class="cols">
  <div class="c1"><ul class="bl small"><li><b>Embedded systems</b> design and prototyping</li><li><b>IoT</b> devices (MQTT, CoAP, HTTP/HTTPS)</li><li><b>Control systems</b> (feedback loops, PID, actuators)</li><li><b>Computer vision + AI</b> (OpenCV, TensorFlow Lite)</li></ul></div>
  <div class="c2"><ul class="bl small"><li><b>Data acquisition</b> and logging</li><li><b>Robotics</b> controllers, motion planning</li><li><b>Signal processing</b> and DSP</li><li><b>Network security</b> (VPNs, firewalls, testing)</li></ul></div>
 </div>
-{mn(56)}
+{mn(44)}
 ''', "B-29-32"))
 # ------------------------------------------------------------------ P4
 P.append(("Meet the board", f'''
@@ -156,7 +166,7 @@ P.append(("Prepare the microSD card", f'''
 <div class="cols">
  <div class="c1"><ol class="st small">
   <li>Open Imager. If Windows says "format the disk?" -&gt; <b class="red">Cancel</b>.</li>
-  <li>Device = <code>Raspberry Pi 4</code></li>
+  <li>Device = <code>Raspberry Pi 4</code> (Pi 5: <code>Raspberry Pi 5</code>)</li>
   <li>OS = <code>Raspberry Pi OS (64-bit)</code></li>
   <li>Storage = my card (check size + drive letter!)</li>
   <li>Next -&gt; open the settings (gear icon / "customise")</li>
@@ -185,7 +195,7 @@ P.append(("Settings &amp; first boot", f'''
  <div class="c1"><ol class="st small">
   <li>Card into the slot on the <b>underside</b> (contacts toward the board).</li>
   <li>Optional monitor / keyboard first.</li>
-  <li>Power <b>last</b> (USB-C, 5 V / 3 A). The Pi 4 has <b>no power button</b>.</li>
+  <li>Power <b>last</b> (USB-C, 5 V / 3 A). The Pi 4 has <b>no power button</b> (Pi 5: use the 27 W supply; it has one).</li>
   <li>Wait a few minutes; it may restart once. <b class="red">Do not unplug!</b></li></ol></div>
  <div class="c2"><div data-draw="leds"></div><div class="small">first boot: resizes the file system, applies my settings, starts SSH (1-3 min)</div></div>
 </div>
@@ -216,7 +226,7 @@ P.append(("First SSH login", f'''
 <tr><td><code>python3 --version</code></td><td>needed on Day 4 (TFLite is picky)</td></tr>
 <tr><td><code>free -h</code></td><td>memory: close to 4 GB</td></tr>
 <tr><td><code>sudo apt-get update</code><br><code>sudo apt upgrade</code></td><td>update the package list, then the system - do it regularly</td></tr></table>
-<div class="fbox"><b class="red">ALWAYS shut down properly:</b> &nbsp;<code>sudo shutdown -h now</code><br>The Pi may still be writing to the card. Wait until the <b>LED stops blinking and goes dark</b>, then unplug. Pulling the plug can lose data or corrupt the card.</div>
+<div class="fbox"><b class="red">ALWAYS shut down properly:</b> &nbsp;<code>sudo shutdown -h now</code><br>The Pi may still be writing to the card. Wait until the <b>LED stops blinking and goes dark</b>, then unplug. Pulling the plug can lose data or corrupt the card.<br>Start again: <b>Pi 4</b> unplug + replug; <b>Pi 5</b> press the power button.</div>
 <div class="small">Moving files between laptop and Pi: pen drive, <code>scp</code> in the terminal, or an FTP/SFTP program (Day 2).</div>
 {mn(56)}
 ''', "B-38-39"))

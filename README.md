@@ -49,6 +49,8 @@ The full roadmap (46 core days plus the optional UNO Q track, with class numbers
 [`tutorials/00_roadmap/`](tutorials/00_roadmap): a 4-page standard plan (`Roadmap_Edge_AI_Study_Plan.pdf/.docx`) and a 2-page sketch-note version
 (`..._SKETCH-NOTES.pdf/.docx`).
 
+**Pi 4 and Pi 5.** The book is written around the Raspberry Pi 5, this course is done on a Pi 4, and students may have either. Every tutorial covers both boards: steps are marked **Pi 4** / **Pi 5** where they differ, and Day 1 has a side-by-side comparison table (speed, RAM, power supply, power button, cooling, camera ports, OS, Imager choice).
+
 **Working with two Pis and two laptops.** Do each day once on one Pi (the learning pass), then
 repeat it on the other Pi from your notes only (the consolidation pass). Keep the same user name
 and use distinct host names, for example `raspi-office` and `raspi-home`. Code and notes live in this

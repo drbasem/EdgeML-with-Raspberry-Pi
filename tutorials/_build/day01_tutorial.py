@@ -113,6 +113,21 @@ def build():
         ["2 x micro-HDMI", "Connect a monitor", "Optional: SSH makes a screen unnecessary."],
         ["USB-C power input", "Needs 5 V / 3 A", "A weak charger causes random crashes."],
     ], [4.6, 5.8, 6.8], size=9)
+    d.h2("B3. Your Pi 4 and the book's Pi 5, side by side")
+    d.p("The book is written around the **Raspberry Pi 5**; you own a **Raspberry Pi 4**; your students may have either. Every step in this tutorial works on both boards. Where they differ, the text says **Pi 4** or **Pi 5**, and this table is the quick reference.", size=10)
+    d.table(["Topic", "Pi 4 (yours)", "Pi 5", "What it means for you"], [
+        ["CPU", "4 cores, Cortex-A72, 1.5 GHz", "4 cores, Cortex-A76, 2.4 GHz", "The Pi 5 is clearly faster. The book's timings are Pi 5 numbers, so expect longer times on your Pi 4."],
+        ["RAM", "up to 8 GB (yours: 4 GB)", "2, 4 or 8 GB (a 16 GB model was added later)", "More RAM = bigger models. This matters most in the language-model phase."],
+        ["Power supply", "USB-C, 5 V / 3 A", "USB-C, 5 V / 5 A (27 W) recommended; a 3 A supply works but limits USB devices to 600 mA", "A weak charger causes random crashes on both boards."],
+        ["Power button", "none: plugging in switches it on", "yes", "Restart a halted Pi 4 by unplugging and replugging; on a Pi 5 press the button."],
+        ["Cooling", "a heatsink or fan case is advisable for long runs", "runs hotter; has a fan connector; an active cooler is advisable for long AI runs", "Check the temperature while a model runs: `vcgencmd measure_temp`."],
+        ["Camera / display ports", "1 camera (CSI) + 1 display (DSI), standard 15-pin ribbon", "two 4-lane camera/display ports, smaller connector", "The camera cable differs between the boards - check this before buying a cable (Day 4)."],
+        ["PCIe", "none", "PCIe 2.0 x1 connector", "Not needed in this course."],
+        ["Wi-Fi / Bluetooth", "dual-band, Bluetooth 5.0", "dual-band 802.11ac, Bluetooth 5.0", "Same for our purposes."],
+        ["Operating system", "runs older and newer releases", "needs a recent Raspberry Pi OS (Bookworm or newer)", "Always take the newest image Imager offers."],
+        ["In Imager", "Device = Raspberry Pi 4", "Device = Raspberry Pi 5", "The only change in the flashing steps."],
+        ["SSH, commands, updates, shutdown", "same", "same", "Identical on both boards."],
+    ], [2.6, 3.9, 4.5, 6.2], size=8.6)
     d.p("**Your turn (5 min):** take your Pi, hold it with the GPIO header at the top, and find every item in the table. "
         "Take a top-down photo with your phone and label it - save it as `S4_my_board.jpg` (instructions below).")
     shot_or_placeholder(d, "S4", "ph_S4_my_board.png", 13.5, "Your Pi 4, photographed and labelled by you.")
@@ -142,7 +157,7 @@ def build():
     d.step(2, "Insert the microSD card", ["Use the card reader (or your laptop's slot).",
                                            "If Windows says __'You need to format the disk before you can use it'__ - click **Cancel**. Do **not** format it; Imager handles everything."])
     d.step(3, "Choose Device, OS and Storage", [
-        "- **Raspberry Pi Device** -> `Raspberry Pi 4`",
+        "- **Raspberry Pi Device** -> `Raspberry Pi 4`  (**Pi 5:** choose `Raspberry Pi 5` - everything else is identical)",
         "- **Operating System** -> `Raspberry Pi OS (64-bit)`",
         "- **Storage** -> your microSD card. Check the size and drive letter match your card. A 32 GB card shows about 29-30 GB.",
         "Then press **Next**."])
@@ -177,7 +192,7 @@ def build():
     d.h1("Part D  -  First boot (15 min)")
     d.step(1, "Insert the card into the Pi", ["The microSD slot is on the **underside** of the board, on the short edge opposite the Ethernet/USB ports. Slide the card in with the **label facing away from the board** (contacts toward the board) until it stops.", "Do not force it."], color=AMBER)
     d.step(2, "Connect the optional extras first", ["If you have a monitor/keyboard, connect them **before** the power (the Pi reads the screen when it starts). With SSH you do not need them."], color=AMBER)
-    d.step(3, "Power it last", ["Plug the USB-C supply into the Pi, then into the wall. The Pi 4 has **no power button** - plugging in turns it on."], color=AMBER)
+    d.step(3, "Power it last", ["Plug the USB-C supply into the Pi, then into the wall. The Pi 4 has **no power button** - plugging in turns it on. **Pi 5:** use the 27 W (5 V / 5 A) supply; it has a power button."], color=AMBER)
     d.step(4, "Read the LEDs and wait", [
         "- **Red LED, steady** = power is good.", "- **Green LED, flickering** = the Pi is reading the card (booting).",
         "The first boot takes **a few minutes** (the book says so too) because the Pi resizes the file system and applies your settings; it may restart once. Do not unplug it."], color=AMBER)
@@ -205,7 +220,7 @@ def build():
         ["`python3 --version`", "The Python version", "Note it: we need it on Day 4"],
         ["`free -h`", "Memory", "Total close to 4 GB (a little less)"],
     ], [4.0, 6.0, 7.2], size=9)
-    d.step(5, "Shut down properly - every time", ["Never just pull the plug. Run the command below, then wait until the **green LED stops flashing and stays dark**, and only then remove the power (book p. 38).", ], color="2E8B57")
+    d.step(5, "Shut down properly - every time", ["Never just pull the plug. Run the command below, then wait until the **green LED stops flashing and stays dark**, and only then remove the power (book p. 38). To start a halted **Pi 4** again, unplug and replug the power; on a **Pi 5** press the power button.", ], color="2E8B57")
     d.code(["sudo shutdown -h now"])
     d.callout("tip", "The best habit you can form today", ["Always shut down with the command. Pulling the plug while the Pi writes to the card can corrupt the card - the book warns about this."])
 
