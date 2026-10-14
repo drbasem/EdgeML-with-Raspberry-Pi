@@ -1,0 +1,215 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Day 01 - notebook-style notes</title>
+<link rel="stylesheet" href="notes_b.css"><script src="notes_b.js"></script></head><body>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 1</div></div>
+
+<div class="title">Edge AI &amp; the Raspberry Pi</div>
+<div class="sh b">1. By the end of today I can...</div>
+<div class="cols">
+ <div class="c1"><ul class="ck">
+  <li>explain Edge AI in two sentences</li><li>name the main parts of the Pi 4</li>
+  <li>write the OS onto a microSD card with my own settings</li><li>power the Pi, read its 2 LEDs, wait out first boot</li>
+  <li>log in over <b>SSH</b> from Windows and shut down safely</li></ul></div>
+ <div class="c2"><div class="ybox small"><b>My 2 hours</b>
+  <table class="t" style="margin:2px 0"><tr><td><b>A</b> big picture</td><td>20 min</td></tr><tr><td><b>B</b> meet the board</td><td>20 min</td></tr><tr><td><b>C</b> prepare microSD</td><td>45 min</td></tr><tr><td><b>D</b> first boot</td><td>15 min</td></tr><tr><td><b>E</b> first SSH login</td><td>20 min</td></tr></table></div></div>
+</div>
+<div class="mn" style="height:70px"></div>
+<div class="sh g">2. What is Edge AI?</div>
+<div class="cols">
+ <div class="c1"><ul class="bl">
+  <li>Cloud AI: my data travels to a <b>data centre</b> and the answer travels back.</li>
+  <li><span class="hl">Edge AI = the model runs ON the device next to the data</span> (camera, robot, sensor box, a Pi).</li>
+  <li>Book: PDF pp. 20-21 and 25-27 (printed page + 1).</li></ul></div>
+ <div class="c2"><div data-draw="edge"></div></div>
+</div>
+<div class="mn" style="height:70px"></div>
+<div class="sh p">3. Five reasons it matters</div>
+<table class="t"><tr><th style="width:30%">Advantage</th><th>What it means in practice</th></tr>
+<tr><td>Low latency</td><td>answer in milliseconds, no round trip</td></tr>
+<tr><td>Privacy</td><td>raw images / audio stay on the device</td></tr>
+<tr><td>Network independence</td><td>works in a tunnel, a field, a factory</td></tr>
+<tr><td>Less bandwidth</td><td>send a result, not a video stream</td></tr>
+<tr><td>Energy efficiency</td><td>small optimised models, small power</td></tr></table>
+<div class="mn" style="height:70px"></div>
+</div><div class="folio">Edge AI study course &middot; Day 01 &middot; notebook-style notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 2</div></div>
+
+<div class="title">AI families &amp; meet the board</div>
+<div class="sh v">4. Two families of AI in this course</div>
+<div class="cols">
+ <div class="c1 bbox"><b>Fixed-function (reactive)</b><br>input -&gt; fixed kind of answer: image classification, object detection, counting with YOLO.<br><span class="note">Phase 2, days 14-26</span></div>
+ <div class="c2 pbox"><b>Generative (proactive)</b><br>creates new content: small language models, vision-language models, agents.<br><span class="note">Phase 3, days 27-38</span></div>
+</div>
+<div class="ybox small"><b class="red">My board = Pi 4, 4 GB.</b> Vision runs fine. Language models: only the small ones, slower than the book's Pi 5. RAM is the limit.</div>
+<div class="mn" style="height:46px"></div>
+
+
+<div class="sh b">5. Anatomy of the Raspberry Pi 4</div>
+<div data-draw="pi"></div>
+<table class="t small"><tr><th style="width:24%">Part</th><th style="width:34%">What it does</th><th>Why I care</th></tr>
+<tr><td>CPU, 4 cores</td><td>runs the OS + my code</td><td>does the neural-network maths</td></tr>
+<tr><td>RAM 4 GB</td><td>working memory</td><td>models must fit in it</td></tr>
+<tr><td>microSD</td><td>the "hard disk"</td><td>always shut down first</td></tr>
+<tr><td>GPIO, 40 pins</td><td>sensors, LEDs, buttons</td><td>physical computing (Phase 3)</td></tr>
+<tr><td>CSI / USB</td><td>camera ports</td><td>vision projects (Day 4)</td></tr></table>
+<div class="small">Book PDF pp. 29-33. The book's picture is the Pi 5 (power button + PCIe; mine has neither).</div>
+<div class="mn" style="height:46px"></div>
+<div class="sh y">6. My turn</div>
+<ul class="ck"><li>find every part on my real board, take a top-down photo, label it</li><li>hold the board by its edges - no metal table, no wet fingers</li></ul>
+<div class="mn" style="height:36px"></div>
+
+</div><div class="folio">Edge AI study course &middot; Day 01 &middot; notebook-style notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 3</div></div>
+
+<div class="title">Prepare the microSD card</div>
+<div class="sh g">7. The idea</div>
+<ul class="bl"><li>The Pi has <b>no hard disk</b>. It boots from the <b>microSD</b>.</li>
+<li>"Installing the OS" = writing an <span class="hl">image</span> onto the card with <b>Raspberry Pi Imager</b>.</li>
+<li>I also bake in my <b>settings</b> (name, user, Wi-Fi, SSH): no monitor or keyboard needed = <b>headless</b>.</li></ul>
+<div data-draw="flow"></div>
+<div class="mn" style="height:58px"></div>
+<div class="sh p">8. Which operating system?</div>
+<table class="t"><tr><th style="width:28%">Choice in Imager</th><th>What it is</th><th style="width:26%">Mine?</th></tr>
+<tr><td><b>Raspberry Pi OS (64-bit)</b></td><td>full system <b>with desktop</b>; 64-bit needed by AI libraries</td><td class="green"><b>YES</b></td></tr>
+<tr><td>Raspberry Pi OS Lite (64-bit)</td><td>no desktop, uses less RAM (book uses it on the Pi Zero)</td><td>not today</td></tr>
+<tr><td>32-bit versions</td><td>older, less compatible</td><td class="red">avoid</td></tr></table>
+<div class="bbox small">The book says "Debian Bookworm". A newer Imager may offer a newer Debian. Steps are the same, but the <b>Python version</b> may differ and TFLite is picky - I record it today and check on Day 4-5.</div>
+<div class="mn" style="height:62px"></div>
+<div class="sh b">9. Before I start</div>
+<ul class="ck"><li>Raspberry Pi Imager installed (raspberrypi.com/software)</li><li>Wi-Fi name + password ready</li><li>card backed up - Imager <b>erases</b> it</li><li>other USB drives unplugged (so I cannot pick them by mistake)</li></ul>
+<div class="mn" style="height:66px"></div>
+
+</div><div class="folio">Edge AI study course &middot; Day 01 &middot; notebook-style notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 4</div></div>
+
+<div class="title">Prepare the microSD card (2)</div>
+<div class="sh y">10. Steps on Windows</div>
+<div class="cols">
+ <div class="c1"><ol class="st">
+  <li>Open Imager. If Windows says "format the disk?" -&gt; <b class="red">Cancel</b>.</li>
+  <li>Device = <code>Raspberry Pi 4</code></li>
+  <li>OS = <code>Raspberry Pi OS (64-bit)</code></li>
+  <li>Storage = my card (check size + drive letter!)</li>
+  <li>Next -&gt; edit settings (gear icon / "customise")</li>
+  <li>Write -&gt; verify -&gt; "Write successful" -&gt; remove card</li></ol></div>
+ <div class="c2" style="text-align:center"><div class="fig"><img src="../../_assets/book/imager_step2.png" width="235"></div><div class="cap">book (PDF p.36): Imager v1.8.5 on a Mac. Mine: Windows, Pi 4.</div></div>
+</div>
+<div class="mn" style="height:70px"></div>
+<div class="sh g">11. Settings I type (very important)</div>
+<table class="t"><tr><th style="width:26%">Setting</th><th>What to enter</th></tr>
+<tr><td>hostname</td><td><code>raspi4</code> (for my two Pis: <code>raspi-office</code> / <code>raspi-home</code>)</td></tr>
+<tr><td>user + password</td><td><code>piuser</code> + a strong password - write it on my connection card</td></tr>
+<tr><td>Wi-Fi</td><td>name + password exactly as spelled, country <code>KW</code></td></tr>
+<tr><td>zone / keyboard</td><td><code>Asia/Kuwait</code>, <code>us</code></td></tr>
+<tr><td><b class="red">SSH</b></td><td><b class="red">ENABLE, password authentication</b> (Services tab)</td></tr></table>
+<div class="cols">
+ <div class="c1"><div class="pbox small"><b class="red">Careful!</b> Imager erases whatever drive I choose. Wrong drive = lost data.</div>
+  <div class="bbox small"><b>Office Wi-Fi</b> may need a login or block devices. Plan B: phone hotspot or an Ethernet cable.</div></div>
+ <div class="c2" style="text-align:center"><div class="fig"><img src="../../_assets/book/imager_customisation.png" width="335"></div><div class="cap">book (PDF p.37): General tab (left), Services tab (right)</div></div>
+</div>
+<div class="small">Book PDF pp. 34-37. Newer Imager versions show the same options as step-by-step screens.</div>
+<div class="mn" style="height:70px"></div>
+
+</div><div class="folio">Edge AI study course &middot; Day 01 &middot; notebook-style notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 5</div></div>
+
+<div class="title">First boot &amp; first login</div>
+<div class="sh y">12. First boot (15 min)</div>
+<div class="cols">
+ <div class="c1"><ol class="st">
+  <li>Card into the slot on the <b>underside</b> (contacts toward the board).</li>
+  <li>Optional monitor / keyboard first.</li>
+  <li>Power <b>last</b> (USB-C, 5 V / 3 A). The Pi 4 has <b>no power button</b>.</li>
+  <li>Wait a few minutes; it may restart once. <b class="red">Do not unplug!</b></li></ol></div>
+ <div class="c2"><div data-draw="leds"></div><div class="small">first boot: resizes the file system, applies my settings, starts SSH (1-3 min)</div></div>
+</div>
+<div class="mn" style="height:96px"></div>
+<div class="sh g">13. First SSH login from Windows (20 min)</div>
+<ul class="bl"><li><b>SSH</b> = Secure SHell: the Pi's command line in a window on my laptop, encrypted. Same Wi-Fi needed.</li></ul>
+<div class="cols">
+ <div class="c1"><ol class="st">
+  <li>Start -&gt; <b>PowerShell</b>. Test: <code>ssh -V</code></li>
+  <li>Connect (below). First time: type <code>yes</code>.</li>
+  <li>Password: <b>nothing shows</b> as I type - normal!</li>
+  <li>Prompt <code>piuser@raspi4:~ $</code> = I am <b>inside the Pi</b>.</li></ol></div>
+ <div class="c2" style="text-align:center"><div class="fig"><img src="../../_assets/book/ssh_first_login.png" width="262"></div><div class="cap">book (PDF p.38): first login on a Mac</div></div>
+</div>
+<div class="term"><span class="dim">PS C:\&gt;</span> ssh piuser@raspi4.local<br><span class="dim">Are you sure you want to continue connecting (yes/no)?</span> yes<br>password: <span class="dim">(invisible)</span><br><span class="g2">piuser@raspi4:~ $</span> _</div>
+<div class="small">Book PDF pp. 38-39. Slides: Class 3, slide 7 (on Windows use cmd or PowerShell).</div>
+<div class="mn" style="height:190px"></div>
+
+</div><div class="folio">Edge AI study course &middot; Day 01 &middot; notebook-style notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 6</div></div>
+
+<div class="title">Commands &amp; troubleshooting</div>
+<div class="sh b">14. My first five commands</div>
+<table class="t"><tr><th style="width:34%">Command</th><th>What it does / what I should see</th></tr>
+<tr><td><code>hostname -I</code></td><td>the Pi's IP address - write it down</td></tr>
+<tr><td><code>uname -m</code></td><td>want <b>aarch64</b> (= 64-bit); <code>armv7l</code> means 32-bit</td></tr>
+<tr><td><code>cat /etc/os-release</code></td><td>OS version - note it</td></tr>
+<tr><td><code>python3 --version</code></td><td>needed on Day 4 (TFLite is picky)</td></tr>
+<tr><td><code>free -h</code></td><td>memory: close to 4 GB</td></tr></table>
+<div class="fbox"><b class="red">ALWAYS shut down properly:</b> &nbsp;<code>sudo shutdown -h now</code><br>Wait until the <b>green LED is dark</b>, then unplug. Pulling the plug can corrupt the card.</div>
+<div class="mn" style="height:96px"></div>
+<div class="sh p">15. When it does not work</div>
+<table class="t small"><tr><th style="width:30%">I see</th><th style="width:32%">probably</th><th>try</th></tr>
+<tr><td><code>Could not resolve hostname</code></td><td>Pi not on the network yet, Wi-Fi typo, <code>.local</code> blocked</td><td>wait 5 min, check Wi-Fi, use the IP, Ethernet / hotspot</td></tr>
+<tr><td><code>Connection timed out</code></td><td>different networks, VPN, guest Wi-Fi</td><td>same Wi-Fi, VPN off</td></tr>
+<tr><td><code>Permission denied</code></td><td>wrong user or password</td><td>retype (case!) or re-flash</td></tr>
+<tr><td><code>HOST IDENTIFICATION HAS CHANGED</code></td><td>I re-flashed the card</td><td><code>ssh-keygen -R raspi4.local</code></td></tr>
+<tr><td>red LED, green never flickers</td><td>no OS found on the card</td><td>reseat, re-flash, other card</td></tr>
+<tr><td>no LEDs at all</td><td>no power</td><td>other cable / charger (5 V / 3 A)</td></tr></table>
+<div class="mn" style="height:230px"></div>
+
+</div><div class="folio">Edge AI study course &middot; Day 01 &middot; notebook-style notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 7</div></div>
+
+<div class="title">Two Pis, two laptops</div>
+<div class="sh v">16. How I think about it</div>
+<ul class="bl"><li>Office laptop + home laptop = two <b>windows</b> into a Pi. Code and notes live on the Pi and in my GitHub repo.</li>
+<li><code>raspi4.local</code> only works <span class="hl">inside one network</span>.</li></ul>
+<div data-draw="net"></div>
+<ul class="bl"><li><b>Pass 1:</b> learn on one Pi (about 2 hours). <b>Pass 2:</b> repeat on the other Pi from my notes only.</li>
+<li>Different host names (<code>raspi-office</code>, <code>raspi-home</code>), same user, <code>git pull</code> everywhere.</li></ul>
+<div class="mn" style="height:90px"></div>
+<div class="sh y">17. Quick quiz (answer here first!)</div>
+<ol class="st small">
+<li>Image classification: fixed-function or generative?</li>
+<li>Why enable SSH in Imager <i>before</i> writing the card?</li>
+<li>Red LED steady = ? Green LED flickering = ?</li>
+<li>What can go wrong if I unplug without shutting down?</li>
+<li>Why does <code>raspi4.local</code> fail from home if the Pi is at the office?</li>
+<li>Why does nothing appear while I type the SSH password?</li>
+<li>Which command shows the IP? Which shows 64-bit?</li>
+<li>Name three advantages of edge AI.</li></ol>
+<div class="mn" style="height:150px"></div>
+<div class="small">Answers: in the standard tutorial, "Check yourself".</div>
+
+</div><div class="folio">Edge AI study course &middot; Day 01 &middot; notebook-style notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 8</div></div>
+
+<div class="title">My connection card &amp; wrap-up</div>
+<div class="sh b">18. Connection card</div>
+<table class="t"><tr><td style="width:38%">hostname</td><td>&nbsp;</td></tr><tr><td>user name</td><td>&nbsp;</td></tr><tr><td>password hint (not the password!)</td><td>&nbsp;</td></tr>
+<tr><td>Wi-Fi 1 (home?)</td><td>&nbsp;</td></tr><tr><td>Wi-Fi 2 (office?)</td><td>&nbsp;</td></tr><tr><td>IP address (it can change)</td><td>&nbsp;</td></tr>
+<tr><td>OS release</td><td>&nbsp;</td></tr><tr><td>Python version</td><td>&nbsp;</td></tr><tr><td>uname -m</td><td>&nbsp;</td></tr><tr><td>microSD size / brand</td><td>&nbsp;</td></tr><tr><td>date flashed</td><td>&nbsp;</td></tr></table>
+<div class="mn" style="height:50px"></div>
+<div class="sh g">19. Day 1 is done when...</div>
+<ul class="ck"><li>the Pi boots: red LED steady, green flickers</li><li>PowerShell shows <code>piuser@raspi4:~ $</code></li>
+<li>all five commands ran and I wrote down OS + Python</li><li>I shut down with <code>sudo shutdown -h now</code></li><li>the connection card is filled in</li></ul>
+<div class="mn" style="height:70px"></div>
+<div class="sh y">20. Teaching it later (my ideas)</div>
+<div class="ybox small">45-minute lab: 10 min big picture, 15 flash, 10 boot + LEDs, 10 SSH + commands. Typical student mistakes: wrong drive chosen, Wi-Fi typo, SSH not enabled, guest / enterprise Wi-Fi, unplugging without shutdown, "host identification changed" after re-flashing.</div>
+<div class="mn" style="height:150px"></div>
+<div class="note">Tomorrow, Day 2: remote access like a pro (files, remote desktop, two networks).</div>
+
+</div><div class="folio">Edge AI study course &middot; Day 01 &middot; notebook-style notes</div></div>
+
+</body></html>

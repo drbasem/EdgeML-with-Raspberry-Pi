@@ -1,0 +1,49 @@
+@font-face { font-family: "PatrickHand"; src: url("../../_assets/fonts/patrick-hand-latin-400-normal.ttf"); }
+@font-face { font-family: "Architect"; src: url("../../_assets/fonts/architects-daughter-latin-400-normal.ttf"); }
+@font-face { font-family: "Caveat"; src: url("../../_assets/fonts/caveat-latin-700-normal.ttf"); font-weight: 700; }
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #d8d8d8; }
+:root { --ink: #222; --blue: #cfe8fb; --green: #d6efc9; --pink: #fbd3e2; --yellow: #fff3b8; --purple: #e5dcf8; --line: #cfe0f5; --bd: #8fb0e6; }
+.pg { width: 210mm; height: 297mm; position: relative; overflow: hidden; margin: 0 auto; background-color: #fefefe; break-after: page; page-break-after: always;
+      background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(8mm - 1px), var(--line) calc(8mm - 1px), var(--line) 8mm);
+      background-position: 0 4mm; font-family: "PatrickHand", cursive; font-size: 17px; color: var(--ink); letter-spacing: .3px; line-height: 1.27; }
+.pg::before { content: ""; position: absolute; left: 7mm; top: 0; bottom: 0; border-left: 2px solid #6f9bd8; }
+.pg::after { content: ""; position: absolute; right: 6mm; top: 0; bottom: 0; border-left: 1.5px solid #9dbbe6; }
+.content { position: absolute; left: 13mm; right: 10mm; top: 6mm; bottom: 8mm; }
+.top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.top .t { background: var(--blue); padding: 1px 14px; font-size: 25px; letter-spacing: 1.2px; text-transform: uppercase; font-family: "Architect"; }
+.top .p { background: var(--pink); border: 1.5px solid #e7a3be; padding: 0 14px; font-size: 21px; }
+.title { display: inline-block; border: 2px solid #222; background: #fff; padding: 0 12px; font-family: "Architect"; font-size: 29px; letter-spacing: 1.5px; text-transform: uppercase; margin: 2px 0 4px; }
+.sh { display: inline-block; padding: 0 10px; margin: 8px 0 4px; font-size: 22px; letter-spacing: .6px; border-radius: 2px; }
+.b { background: var(--blue); } .g { background: var(--green); } .p { background: var(--pink); } .y { background: var(--yellow); } .v { background: var(--purple); }
+.sub { display: inline-block; background: var(--pink); padding: 0 8px; margin: 2px 0; font-size: 18px; }
+.cols { display: flex; gap: 14px; align-items: flex-start; } .cols > .c1 { flex: 1.15; } .cols > .c2 { flex: 1; } .cols > .eq { flex: 1; }
+ul.bl { list-style: none; padding: 0 0 0 16px; margin: 2px 0; }
+ul.bl li { position: relative; margin: 1px 0; } ul.bl li::before { content: ""; position: absolute; left: -13px; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: #222; }
+ul.ck { list-style: none; padding: 0; margin: 2px 0; }
+ul.ck li { position: relative; padding-left: 24px; margin: 2px 0; } ul.ck li::before { content: ""; position: absolute; left: 2px; top: 5px; width: 13px; height: 13px; border: 1.8px solid #333; border-radius: 2px; background: #fff; }
+ol.st { list-style: none; padding: 0; margin: 2px 0; counter-reset: s; }
+ol.st li { position: relative; padding-left: 30px; margin: 3px 0; counter-increment: s; } ol.st li::before { content: counter(s); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%; background: var(--pink); border: 1.5px solid #e7a3be; text-align: center; line-height: 20px; font-size: 15px; }
+.fbox { background: #fde3ee; border: 1.6px solid #e58fb2; border-radius: 3px; padding: 3px 10px; margin: 4px 0; }
+.ybox { background: var(--yellow); padding: 4px 10px; margin: 4px 0; border-radius: 3px; }
+.pbox { background: #fde0ea; padding: 4px 10px; margin: 4px 0; border-radius: 3px; }
+.bbox { background: #e1effc; padding: 4px 10px; margin: 4px 0; border-radius: 3px; }
+.gbox { background: #e3f4dc; padding: 4px 10px; margin: 4px 0; border-radius: 3px; }
+table.t { border-collapse: collapse; width: 100%; margin: 4px 0; background: rgba(255,255,255,.55); }
+table.t td, table.t th { border: 1.5px solid #333; padding: 1px 8px; text-align: left; vertical-align: top; }
+table.t th { background: #fff1a8; font-weight: normal; letter-spacing: .6px; }
+code { font-family: "Architect"; background: rgba(60, 90, 160, .10); padding: 0 4px; border-radius: 3px; font-size: 15.5px; letter-spacing: 0; }
+.red { color: #c0194a; } .green { color: #1f7a4d; } .hl { background: linear-gradient(transparent 50%, rgba(255, 233, 80, .8) 50%); }
+.mn { position: relative; height: 66px; border: 1.8px dashed var(--bd); border-radius: 8px; margin: 10px 0 8px; background: rgba(255,255,255,.35); }
+.mn::before { content: "my notes"; position: absolute; left: 12px; top: -11px; background: #fefefe; color: #7d93b8; font-size: 15px; padding: 0 6px; }
+.term { background: #0f1c2b; color: #e7eef5; border-radius: 6px; padding: 6px 12px; font-family: "Architect"; font-size: 14.5px; line-height: 1.35; margin: 4px 0; letter-spacing: 0; }
+.term .g2 { color: #7ce0a3; } .term .dim { color: #8da0b5; }
+.fig { display: inline-block; background: #fff; border: 1.5px solid #999; padding: 3px; }
+.fig img { display: block; }
+.cap { font-size: 14px; color: #556; text-align: center; margin-top: 1px; line-height: 1.1; }
+.led { display: inline-block; width: 13px; height: 13px; border-radius: 50%; border: 1.5px solid #333; vertical-align: -1px; margin-right: 4px; }
+.chip { display: inline-block; width: 20px; height: 14px; border: 1.5px solid #333; vertical-align: -1px; margin-right: 6px; }
+.small { font-size: 14.5px; } .note { font-family: "Caveat"; font-weight: 700; font-size: 20px; color: #c0194a; }
+.folio { position: absolute; left: 0; right: 0; bottom: 3mm; text-align: center; font-size: 13px; color: #8aa0c8; }
+svg text { font-family: "PatrickHand"; }

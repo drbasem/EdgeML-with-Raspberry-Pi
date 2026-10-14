@@ -28,7 +28,8 @@ A day-by-day, beginner-first path through the Raspberry Pi book and the two UNIF
 | File | What it is |
 |---|---|
 | `DayNN_<title>.docx` / `.pdf` | Full tutorial, A4, 300 dpi figures, book pages cited, quiz, teaching tips |
-| `DayNN_<title>_SKETCH-NOTES.pdf` / `.docx` | Handwriting-style study notes with doodles and a "my notes" column. The PDF is vector with embedded fonts; the `.docx` holds each A4 page as an image |
+| `DayNN_<title>_SKETCH-NOTES.pdf` / `.docx` | Handwriting style A: doodles and a "my notes" column on the right of every page |
+| `DayNN_<title>_NOTEBOOK-NOTES.pdf` / `.docx` | Handwriting style B: ruled-notebook look with colour-highlighted headings, boxes and tables, and a blank "my notes" area after every part. (Both handwriting editions: the PDF is vector with embedded fonts; the `.docx` holds each A4 page as an image) |
 | `animations/` | Narrated MP4 (English voice-over + subtitles), a silent MP4, a GIF, the `.srt` subtitles and the narration script |
 | `figures/` | All diagrams, key frames and screenshot placeholders |
 
