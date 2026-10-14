@@ -271,4 +271,11 @@ class Doc:
                 z = c.add_paragraph(); para_fmt(z, after=0, align=WD_ALIGN_PARAGRAPH.CENTER); add_runs(z, src, size=7.5, color=GREY, italic=True)
         set_col_widths(t, [CONTENT_W / 2, CONTENT_W / 2]); self.spacer(5)
 
+    def reflist(self, items, size=9.5):
+        for i, it in enumerate(items, 1):
+            p = self.d.add_paragraph(); f = p.paragraph_format
+            f.left_indent = Cm(0.9); f.first_line_indent = Cm(-0.9); para_fmt(p, after=3.5)
+            r = p.add_run(f"[{i}]  "); r.bold = True; r.font.size = Pt(size); r.font.color.rgb = rgb(NAVY)
+            add_runs(p, it, size=size)
+
     def save(self, path): self.d.save(path)

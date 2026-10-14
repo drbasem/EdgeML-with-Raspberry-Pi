@@ -1,16 +1,12 @@
-# Study course: Edge AI with the Raspberry Pi
+# Course material
 
-See the main [README](../README.md#study-course-tutorials) for the plan, progress table and how
-to use these files.
+See the main [README](../README.md) for the course overview, progress and how to rebuild.
 
 ```
 tutorials/
-  00_roadmap/            overview and day-by-day plan (standard + sketch notes)
-  day01/                 Day 01 - tutorial, sketch notes, animation, figures
+  00_roadmap/            the course syllabus (standard document + notebook-style notes)
+  day01/                 Day 01: tutorial, notebook-style notes, animation, figures
   my_screenshots/dayNN/  your own captures; picked up automatically when you rebuild
-  _build/                scripts that generate everything (Python, rough.js, Playwright, ffmpeg)
-  _assets/               fonts (OFL), rough.js, figures cropped from the book
+  _build/                scripts that generate everything
+  _assets/               fonts (SIL OFL) and figures adapted from the references
 ```
-
-Reading order for each day: tutorial (PDF or Word) -> animation -> do the lab -> sketch notes
-(print or annotate) -> quiz at the end of the tutorial.

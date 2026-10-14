@@ -24,9 +24,8 @@ def arrow(ax, a, b, color=GREY, lw=2, ms=16, rad=0.0, z=3):
 def fig_roadmap():
     fig, ax = newax(7.2, 2.4, 126, 40)
     ax.set_xlim(-3, 123)
-    segs = [("A", "Big picture", 20, NAVY), ("B", "Meet the board", 20, "#7A4FA0"),
-            ("C", "Prepare the microSD", 45, RASP), ("D", "First boot", 15, AMBER),
-            ("E", "First SSH login", 20, GREEN)]
+    segs = [("A", "Big picture", 20, NAVY), ("B", "The Raspberry Pi", 25, "#7A4FA0"),
+            ("C", "OS + network\nbasics", 15, "#2B6CB0"), ("D", "Prepare the\nmicroSD", 35, RASP), ("E", "First boot", 10, AMBER), ("F", "First SSH\nlogin", 15, GREEN)]
     t = 0
     for k, name, m, c in segs:
         w = m  # 1 minute = 1 unit; 120 total
@@ -36,7 +35,7 @@ def fig_roadmap():
         ax.text(t + w / 2, 10.3, name, ha="center", va="top", color=INK, fontsize=9.3, wrap=True)
         t += w
     ax.plot([0, 120], [33, 33], color=GREY, lw=1.2)
-    for x in (0, 20, 40, 85, 100, 120):
+    for x in (0, 20, 45, 60, 95, 105, 120):
         ax.plot([x, x], [32, 34], color=GREY, lw=1.2)
         ax.text(x, 36.5, f"{x//60}:{x%60:02d}", ha="center", fontsize=9, color=GREY)
     fig.savefig(f"{OUT}/d1_roadmap.png", pad_inches=0); plt.close(fig)
@@ -87,7 +86,7 @@ def fig_anatomy():
     call("40-pin GPIO header\n(sensors, LEDs, buttons)", (X(32), Y(54.2)), (X(32), 83.5), ha="center")
     call("Wi-Fi + Bluetooth", (X(10), Y(40)), (1, 66))
     call("4 GB RAM", (X(12), Y(25)), (1, 50))
-    call("microSD slot (underside)\n= the Pi's 'hard disk'", (X(-3.5), Y(28)), (1, 34))
+    call("microSD slot (underside)\n= the Pi's 'hard disk'", (X(-3.5), Y(32)), (1, 40))
     call("2 USB 2.0 + 2 USB 3.0\n(blue = USB 3.0)", (X(87), Y(40)), (X(88) + 4, 66))
     call("Gigabit Ethernet\n(wired network)", (X(86), Y(6)), (X(88) + 4, 33))
     call("USB-C power\n5 V / 3 A", (X(11), Y(-1.4)), (4, 9), ha="left")
@@ -168,7 +167,7 @@ def fig_network():
     fig, ax = newax(7.2, 3.1, 120, 52)
     # same-LAN case
     rbox(ax, 1, 3, 58, 46, GREY_L, GREY, r=2, lw=1)
-    ax.text(30, 45.5, "Works on Day 1: same Wi-Fi network", ha="center", fontsize=9.5, fontweight="bold", color=GREEN)
+    ax.text(30, 45.5, "Works on Day 1: same network", ha="center", fontsize=9.5, fontweight="bold", color=GREEN)
     rbox(ax, 5, 18, 14, 10, NAVY, r=1.2); ax.text(12, 23, "Laptop", color="white", ha="center", va="center", fontsize=9)
     rbox(ax, 24, 8, 12, 8, "#666", r=1.2);  ax.text(30, 12, "Router", color="white", ha="center", va="center", fontsize=9)
     rbox(ax, 41, 18, 14, 10, PCB, r=1.2); ax.text(48, 23, "Pi 4", color="white", ha="center", va="center", fontsize=9)
@@ -177,12 +176,11 @@ def fig_network():
             bbox=dict(boxstyle="round,pad=0.35", fc="white", ec=GREY, lw=0.8))
     # different-LAN case
     rbox(ax, 61, 3, 58, 46, "#FFF5F5", RASP, r=2, lw=1)
-    ax.text(90, 45.5, "Day 2 topic: laptop on a different network", ha="center", fontsize=9.5, fontweight="bold", color=RASP)
-    rbox(ax, 64, 30, 14, 9, NAVY, r=1.2); ax.text(71, 34.5, "Office\nlaptop", color="white", ha="center", va="center", fontsize=8.5)
-    rbox(ax, 64, 9, 14, 9, NAVY, r=1.2); ax.text(71, 13.5, "Home\nlaptop", color="white", ha="center", va="center", fontsize=8.5)
+    ax.text(90, 45.5, "Needs extra tools: laptop on another network", ha="center", fontsize=9.5, fontweight="bold", color=RASP)
+    rbox(ax, 64, 19, 14, 11, NAVY, r=1.2); ax.text(71, 24.5, "Laptop on\nnetwork B", color="white", ha="center", va="center", fontsize=8.3)
     rbox(ax, 98, 19, 14, 10, PCB, r=1.2); ax.text(105, 24, "Pi 4", color="white", ha="center", va="center", fontsize=9)
     ax.text(88, 24, "?", fontsize=26, color=RASP, ha="center", va="center", fontweight="bold")
-    arrow(ax, (78, 34), (86, 27), lw=1.6, color=RASP); arrow(ax, (78, 14), (86, 21), lw=1.6, color=RASP)
+    arrow(ax, (78, 24.5), (86, 24.5), lw=1.6, color=RASP)
     ax.text(90, 5.3, "'.local' names only work inside one network", ha="center", fontsize=8.3, color=GREY, style="italic")
     fig.savefig(f"{OUT}/d1_network.png", pad_inches=0); plt.close(fig)
 
@@ -214,10 +212,122 @@ def placeholder(name, title, how, size=(7.2, 3.6)):
     ax.text(50, H * 0.27, how, ha="center", va="center", fontsize=8.8, color=GREY, linespacing=1.4)
     fig.savefig(f"{OUT}/{name}.png", pad_inches=0); plt.close(fig)
 
+
+# ---------------------------------------------------------------- cloud vs edge
+def fig_cloud_edge():
+    fig, ax = newax(7.2, 3.0, 120, 50)
+    from matplotlib.patches import Ellipse
+    for x0, title, col, fill in ((1, "Cloud AI", "#2B6CB0", "#E3EEFA"), (61, "Edge AI", GREEN, GREEN_L)):
+        rbox(ax, x0, 1, 58, 48, fill, col, r=1.6, lw=1.4, ls=(0, (5, 3)))
+        ax.text(x0 + 2.5, 44.2, title, fontsize=12.5, fontweight="bold", color=col, va="center")
+    # cloud AI
+    rbox(ax, 5, 12, 9, 7, "#EEE", INK, r=1); ax.add_patch(Circle((9.5, 15.5), 2.2, fc="white", ec=INK, lw=1.3, zorder=6)); ax.text(9.5, 8.8, "camera", ha="center", fontsize=8)
+    for dx, dy, w, h in ((38, 31, 13, 8), (44, 34, 12, 8), (32, 29, 11, 6)):
+        ax.add_patch(Ellipse((dx, dy), w, h, fc="#D8EBFB", ec="#2B6CB0", lw=1.3, zorder=2))
+    ax.text(41, 31.5, "data centre", ha="center", fontsize=8.5, zorder=4)
+    arrow(ax, (15, 18), (31, 28), color=RASP, lw=1.8); arrow(ax, (33, 25), (16, 14), color=RASP, lw=1.8, rad=-0.1)
+    ax.text(29, 9, "data travels away and back:\nslower, needs a network,\nprivate data leaves the device", ha="center", va="center", fontsize=8.2, color=RASP, linespacing=1.3)
+    # edge AI
+    rbox(ax, 65, 12, 9, 7, "#EEE", INK, r=1); ax.add_patch(Circle((69.5, 15.5), 2.2, fc="white", ec=INK, lw=1.3, zorder=6)); ax.text(69.5, 8.8, "camera", ha="center", fontsize=8)
+    arrow(ax, (75.5, 15.5), (84, 15.5), color=GREEN, lw=2)
+    rbox(ax, 85, 8, 24, 17, "#CDEBD6", GREEN, r=1.2); ax.text(97, 19.2, "Raspberry Pi", ha="center", fontsize=9.5); ax.text(97, 13, "the model runs\nHERE", ha="center", fontsize=8.8, color=GREEN, fontweight="bold", linespacing=1.15)
+    arrow(ax, (97, 26), (97, 36), color=GREEN, lw=2); ax.text(97, 39.5, "result", ha="center", fontsize=10, color=GREEN, fontweight="bold")
+    ax.text(89, 3.6, "next to the sensor: fast, works offline, data stays local", ha="center", fontsize=7.6, color=GREEN)
+    fig.savefig(f"{OUT}/d1_cloud_edge.png", pad_inches=0); plt.close(fig)
+
+# ---------------------------------------------------------------- Pi 5 anatomy (schematic)
+def fig_pi5():
+    fig, ax = newax(7.2, 5.2, 120, 87)
+    bx, by, sc = 26, 22, 0.72
+    X = lambda mm: bx + mm * sc; Y = lambda mm: by + mm * sc; S_ = lambda mm: mm * sc
+    rbox(ax, X(0), Y(0), S_(85), S_(56), PCB, "#14532F", r=2.5, lw=2, z=1)
+    for hx, hy in [(3.5, 3.5), (61.5, 3.5), (3.5, 52.5), (61.5, 52.5)]:
+        ax.add_patch(Circle((X(hx), Y(hy)), S_(1.6), fc="#0E3D22", ec="#C9D6CE", lw=1.2, zorder=3))
+    rbox(ax, X(7), Y(49), S_(51), S_(5.2), "#2B2B2B", r=0.4, z=3)                      # GPIO
+    for i in range(20):
+        for j in range(2): ax.add_patch(Rectangle((X(8.3 + i * 2.5), Y(49.9 + j * 2.0)), S_(1.0), S_(1.0), fc="#E7C65B", ec="none", zorder=4))
+    rbox(ax, X(22), Y(14), S_(24), S_(24), "#B8BEC4", "#7C858D", r=1, z=3)             # CPU/RAM metal shield
+    ax.text(X(34), Y(26), "CPU\n(4 cores,\nunder the\nmetal lid)", ha="center", va="center", fontsize=6.6, color="#2B3138", zorder=5, linespacing=1.15, fontweight="bold")
+    rbox(ax, X(51), Y(24), S_(11), S_(11), "#2B2B2B", r=0.8, z=3); ax.text(X(56.5), Y(29.5), "I/O\nchip", ha="center", va="center", fontsize=6.5, color="white", zorder=5)
+    rbox(ax, X(8), Y(36), S_(11), S_(9), "#B8BEC4", "#7C858D", r=0.6, z=3); ax.text(X(13.5), Y(40.5), "Wi-Fi\nBT", ha="center", va="center", fontsize=6.6, color="#2B3138", zorder=5)
+    rbox(ax, X(10), Y(15), S_(5), S_(13), "#F2F2F2", "#9aa", r=0.3, z=3)               # PCIe connector
+    rbox(ax, X(63), Y(46), S_(5), S_(6), "#F2F2F2", "#9aa", r=0.3, z=3)               # fan connector
+    rbox(ax, X(66), Y(33), S_(21), S_(19), "#C9CED3", "#8B949C", r=0.8, z=3); rbox(ax, X(66), Y(33), S_(4), S_(19), "#2B2B2B", r=0.2, z=4)   # USB 2
+    rbox(ax, X(66), Y(14), S_(21), S_(17.5), "#C9CED3", "#8B949C", r=0.8, z=3); rbox(ax, X(66), Y(14), S_(4), S_(17.5), "#3C6FD1", r=0.2, z=4)  # USB 3
+    rbox(ax, X(66), Y(-1), S_(20), S_(13.5), "#AEB5BC", "#8B949C", r=0.8, z=3); ax.text(X(78), Y(6), "RJ45", ha="center", va="center", fontsize=8, color="#2B3138", zorder=5)
+    rbox(ax, X(6.5), Y(-1.4), S_(9), S_(4.2), "#C9CED3", "#8B949C", r=0.5, z=3)       # USB-C
+    rbox(ax, X(2), Y(6), S_(3.5), S_(3.5), "#D6403A", "#7B1E1A", r=0.6, z=4)          # power button
+    rbox(ax, X(22.5), Y(-1.4), S_(7), S_(3.8), "#C9CED3", "#8B949C", r=0.5, z=3); rbox(ax, X(34.5), Y(-1.4), S_(7), S_(3.8), "#C9CED3", "#8B949C", r=0.5, z=3)  # micro-HDMI
+    rbox(ax, X(47), Y(1), S_(8), S_(3), "#F2F2F2", "#9aa", r=0.3, z=3); rbox(ax, X(57), Y(1), S_(8), S_(3), "#F2F2F2", "#9aa", r=0.3, z=3)   # 2 x camera/display
+    rbox(ax, X(-3.5), Y(25), S_(12), S_(14), "none", "#2B2B2B", r=0.8, lw=1.6, z=4, ls=(0, (3, 2)))   # microSD (underside)
+    def call(txt, xy, xyt, ha="left", col=INK):
+        ax.annotate(txt, xy=xy, xytext=xyt, fontsize=8.6, color=col, ha=ha, va="center", linespacing=1.2, arrowprops=dict(arrowstyle="-", color=GREY, lw=1.0, shrinkA=3, shrinkB=0))
+    call("40-pin GPIO header\n(sensors, LEDs, buttons)", (X(32), Y(54.2)), (X(32), 83.5), ha="center")
+    call("fan connector", (X(65.5), Y(52.5)), (X(76), 74), ha="left")
+    call("Wi-Fi + Bluetooth", (X(10), Y(45)), (1, 70))
+    call("PCIe 2.0 x1\nconnector", (X(10), Y(26)), (1, 56))
+    call("microSD slot (underside)\n= the Pi's 'hard disk'", (X(-3.5), Y(32)), (1, 40))
+    call("2 USB 2.0 + 2 USB 3.0\n(blue = USB 3.0)", (X(87), Y(45)), (X(88) + 4, 66))
+    call("Gigabit Ethernet", (X(86), Y(6)), (X(88) + 4, 30))
+    call("power button", (X(2), Y(7.5)), (1, 14))
+    call("USB-C power\n5 V / 5 A (27 W)", (X(11), Y(-1.4)), (3, 6))
+    call("2 x micro-HDMI", (X(32), Y(-1.4)), (X(25), 3), ha="center")
+    call("2 camera / display\nconnectors (small)", (X(61), Y(1)), (X(66), 7.5), ha="left")
+    ax.text(1, 83.5, "Raspberry Pi 5\n(schematic, not to scale)", fontsize=9, color=NAVY, fontweight="bold", va="center", linespacing=1.2)
+    fig.savefig(f"{OUT}/d1_pi5_anatomy.png", pad_inches=0); plt.close(fig)
+
+# ---------------------------------------------------------------- OS layers
+def fig_os():
+    fig, ax = newax(7.2, 3.2, 120, 54)
+    layers = [("Your programs", "Python scripts, Jupyter notebooks, AI models, web servers", "#D6EFC9", GREEN),
+              ("Shell and desktop", "where you type commands (terminal) or click (windows, mouse)", "#CFE8FB", "#2B6CB0"),
+              ("Operating system kernel", "runs programs, shares CPU and RAM, manages files, talks to devices through drivers", "#FBD3E2", RASP),
+              ("Hardware", "CPU, RAM, microSD card, Wi-Fi, USB, camera, GPIO pins", "#E5DCF8", "#7A4FA0")]
+    for i, (t, d, f, c) in enumerate(layers):
+        y = 40 - i * 12.5
+        rbox(ax, 4, y, 84, 10.5, f, c, r=1.2, lw=1.4)
+        ax.text(7, y + 7, t, fontsize=10.5, fontweight="bold", color=INK, va="center"); ax.text(7, y + 2.9, d, fontsize=8.3, color=INK, va="center")
+    arrow(ax, (96, 5), (96, 51), color=GREY, lw=1.6); ax.text(99, 49, "closer to you", fontsize=8.4, color=GREY, va="center"); ax.text(99, 7, "closer to the\nhardware", fontsize=8.4, color=GREY, va="center", linespacing=1.2)
+    fig.savefig(f"{OUT}/d1_os_layers.png", pad_inches=0); plt.close(fig)
+
+# ---------------------------------------------------------------- network primer
+def fig_netprimer():
+    fig, ax = newax(7.2, 3.5, 120, 58)
+    from matplotlib.patches import Ellipse
+    rbox(ax, 2, 2, 90, 42, "#F3F8F2", GREEN, r=2, lw=1.4, ls=(0, (5, 3))); ax.text(5, 40.5, "one network (your Wi-Fi)", fontsize=9.5, color=GREEN, fontweight="bold", va="center")
+    for dx, dy, w, h in ((57, 52, 16, 8), (66, 54, 14, 8), (50, 50, 12, 6)): ax.add_patch(Ellipse((dx, dy), w, h, fc="#D8EBFB", ec="#2B6CB0", lw=1.2))
+    ax.text(60, 52, "Internet", ha="center", fontsize=9, va="center", zorder=4)
+    rbox(ax, 8, 14, 22, 15, NAVY_L, NAVY, r=1.2); ax.text(19, 24.5, "Laptop", ha="center", fontsize=10, fontweight="bold"); ax.text(19, 18.5, "IP 192.168.1.20", ha="center", fontsize=8)
+    rbox(ax, 42, 6, 22, 14, "#E6E6E6", "#555", r=1.2); ax.text(53, 15.5, "Router", ha="center", fontsize=10, fontweight="bold"); ax.text(53, 10, "192.168.1.1", ha="center", fontsize=8)
+    rbox(ax, 68, 14, 22, 15, "#CDEBD6", GREEN, r=1.2); ax.text(79, 24.5, "Raspberry Pi", ha="center", fontsize=9.5, fontweight="bold"); ax.text(79, 18.5, "IP 192.168.1.57", ha="center", fontsize=8)
+    arrow(ax, (31, 18), (41, 14), color=GREY, lw=1.6); arrow(ax, (65, 14), (67, 17), color=GREY, lw=1.6); arrow(ax, (53, 21), (57, 47), color=GREY, lw=1.4)
+    ax.text(79, 11.3, "name: raspi4.local", ha="center", fontsize=8.6, color=GREEN, fontweight="bold")
+    rbox(ax, 94.5, 3, 25, 53, "#FFF4DB", AMBER, r=1.2, lw=1.2)
+    ax.text(96, 52, "IP address", fontsize=8.6, fontweight="bold", va="center"); ax.text(96, 47.3, "a device's number\non the network", fontsize=7.4, va="center", linespacing=1.15)
+    ax.text(96, 39.5, "Router (DHCP)", fontsize=8.6, fontweight="bold", va="center"); ax.text(96, 34.8, "hands out addresses\nautomatically", fontsize=7.4, va="center", linespacing=1.15)
+    ax.text(96, 26.5, ".local name (mDNS)", fontsize=8.6, fontweight="bold", va="center"); ax.text(96, 19.5, "devices announce their\nname inside the\nnetwork; it only\nworks there", fontsize=7.4, va="center", linespacing=1.15)
+    fig.savefig(f"{OUT}/d1_netprimer.png", pad_inches=0); plt.close(fig)
+
+# ---------------------------------------------------------------- boot sequence
+def fig_boot():
+    fig, ax = newax(7.2, 2.6, 120, 43)
+    steps = [("1", "Power on", "red LED lights", NAVY), ("2", "Firmware", "looks for an OS\non the microSD", "#7A4FA0"), ("3", "Linux starts", "the kernel loads", RASP),
+             ("4", "First-boot setup", "grows the file\nsystem, applies\nyour settings", AMBER), ("5", "Network", "joins Wi-Fi,\ngets an IP address", "#2B6CB0"), ("6", "SSH ready", "you can log in", GREEN)]
+    w = 17.2; g = 2.8
+    for i, (n, t, d, c) in enumerate(steps):
+        x = 1 + i * (w + g)
+        rbox(ax, x, 12, w, 25, c, r=1.8)
+        ax.add_patch(Circle((x + 3, 33.8), 2.4, fc="white", ec="none", zorder=4)); ax.text(x + 3, 33.8, n, ha="center", va="center", color=c, fontsize=10, fontweight="bold", zorder=5)
+        ax.text(x + w / 2, 27.3, t, ha="center", va="center", color="white", fontsize=8.6, fontweight="bold")
+        ax.text(x + w / 2, 19.3, d, ha="center", va="center", color="white", fontsize=7.4, linespacing=1.2)
+        if i < 5: arrow(ax, (x + w + 0.2, 24.5), (x + w + g - 0.2, 24.5), color=GREY, lw=1.8, ms=12)
+    ax.text(60, 5.5, "the whole sequence takes about 1 to 3 minutes the first time (a little less on later boots)", ha="center", fontsize=8.6, color=GREY, style="italic")
+    fig.savefig(f"{OUT}/d1_boot.png", pad_inches=0); plt.close(fig)
+
 if __name__ == "__main__":
-    fig_roadmap(); fig_anatomy(); fig_kit(); fig_flow(); fig_network(); fig_ssh()
+    fig_roadmap(); fig_anatomy(); fig_kit(); fig_flow(); fig_network(); fig_ssh(); fig_cloud_edge(); fig_pi5(); fig_os(); fig_netprimer(); fig_boot()
     placeholder("ph_S1_imager_windows", "S1 - Raspberry Pi Imager main window on YOUR Windows laptop",
-                "Win + Shift + S, drag over the Imager window,\npaste into Paint, save as  S1_imager_windows.png\nin  tutorials/my_screenshots/day01/", size=(7.2, 5.37))
+                "Win + Shift + S, drag over the Imager window,\npaste into Paint, save as  S1_imager_windows.png\nin the folder  my_screenshots/day01/", size=(7.2, 5.37))
     placeholder("ph_S2_customisation", "S2 - The customisation screen with YOUR hostname/user (blur the password!)",
                 "Capture the General and Services tabs.  Save as  S2_customisation.png\n(hide the Wi-Fi password before saving)", size=(7.2, 2.3))
     placeholder("ph_S3_powershell_login", "S3 - PowerShell after a successful  ssh  login to your Pi",

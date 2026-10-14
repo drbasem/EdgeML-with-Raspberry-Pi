@@ -167,7 +167,7 @@ def draw(ax, t):
             ax.add_patch(Circle((120 - 22 * f2, 66 - 18 * f2), 1.1, fc=NAVY, ec="none", zorder=6))
         T(88, 56, "encrypted SSH tunnel", fontsize=8.2, color=GREEN, fontweight="bold", ha="center", zorder=7, bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=GREEN, lw=1))
     # title top-left
-    T(4, 85, "Edge AI study course - Day 01", fontsize=8.5, color=GREY, va="center")
+    T(4, 85, "Edge AI with the Raspberry Pi - Day 01", fontsize=8.5, color=GREY, va="center")
 
 def render(path_mp4):
     global TOUT

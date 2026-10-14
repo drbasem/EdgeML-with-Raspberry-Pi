@@ -1,297 +1,453 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Day 01 - notebook-style notes</title>
+<!doctype html><html><head><meta charset="utf-8"><title>Day 01 - notebook notes</title>
 <link rel="stylesheet" href="notes_b.css"><script src="notes_b.js"></script></head><body>
 <div class="pg"><div class="content">
-<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 1</div></div>
-<div class="title">Edge AI &amp; the Raspberry Pi</div>
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 1</div></div>
+<div class="title">Edge AI: the big idea</div>
 
-<div class="small" style="margin:-2px 0 2px">Reading code at the bottom of a page, e.g. <b>B-20-21</b> = read the Edge AI book, PDF pages 20-21.</div>
 <div class="sh b">1. By the end of today I can...</div>
 <div class="cols">
- <div class="c1"><ul class="ck">
-  <li>explain Edge AI in two sentences</li><li>name the main parts of the Pi 4</li>
-  <li>write the OS onto a microSD card with my own settings</li><li>power the Pi, read its 2 LEDs, wait out first boot</li>
-  <li>log in over <b>SSH</b> from Windows and shut down safely</li></ul></div>
+ <div class="c1"><ul class="ck small">
+  <li>explain Edge AI, and how it differs from cloud AI</li><li>tell fixed-function AI from generative AI</li>
+  <li>name the main parts of a Pi 4 and a Pi 5</li><li>explain what an operating system does</li><li>understand router, IP address, host name, <code>.local</code></li>
+  <li>write the OS onto a microSD card with my own settings</li><li>boot, read the LEDs, log in over SSH, shut down safely</li></ul></div>
  <div class="c2"><div class="ybox small"><b>My 2 hours</b>
-  <table class="t" style="margin:2px 0"><tr><td><b>A</b> big picture</td><td>20 min</td></tr><tr><td><b>B</b> meet the board</td><td>20 min</td></tr><tr><td><b>C</b> prepare microSD</td><td>45 min</td></tr><tr><td><b>D</b> first boot</td><td>15 min</td></tr><tr><td><b>E</b> first SSH login</td><td>20 min</td></tr></table></div></div>
+  <table class="t" style="margin:2px 0"><tr><td><b>A</b> big picture</td><td>20 min</td></tr><tr><td><b>B</b> the Raspberry Pi</td><td>25 min</td></tr><tr><td><b>C</b> OS + network basics</td><td>15 min</td></tr><tr><td><b>D</b> prepare the microSD</td><td>35 min</td></tr><tr><td><b>E</b> first boot</td><td>10 min</td></tr><tr><td><b>F</b> first SSH login</td><td>15 min</td></tr></table></div></div>
 </div>
-<div class="mn" style="height:56px"></div>
+<div class="mn" style="height:50px"></div>
 <div class="sh g">2. What is Edge AI?</div>
 <div class="cols">
  <div class="c1"><ul class="bl">
-  <li><b>Cloud AI:</b> my data travels to a data centre and the answer travels back.</li>
-  <li><b>Edge AI:</b> <span class="hl">the AI algorithm runs locally, on the device next to the data</span> (camera, robot, sensor box, a Pi) - not in the cloud.</li>
-  <li>Result: devices that are more <b>responsive, private and efficient</b>.</li>
-  <li>Two kinds of AI I will build on the Pi: <b>fixed-function</b> (reactive) and <b>generative</b> (proactive).</li></ul></div>
+  <li><b>Cloud AI:</b> my data travels to a data centre, the model computes, the answer travels back.</li>
+  <li><b>Edge AI:</b> <span class="hl">the AI algorithm runs locally, on the device next to the data</span>: a camera, robot, factory sensor, phone or a Raspberry Pi.</li>
+  <li>The "edge" = the edge of the network, where data is born.</li>
+  <li>Result: systems that are more <b>responsive, private and efficient</b>.</li></ul></div>
  <div class="c2"><div data-draw="edge"></div></div>
 </div>
-<div class="mn" style="height:52px"></div>
-<div class="sh p">3. Five reasons it matters</div>
-<table class="t"><tr><th style="width:27%">Advantage</th><th>What it means in practice</th></tr>
-<tr><td>Low latency</td><td>answer in milliseconds, no network round trip (a robot reacts <i>now</i>)</td></tr>
-<tr><td>Privacy</td><td>sensitive images / audio stay on the device, not on a remote server</td></tr>
-<tr><td>Network independence</td><td>keeps working with no Internet: tunnel, field, factory</td></tr>
-<tr><td>Less bandwidth</td><td>send only the useful result, not a whole video stream</td></tr>
-<tr><td>Energy efficiency</td><td>optimised models on small hardware use little power</td></tr></table>
-<div class="ybox small"><b>In one sentence:</b> Edge AI brings intelligence to where data is generated and decisions are needed.</div>
-<div class="mn" style="height:56px"></div>
+<div class="mn" style="height:50px"></div>
+<div class="sh p">3. Training and inference</div>
+<ul class="bl small"><li>A <b>model</b> is a program whose behaviour is <i>learned from examples</i> instead of written by hand.</li></ul>
+<table class="t small"><tr><th style="width:16%">Stage</th><th>What happens</th><th style="width:30%">Where in this course</th></tr>
+<tr><td><b>Training</b></td><td>show the model many examples; it adjusts its internal numbers until answers are good. Heavy: lots of data, fast processor.</td><td>laptop or cloud (Colab, Edge Impulse)</td></tr>
+<tr><td><b>Inference</b></td><td>give the trained model new data (photo, sound, question); it answers. Light: milliseconds to seconds.</td><td class="green"><b>on the Raspberry Pi</b></td></tr></table>
+<div class="ybox small">Typical project: train (or download) once, shrink the model to fit a small device, then run inference on the Pi again and again.</div>
+<div class="mn" style="height:50px"></div>
 
-</div><div class="reading">B-20-21, 27</div><div class="folio">Edge AI study course &middot; Day 01 &middot; figures adapted from Rovai (2025)</div></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
 <div class="pg"><div class="content">
-<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 2</div></div>
-<div class="title">How the course fits together</div>
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 2</div></div>
+<div class="title">Why the edge? Two families of AI</div>
 
-<div class="sh b">4. What I will learn (the whole path)</div>
-<ol class="st">
- <li><b>Essential setup:</b> get the Pi ready for Edge AI work.</li>
- <li><b>Computer vision:</b> image classification and object detection.</li>
- <li><b>Small language models (SLMs):</b> run and optimise them on the Pi.</li>
- <li><b>Vision-language models:</b> multimodal AI (Florence-2).</li>
- <li><b>Physical computing:</b> connect AI to sensors and actuators.</li>
- <li><b>Advanced optimisation:</b> RAG, agents, function calling.</li></ol>
-<div class="mn" style="height:52px"></div>
+<div class="sh p">4. Five reasons Edge AI matters</div>
+<table class="t"><tr><th style="width:27%">Advantage</th><th>What it means in practice</th></tr>
+<tr><td>Low latency</td><td>answer in milliseconds, no network round trip: a robot reacts <i>now</i></td></tr>
+<tr><td>Privacy</td><td>sensitive images / audio stay on the device</td></tr>
+<tr><td>Network independence</td><td>keeps working with no Internet: tunnel, field, ship, factory</td></tr>
+<tr><td>Less bandwidth</td><td>send only the result (a few bytes), not a video stream</td></tr>
+<tr><td>Energy efficiency</td><td>small optimised models on small hardware use little power</td></tr></table>
+<div class="pbox small"><b>The price of the edge:</b> small processor, limited memory, limited power budget -&gt; models must be <b>small and optimised</b> (e.g. lower numerical precision). Fitting a model to the hardware is a theme of the whole course.</div>
+<div class="mn" style="height:50px"></div>
 <div class="sh v">5. Two families of AI</div>
 <div class="cols">
- <div class="c1 bbox"><b>Fixed-function (reactive)</b><ul class="bl small" style="margin:2px 0"><li>analyses a specific input using predetermined patterns / rules</li><li>acts only when a particular trigger arrives</li><li>consistent, predictable output</li><li>excels at structured tasks: classify, detect, recognise</li><li>works within its boundaries</li></ul><span class="note">my Phase 2: classification, detection, counting</span></div>
- <div class="c2 pbox"><b>Generative (proactive)</b><ul class="bl small" style="margin:2px 0"><li>creates new content: text, descriptions, solutions</li><li>understands context</li><li>keeps a dialogue going</li><li>adapts to new situations beyond its training</li></ul><span class="note">my Phase 3: SLMs, vision-language, agents</span></div>
+ <div class="c1 bbox"><b>Fixed-function (reactive)</b><ul class="bl small" style="margin:2px 0"><li>analyses a specific input using predetermined patterns / rules</li><li>responds only to particular triggers</li><li>consistent, predictable output</li><li>excels at structured tasks: classify, detect, recognise</li><li>works within its boundaries</li></ul></div>
+ <div class="c2 pbox"><b>Generative (proactive)</b><ul class="bl small" style="margin:2px 0"><li>creates new content: text, descriptions, solutions</li><li>understands context</li><li>keeps a dialogue going</li><li>adapts to situations beyond its training</li></ul></div>
 </div>
-<table class="t small"><tr><th style="width:22%"></th><th>Fixed-function</th><th>Generative</th></tr>
+<table class="t small"><tr><th style="width:20%"></th><th>Fixed-function</th><th>Generative</th></tr>
 <tr><td>Core focus</td><td>data analysis, assessment, automation</td><td>content creation, anticipation, dialogue</td></tr>
-<tr><td>Examples</td><td>fraud detection, spam filters, image recognition</td><td>ChatGPT, DALL-E, predictive maintenance, smart assistants</td></tr>
-<tr><td>Typical use</td><td>banking, medical diagnostics, security</td><td>content, customer support, design, automation</td></tr></table>
-<div class="ybox small"><b>Rule of thumb:</b> fixed-function = efficient, predictable, low resources, well-defined tasks. Generative = creative, personalised, anticipatory.</div>
-<div class="mn" style="height:52px"></div>
-<div class="sh g">6. How each topic is taught, and what I should know</div>
-<div class="cols">
- <div class="c1"><b>Every chapter has:</b><ul class="bl small"><li>concepts and theory</li><li>step-by-step implementation</li><li>a practical project with code</li><li>performance optimisation tips</li><li>ideas for further exploration</li></ul></div>
- <div class="c2"><b>Helpful background:</b><ul class="bl small"><li>basic Python</li><li>Linux command-line basics</li><li>elementary machine-learning ideas</li><li>earlier Pi experience (helpful, not required)</li></ul></div>
-</div>
-<div class="mn" style="height:52px"></div>
+<tr><td>Examples</td><td>fraud detection, spam filters, image recognition, counting objects</td><td>chat assistants, image generators, predictive maintenance, smart assistants</td></tr>
+<tr><td>Typical use</td><td>banking, medical diagnostics, security</td><td>content, customer support, design, automation</td></tr>
+<tr><td>In this course</td><td>Phase 2: classification, detection, counting</td><td>Phase 3: language models, vision-language, agents</td></tr></table>
+<div class="ybox small"><b>Rule of thumb:</b> fixed-function = efficient, predictable, low resources, well-defined task. Generative = creative, personalised, anticipatory. Both gain from the edge: lower latency, privacy, reliability offline, efficient resources.</div>
+<div class="mn" style="height:50px"></div>
+<div class="sh g">6. What the whole course covers</div>
+<ol class="st small"><li><b>Essential setup</b> of the Raspberry Pi (this week)</li><li><b>ML foundations</b> on Google Colab</li><li><b>Computer vision:</b> classification, detection, counting</li><li><b>Small language models:</b> run, optimise, add retrieval (RAG), tools, agents</li><li><b>Vision-language models</b></li><li><b>Physical computing:</b> sensors and actuators through GPIO</li><li><b>Capstone project</b> and how to teach it</li></ol>
+<div class="mn" style="height:50px"></div>
 
-</div><div class="reading">B-21-23, 25-27</div><div class="folio">Edge AI study course &middot; Day 01 &middot; figures adapted from Rovai (2025)</div></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
 <div class="pg"><div class="content">
-<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 3</div></div>
-<div class="title">Why the Raspberry Pi?</div>
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 3</div></div>
+<div class="title">The Raspberry Pi</div>
 
-<div class="sh y">7. What makes the Pi good for engineers</div>
+<div class="sh g">7. A computer on a single board</div>
+<ul class="bl"><li><b>Single-board computer (SBC):</b> a complete computer on one circuit board: processor, memory, network + video connectors, pins for electronics.</li>
+<li>Its main chip is a <b>system on a chip (SoC)</b>: CPU cores, graphics and controllers in one package.</li>
+<li><span class="hl">No built-in disk.</span> The OS and my files live on a <b>microSD card</b>. Swap the card = swap the computer's whole "personality".</li></ul>
+<div class="mn" style="height:50px"></div>
+<div class="sh y">8. Why the Pi suits Edge AI</div>
+<table class="t small"><tr><th style="width:27%">Feature</th><th>What it gives me</th></tr>
+<tr><td><b>Computational power</b></td><td>multi-core ARM CPUs, up to 8 GB RAM on newer models</td></tr>
+<tr><td><b>GPIO, 40 pins</b></td><td>each pin reads a signal (button, sensor) or drives one (LED, relay)</td></tr>
+<tr><td><b>Connectivity</b></td><td>Wi-Fi, Bluetooth, Gigabit Ethernet, USB</td></tr>
+<tr><td><b>I2C, SPI, UART</b></td><td>serial buses for sensors, displays, other chips</td></tr>
+<tr><td><b>Soft real-time</b></td><td>control / signal tasks that tolerate small timing variation</td></tr>
+<tr><td><b>Power efficiency</b></td><td>suits battery-powered and always-on designs</td></tr>
+<tr><td><b>Full Linux + community</b></td><td>standard tools, huge community, low cost</td></tr></table>
+<div class="mn" style="height:50px"></div>
+<div class="sh b">9. What engineers build with a Pi</div>
 <div class="cols">
- <div class="c1"><ul class="bl small">
-  <li><b>Computational power:</b> multi-core ARM processors, up to 8 GB RAM on the newest models.</li>
-  <li><b>GPIO:</b> a 40-pin header to talk directly to sensors and actuators.</li>
-  <li><b>Connectivity:</b> Wi-Fi, Bluetooth, Ethernet, several USB ports.</li></ul></div>
- <div class="c2"><ul class="bl small">
-  <li><b>Low-level access:</b> I2C, SPI and UART interfaces.</li>
-  <li><b>Soft real-time:</b> with proper configuration, usable for control and signal processing.</li>
-  <li><b>Power efficiency:</b> low consumption, good for battery-powered designs.</li></ul></div>
+ <div class="c1"><ul class="bl small"><li><b>Embedded systems:</b> prototyping devices</li><li><b>IoT:</b> sensors using MQTT, CoAP, HTTP(S)</li><li><b>Control systems:</b> feedback loops, PID, actuators</li><li><b>Vision + AI:</b> OpenCV, TensorFlow Lite</li></ul></div>
+ <div class="c2"><ul class="bl small"><li><b>Data acquisition:</b> sensor logging, real-time analysis</li><li><b>Robotics:</b> controllers, motion planning</li><li><b>Signal processing:</b> real-time filtering, DSP</li><li><b>Network security:</b> VPNs, firewalls, test labs</li></ul></div>
 </div>
-<div class="small">Plus: a full Linux OS, a huge community, and low cost. That combination is why it is a good Edge AI platform.</div>
-<div class="mn" style="height:40px"></div>
-<div class="sh b">8. Pi models compared</div>
-<table class="t small"><tr><th style="width:17%"></th><th>Zero 2 W</th><th>Pi 4 (my board)</th><th>Pi 5</th></tr>
-<tr><td>CPU</td><td>1 GHz quad-core Cortex-A53 (64-bit)</td><td>quad-core Cortex-A72, 1.5 GHz</td><td>quad-core Cortex-A76, 2.4 GHz</td></tr>
-<tr><td>RAM</td><td>512 MB</td><td>4 GB (mine)</td><td>2 / 4 / 8 GB (8 GB best for AI)</td></tr>
-<tr><td>Wi-Fi / BT</td><td>2.4 GHz only, BT 4.2</td><td>dual-band, BT 5.0</td><td>dual-band 802.11ac, BT 5.0</td></tr>
-<tr><td>Ports</td><td>mini-HDMI, micro-USB OTG, CSI camera</td><td>2 micro-HDMI, 2 USB 3 + 2 USB 2, CSI, DSI</td><td>2 micro-HDMI, 2 USB 3 + 2 USB 2, CSI, DSI, PCIe</td></tr>
-<tr><td>Power</td><td>5 V / 2.5 A micro-USB</td><td>5 V / 3 A USB-C</td><td>5 V / 5 A USB-C (27 W)</td></tr>
-</table>
-<div class="sub">Pi 4 vs Pi 5 - what changes in practice</div>
-<table class="t small"><tr><th style="width:22%">Topic</th><th style="width:39%">Pi 4 (mine)</th><th>Pi 5</th></tr>
-<tr><td>Speed</td><td>A72, 1.5 GHz</td><td>A76, 2.4 GHz: clearly faster</td></tr>
-<tr><td>Power button</td><td>none - plug in = on</td><td>yes</td></tr>
-<tr><td>Charger</td><td>5 V / 3 A</td><td>5 V / 5 A (27 W); 3 A limits USB to 600 mA</td></tr>
-<tr><td>Cooling</td><td>heatsink / fan case advisable</td><td>hotter, fan connector, active cooler advisable</td></tr>
-<tr><td>Camera ports</td><td>1 CSI + 1 DSI (15-pin)</td><td>two 4-lane ports, smaller connector - check cable</td></tr>
-<tr><td>OS</td><td>old and new releases</td><td>needs Bookworm or newer</td></tr>
-<tr><td>Imager step</td><td>Device = Raspberry Pi 4</td><td>Device = Raspberry Pi 5</td></tr>
-<tr><td>Everything else</td><td colspan="2">SSH, commands, updates, shutdown: <b>identical</b></td></tr></table>
-<div class="bbox small"><b>For me:</b> vision runs well on the Pi 4. For language models I stay with small ones and expect them slower than on a Pi 5 (more RAM and a faster CPU there).</div>
-<div class="mn" style="height:40px"></div>
-<div class="sh g">9. What I can build with a Pi</div>
-<div class="cols">
- <div class="c1"><ul class="bl small"><li><b>Embedded systems</b> design and prototyping</li><li><b>IoT</b> devices (MQTT, CoAP, HTTP/HTTPS)</li><li><b>Control systems</b> (feedback loops, PID, actuators)</li><li><b>Computer vision + AI</b> (OpenCV, TensorFlow Lite)</li></ul></div>
- <div class="c2"><ul class="bl small"><li><b>Data acquisition</b> and logging</li><li><b>Robotics</b> controllers, motion planning</li><li><b>Signal processing</b> and DSP</li><li><b>Network security</b> (VPNs, firewalls, testing)</li></ul></div>
-</div>
+<div class="mn" style="height:50px"></div>
+<div class="sh p">10. Models compared</div>
+<table class="t small"><tr><th style="width:15%"></th><th>Zero 2 W</th><th>Pi 4 Model B</th><th>Pi 5</th></tr>
+<tr><td>CPU</td><td>1 GHz, 4 cores, Cortex-A53, 64-bit</td><td>1.5 GHz, 4 cores, Cortex-A72</td><td>2.4 GHz, 4 cores, Cortex-A76</td></tr>
+<tr><td>RAM</td><td>512 MB</td><td>up to 8 GB</td><td>2 / 4 / 8 GB (16 GB later)</td></tr>
+<tr><td>Wi-Fi / BT</td><td>2.4 GHz only, BT 4.2</td><td>dual-band, BT 5.0</td><td>dual-band, BT 5.0</td></tr>
+<tr><td>Power</td><td>5 V / 2.5 A micro-USB, ~0.6 W idle</td><td>5 V / 3 A USB-C</td><td>5 V / 5 A (27 W) USB-C, ~3-3.5 W idle</td></tr>
+<tr><td>Best for</td><td>tiny battery projects, small models</td><td>vision projects, small SLMs</td><td>vision + the largest SLMs (8 GB best)</td></tr></table>
+<div class="mn" style="height:50px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 4</div></div>
+<div class="title">Pi 4 or Pi 5: what changes</div>
+
+<div class="sh b">11. In practice</div>
+<table class="t small"><tr><th style="width:19%">Topic</th><th style="width:36%">Pi 4</th><th>Pi 5</th></tr>
+<tr><td>Speed</td><td>Cortex-A72, 1.5 GHz</td><td>Cortex-A76, 2.4 GHz: clearly faster</td></tr>
+<tr><td>Memory</td><td>up to 8 GB</td><td>2, 4, 8 GB</td></tr>
+<tr><td>Power supply</td><td>USB-C 5 V / 3 A</td><td>USB-C 5 V / 5 A (27 W); a 3 A supply limits USB devices to 600 mA</td></tr>
+<tr><td>Power button</td><td>none: plug in = on</td><td>yes</td></tr>
+<tr><td>Cooling</td><td>heatsink / fan case advisable for long runs</td><td>hotter; fan connector; active cooler advisable</td></tr>
+<tr><td>Camera cable</td><td>standard 15-pin ribbon</td><td>smaller 22-pin connector: check the cable</td></tr>
+<tr><td>Operating system</td><td>older and newer releases</td><td>needs a recent Raspberry Pi OS</td></tr>
+<tr><td>In Imager</td><td>Device = Raspberry Pi 4</td><td>Device = Raspberry Pi 5</td></tr>
+<tr><td>SSH, commands, updates, shutdown</td><td colspan="2"><b>identical</b> on both boards</td></tr></table>
+<div class="bbox small"><b>Which one?</b> This course works on either. Vision runs well on a Pi 4. For language models a Pi 4 needs smaller models and longer waits; a Pi 5 is more comfortable.</div>
+<div class="mn" style="height:50px"></div>
+<div class="sh y">12. Anatomy of the Raspberry Pi 4</div>
+<div data-draw="pi"></div>
+<div class="mn" style="height:50px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 5</div></div>
+<div class="title">Meet the boards</div>
+
+<div class="sh y">13. Anatomy of the Raspberry Pi 5</div>
+<div data-draw="pi5"></div>
+<div class="small">(schematics: port positions are simplified - compare with the real board)</div>
+<div class="mn" style="height:44px"></div>
+<div class="sh g">14. What each part does</div>
+<table class="t small"><tr><th style="width:22%">Part</th><th style="width:40%">What it does</th><th>Pi 4 / Pi 5</th></tr>
+<tr><td>CPU (SoC)</td><td>runs the OS and my code; does the neural-network maths</td><td>BCM2711 A72 / BCM2712 A76</td></tr>
+<tr><td>RAM</td><td>working memory: a model must fit in it</td><td>up to 8 GB / 2-8 GB</td></tr>
+<tr><td>microSD slot</td><td>holds the card (underside)</td><td>both</td></tr>
+<tr><td>GPIO 40 pins</td><td>sensors, LEDs, buttons, relays</td><td>both, same layout</td></tr>
+<tr><td>USB</td><td>keyboards, webcams, mics, storage; blue = USB 3</td><td>2 x USB 3 + 2 x USB 2, both</td></tr>
+<tr><td>Camera / display</td><td>ribbon connectors</td><td>1 CSI + 1 DSI / 2 small connectors</td></tr>
+<tr><td>micro-HDMI x 2</td><td>monitors; use the port nearest USB-C first</td><td>both</td></tr>
+<tr><td>Power button, PCIe, fan</td><td>on / off; fast expansion; cooling fan</td><td>Pi 5 only</td></tr>
+<tr><td>Status LEDs</td><td>red = power, green = activity</td><td>both</td></tr></table>
+<div class="mn" style="height:44px"></div>
 <div class="mn" style="height:44px"></div>
 
-</div><div class="reading">B-29-32</div><div class="folio">Edge AI study course &middot; Day 01 &middot; figures adapted from Rovai (2025)</div></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
 <div class="pg"><div class="content">
-<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 4</div></div>
-<div class="title">Meet the board</div>
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 6</div></div>
+<div class="title">What I need on the desk</div>
 
-<div class="sh b">10. Anatomy of the Raspberry Pi 4</div>
-<div data-draw="pi"></div>
-<table class="t small"><tr><th style="width:24%">Part</th><th style="width:34%">What it does</th><th>Why I care</th></tr>
-<tr><td>CPU, 4 cores</td><td>runs the OS + my code</td><td>does the neural-network maths</td></tr>
-<tr><td>RAM 4 GB</td><td>working memory</td><td>models must fit in it</td></tr>
-<tr><td>microSD</td><td>the "hard disk"</td><td>always shut down first</td></tr>
-<tr><td>GPIO, 40 pins</td><td>sensors, LEDs, buttons</td><td>physical computing (Phase 3)</td></tr>
-<tr><td>CSI / USB</td><td>camera ports</td><td>vision projects (Day 4)</td></tr></table>
-<div class="small">The Pi 5 (not mine) adds a power button and a PCIe connector.</div>
-<div class="mn" style="height:56px"></div>
-<div class="sh y">11. My turn</div>
-<ul class="ck"><li>find every part on my real board, take a top-down photo, label it</li><li>hold the board by its edges - no metal table, no wet fingers</li></ul>
-<div class="mn" style="height:70px"></div>
-
-</div><div class="reading">B-32-33</div><div class="folio">Edge AI study course &middot; Day 01 &middot; figures adapted from Rovai (2025)</div></div>
-<div class="pg"><div class="content">
-<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 5</div></div>
-<div class="title">The operating system</div>
-
-<div class="sh g">12. What is an operating system (OS)?</div>
-<ul class="bl"><li>Software that <b>manages the hardware and the software</b> and gives programs standard services. The layer between hardware and applications.</li></ul>
+<div class="sh p">15. What I need on the desk</div>
 <div class="cols">
- <div class="c1 gbox"><b>What it does</b><ul class="bl small" style="margin:2px 0"><li><b>Processes:</b> shares CPU time between programs</li><li><b>Memory:</b> gives out and frees RAM</li><li><b>Files:</b> organises files and folders</li><li><b>Devices:</b> talks to connected hardware</li><li><b>User interface:</b> lets me use the computer</li></ul></div>
- <div class="c2 bbox"><b>What it is made of</b><ul class="bl small" style="margin:2px 0"><li><b>Kernel:</b> the core, controls the hardware</li><li><b>Shell:</b> where I type commands</li><li><b>File system:</b> how data is stored</li><li><b>Drivers:</b> let the OS talk to devices</li></ul></div>
+ <div class="c1 pbox small"><b>Required</b><ul class="bl" style="margin:2px 0"><li>Pi 4 or Pi 5</li><li>microSD card, <b>32 GB+</b>, reputable brand, A1 / A2 rating</li><li>correct USB-C supply (Pi 4: 5 V / 3 A; Pi 5: 5 V / 5 A)</li><li>card reader (or laptop slot)</li><li>laptop with Wi-Fi</li></ul></div>
+ <div class="c2 gbox small"><b>Optional</b><ul class="bl" style="margin:2px 0"><li>monitor + micro-HDMI cable</li><li>USB keyboard + mouse</li><li>Ethernet cable (fallback)</li><li>heatsink / fan case (active cooler on Pi 5)</li></ul></div>
 </div>
-<div class="mn" style="height:52px"></div>
-<div class="sh p">13. Raspberry Pi OS</div>
-<ul class="bl"><li>A version of <b>Linux (Debian)</b> made for the Pi's ARM processor and limited resources. Formerly called Raspbian.</li>
-<li><b>Lightweight</b>, <b>versatile</b> (many languages), <b>open source</b>, supports <b>GPIO</b>, regularly updated.</li>
-<li>Standard Linux tools and libraries work, so it is a full computer in a small package: IoT devices up to edge machine-learning projects.</li></ul>
-<div class="bbox small"><b>Version note:</b> the course text was written on Debian 12 "Bookworm". A newer Imager may offer a newer Debian. The steps are the same, but the <b>Python version</b> can differ, and TensorFlow Lite is picky - I record it today and check on Day 4-5.</div>
-<div class="mn" style="height:52px"></div>
-<div class="sh y">14. Which OS image do I choose?</div>
-<table class="t"><tr><th style="width:30%">Choice in Imager</th><th>What it is</th><th style="width:18%">Mine?</th></tr>
-<tr><td><b>Raspberry Pi OS (64-bit)</b></td><td>full system <b>with desktop</b>; 64-bit is needed by many AI libraries</td><td class="green"><b>YES</b></td></tr>
-<tr><td>Raspberry Pi OS Lite (64-bit)</td><td>no desktop, saves RAM (used on tiny boards like the Zero)</td><td>not today</td></tr>
-<tr><td>32-bit versions</td><td>older, less compatible</td><td class="red">avoid</td></tr></table>
-<div class="mn" style="height:56px"></div>
+<div class="pbox small"><b>Handling:</b> hold the board by its edges; no metal surface while powered; no wet fingers. Cheap or fake cards and weak chargers cause strange failures.</div>
+<div class="mn" style="height:44px"></div>
+<div class="sh y">16. My turn</div>
+<ul class="ck small"><li>find every part on my real board; take a top-down photo, label it, and paste or sketch it here</li></ul>
+<div class="mn" style="height:300px"></div>
 
-</div><div class="reading">B-34-35</div><div class="folio">Edge AI study course &middot; Day 01 &middot; figures adapted from Rovai (2025)</div></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
 <div class="pg"><div class="content">
-<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 6</div></div>
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 7</div></div>
+<div class="title">Operating system basics</div>
+
+<div class="sh g">17. What is an operating system?</div>
+<ul class="bl small"><li>Software that <b>manages the hardware and the software resources</b> and gives programs standard services. It sits between the hardware and my applications.</li></ul>
+<div class="layer" style="background:#d6efc9"><b>Your programs</b> - Python scripts, Jupyter, AI models</div>
+<div class="layer" style="background:#cfe8fb"><b>Shell / desktop</b> - where I type commands or click</div>
+<div class="layer" style="background:#fbd3e2"><b>Kernel + drivers</b> - processes, memory, files, devices</div>
+<div class="layer" style="background:#e5dcf8"><b>Hardware</b> - CPU, RAM, microSD, Wi-Fi, USB, camera, GPIO</div>
+<div class="cols" style="margin-top:4px">
+ <div class="c1 gbox small"><b>It manages</b><ul class="bl" style="margin:2px 0"><li><b>processes:</b> shares CPU time</li><li><b>memory:</b> gives and frees RAM</li><li><b>files:</b> files and folders</li><li><b>devices:</b> via drivers</li><li><b>user interface</b></li></ul></div>
+ <div class="c2 bbox small"><b>Made of</b><ul class="bl" style="margin:2px 0"><li><b>kernel:</b> the core, controls hardware</li><li><b>shell:</b> where I type commands</li><li><b>file system:</b> how data is stored</li><li><b>drivers:</b> talk to devices</li></ul></div>
+</div>
+<div class="mn" style="height:44px"></div>
+<div class="sh p">18. Linux, Debian, Raspberry Pi OS</div>
+<ul class="bl small"><li><b>Linux:</b> family of free, open-source operating systems around the Linux kernel. A <b>distribution</b> = kernel + tools + libraries + package manager.</li>
+<li><b>Debian:</b> one of the oldest, most widely used distributions.</li>
+<li><b>Raspberry Pi OS</b> (formerly Raspbian): Debian adapted for the Pi's ARM processors. Lightweight, versatile, open source, GPIO support, regular updates.</li></ul>
+<div class="bbox small"><b>Versions and Python:</b> releases follow Debian (e.g. Debian 12 "Bookworm"; newer ones exist). Imager offers the current one; the steps are the same. The <b>Python version</b> can differ, and some ML packages are slow to support the newest Python. Day 5 handles it with virtual environments. Record my OS and Python versions today.</div>
+<div class="mn" style="height:44px"></div>
+<div class="sh y">19. Which image do I choose?</div>
+<table class="t small"><tr><th style="width:30%">Choice in Imager</th><th>What it is</th><th style="width:22%">Mine?</th></tr>
+<tr><td><b>Raspberry Pi OS (64-bit)</b></td><td>full system <b>with desktop</b>; many AI libraries need 64-bit</td><td class="green"><b>YES</b> (Pi 4 and Pi 5)</td></tr>
+<tr><td>Raspberry Pi OS Lite (64-bit)</td><td>no desktop, saves RAM (for tiny boards like the Zero 2 W)</td><td>not needed</td></tr>
+<tr><td>32-bit versions</td><td>older; fewer AI packages</td><td class="red">avoid</td></tr></table>
+<div class="ybox small"><b>64-bit?</b> More memory addressable, full CPU instruction set. Check later with <code>uname -m</code>: <b>aarch64</b> = 64-bit ARM, <code>armv7l</code> = 32-bit.</div>
+<div class="mn" style="height:44px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 8</div></div>
+<div class="title">Just enough networking</div>
+
+<div class="sh b">20. How the laptop will find the Pi</div>
+<div data-draw="netp"></div>
+<table class="t small"><tr><th style="width:24%">Idea</th><th>Explanation</th></tr>
+<tr><td><b>Router</b></td><td>connects my devices (Wi-Fi or cable) to each other and to the Internet</td></tr>
+<tr><td><b>IP address</b></td><td>a device's number on the network, e.g. <code>192.168.1.57</code> (four numbers 0-255). <code>192.168.x.x</code>, <code>10.x.x.x</code>, <code>172.16-31.x.x</code> are private: they work only inside my network</td></tr>
+<tr><td><b>DHCP</b></td><td>router service that gives each device an address automatically; it can change from day to day</td></tr>
+<tr><td><b>Host name</b></td><td>friendly name I choose, e.g. <code>raspi4</code></td></tr>
+<tr><td><b><code>.local</code> name</b></td><td>devices announce their names inside the network (mDNS), so <code>raspi4.local</code> works without knowing the IP. <b>Only inside one network</b>; some networks block it</td></tr>
+<tr><td><b>Wi-Fi bands</b></td><td>2.4 GHz: longer range, slower. 5 GHz: faster, shorter range. Pi 4 and Pi 5 use both; Pi Zero 2 W only 2.4 GHz</td></tr></table>
+<div class="mn" style="height:44px"></div>
+<div class="sh p">21. Networks that make life harder</div>
+<ul class="bl small"><li><b>Guest networks</b> and some office / university networks isolate devices: the laptop cannot see the Pi.</li>
+<li><b>Enterprise networks</b> (WPA2-Enterprise) need a user name too: Imager's simple Wi-Fi form cannot do that.</li>
+<li><b>Login-page (portal) networks</b> do not work for a Pi without a screen.</li>
+<li>In all cases: use a <b>phone hotspot</b> or an <b>Ethernet cable</b> to a home router for the first connection.</li></ul>
+<div class="mn" style="height:60px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 9</div></div>
 <div class="title">Prepare the microSD card</div>
 
-<div class="sh g">15. The idea</div>
-<ul class="bl"><li>By default a Pi looks for an operating system on the <b>microSD card</b> in its slot. It has <b>no hard disk</b>.</li>
-<li>"Installing the OS" = writing an <span class="hl">image</span> onto the card with <b>Raspberry Pi Imager</b> (Windows, macOS, Linux).</li>
-<li>Imager also pre-sets my <b>credentials and remote-access settings</b>: no monitor or keyboard needed = <b>headless</b>.</li></ul>
+<div class="sh g">22. The idea</div>
+<ul class="bl small"><li>At power-up the built-in firmware looks for an OS on the <b>microSD card</b>. "Installing the OS" = writing an <span class="hl">image</span> (a complete ready-to-run copy of the system) onto the card.</li>
+<li>Tool: <b>Raspberry Pi Imager</b> (free; Windows, macOS, Linux). It can also store my <b>settings</b> (host name, user, password, Wi-Fi, SSH) so the Pi needs <b>no monitor or keyboard</b> = <b>headless</b>.</li></ul>
 <div data-draw="flow"></div>
-<div class="mn" style="height:52px"></div>
-<div class="sh b">16. Before I start</div>
-<ul class="ck"><li>Raspberry Pi Imager installed (raspberrypi.com/software)</li><li>microSD card, 32 GB recommended, in a reader</li><li>Wi-Fi name + password ready</li><li>card backed up - Imager <b>erases</b> it</li><li>other USB drives unplugged (so I cannot pick them by mistake)</li></ul>
-<div class="mn" style="height:52px"></div>
-<div class="sh y">17. Steps on Windows</div>
+<div class="mn" style="height:44px"></div>
+<div class="sh b">23. Install Imager; before I start</div>
+<ul class="ck small"><li>download Imager from raspberrypi.com/software, run the installer, open it</li><li>microSD card (32 GB+) in a reader</li><li>Wi-Fi name + password ready</li><li>card backed up: Imager <b>erases</b> it</li><li>other USB drives unplugged (so I cannot pick them by mistake)</li></ul>
+<div class="mn" style="height:44px"></div>
+<div class="sh y">24. Steps on Windows</div>
 <div class="cols">
  <div class="c1"><ol class="st small">
-  <li>Open Imager. If Windows says "format the disk?" -&gt; <b class="red">Cancel</b>.</li>
+  <li>Insert the card. If Windows says "format the disk?" -&gt; <b class="red">Cancel</b>.</li>
   <li>Device = <code>Raspberry Pi 4</code> (Pi 5: <code>Raspberry Pi 5</code>)</li>
   <li>OS = <code>Raspberry Pi OS (64-bit)</code></li>
   <li>Storage = my card (check size + drive letter!)</li>
   <li>Next -&gt; open the settings (gear icon / "customise")</li>
   <li>Write -&gt; verify -&gt; "Write successful" -&gt; remove card</li></ol></div>
- <div class="c2" style="text-align:center"><div class="fig"><img src="../../_assets/book/imager_step2.png" width="228"></div><div class="cap">Imager with device, OS and storage chosen (example on a Mac, older release)</div></div>
+ <div class="c2" style="text-align:center"><div class="fig"><img src="../../_assets/figures_adapted/imager_step2.png" width="228"></div><div class="cap">Imager with device, OS and storage chosen (example on a Mac, older release)</div></div>
 </div>
-<div class="mn" style="height:56px"></div>
+<div class="pbox small"><b class="red">Careful!</b> Imager erases whatever drive I choose. Wrong drive = lost data.</div>
+<div class="mn" style="height:44px"></div>
 
-</div><div class="reading">B-35-36</div><div class="folio">Edge AI study course &middot; Day 01 &middot; figures adapted from Rovai (2025)</div></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
 <div class="pg"><div class="content">
-<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 7</div></div>
-<div class="title">Settings &amp; first boot</div>
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 10</div></div>
+<div class="title">Settings &amp; writing the card</div>
 
-<div class="sh g">18. Settings I type (very important)</div>
-<table class="t"><tr><th style="width:26%">Setting</th><th>What to enter</th></tr>
-<tr><td>hostname</td><td><code>raspi4</code> (for my two Pis: <code>raspi-office</code> / <code>raspi-home</code>)</td></tr>
-<tr><td>user + password</td><td><code>piuser</code> + a strong password - write it on my connection card</td></tr>
-<tr><td>Wi-Fi</td><td>name + password exactly as spelled, country <code>KW</code></td></tr>
-<tr><td>zone / keyboard</td><td><code>Asia/Kuwait</code>, <code>us</code></td></tr>
-<tr><td><b class="red">SSH</b></td><td><b class="red">ENABLE, password authentication</b> (Services tab) - without it I cannot log in remotely</td></tr></table>
+<div class="sh g">25. The settings, one by one</div>
+<table class="t small"><tr><th style="width:21%">Setting</th><th style="width:30%">What to enter</th><th>Why</th></tr>
+<tr><td>Host name</td><td><code>raspi4</code> (letters, digits, hyphens; no spaces)</td><td>the Pi's name; I reach it as <code>raspi4.local</code>. A different name for each Pi</td></tr>
+<tr><td>User + password</td><td><code>piuser</code> + strong password</td><td>no default user any more; needed for SSH and <code>sudo</code>; case-sensitive; write it on my card</td></tr>
+<tr><td>Wi-Fi</td><td>SSID + password <b>exactly</b> as spelled</td><td>the Pi must join by itself at first boot; typos are the #1 failure</td></tr>
+<tr><td>Wi-Fi country</td><td><code>KW</code>, <code>EG</code>, <code>US</code>... (where the Pi runs)</td><td>radio regulations differ by country</td></tr>
+<tr><td>Zone / keyboard</td><td><code>Asia/Kuwait</code>, <code>us</code></td><td>correct clock; right characters</td></tr>
+<tr><td><b class="red">SSH</b></td><td><b class="red">ENABLE</b>, password authentication (Services tab)</td><td>without it: no remote logins</td></tr></table>
 <div class="cols">
- <div class="c1"><div class="pbox small"><b class="red">Careful!</b> Imager erases whatever drive I choose. Wrong drive = lost data.</div>
-  <div class="bbox small"><b>Office Wi-Fi</b> may need a login or block devices. Plan B: phone hotspot or an Ethernet cable. Imager stores one Wi-Fi network only; I add the second one on Day 2.</div></div>
- <div class="c2" style="text-align:center"><div class="fig"><img src="../../_assets/book/imager_customisation.png" width="335"></div><div class="cap">settings screens: General (left), Services (right)</div></div>
+ <div class="c1"><div class="bbox small"><b>One Wi-Fi only:</b> Imager stores a single network. A second one (lab and home) is added later from the Pi (Day 2).</div></div>
+ <div class="c2" style="text-align:center"><div class="fig"><img src="../../_assets/figures_adapted/imager_customisation.png" width="320"></div><div class="cap">General tab (left), Services tab (right)</div></div>
 </div>
-<div class="mn" style="height:56px"></div>
-<div class="sh y">19. First boot (15 min)</div>
+<div class="mn" style="height:50px"></div>
+<div class="sh y">26. Write the card</div>
+<ul class="bl small"><li>Confirm the warning: <b>all data on the card is erased</b>.</li>
+<li>Imager <b>writes</b>, then <b>verifies</b>: about 5-15 minutes. Do not remove the card or close Imager.</li>
+<li>"<b>Write successful</b>" -&gt; Continue -&gt; remove the card (Imager ejects it).</li></ul>
+<div class="mn" style="height:60px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 11</div></div>
+<div class="title">First boot</div>
+
+<div class="sh y">27. Steps</div>
 <div class="cols">
  <div class="c1"><ol class="st small">
   <li>Card into the slot on the <b>underside</b> (contacts toward the board).</li>
-  <li>Optional monitor / keyboard first.</li>
-  <li>Power <b>last</b> (USB-C, 5 V / 3 A). The Pi 4 has <b>no power button</b> (Pi 5: use the 27 W supply; it has one).</li>
+  <li>Optional monitor (micro-HDMI port nearest the USB-C) and keyboard first.</li>
+  <li>Power <b>last</b>. <b>Pi 4:</b> no power button, plug in = on. <b>Pi 5:</b> 27 W supply; it has a power button.</li>
   <li>Wait a few minutes; it may restart once. <b class="red">Do not unplug!</b></li></ol></div>
- <div class="c2"><div data-draw="leds"></div><div class="small">first boot: resizes the file system, applies my settings, starts SSH (1-3 min)</div></div>
+ <div class="c2"><div data-draw="leds"></div></div>
 </div>
-<div class="pbox small"><b>If something is off:</b> nothing lights up = power; red only, green never flickers = no OS found, reseat or re-flash; random restarts = weak charger.</div>
-<div class="mn" style="height:60px"></div>
+<div class="mn" style="height:50px"></div>
+<div class="sh g">28. What happens during first boot</div>
+<div data-draw="boot"></div>
+<div class="small">Step 4 happens only the first time: the Pi grows the file system to fill my card and applies the settings I typed in Imager.</div>
+<div class="mn" style="height:50px"></div>
+<div class="sh p">29. Reading the LEDs</div>
+<table class="t small"><tr><th style="width:32%">LEDs</th><th>Meaning</th><th style="width:34%">Do</th></tr>
+<tr><td>red steady, green flickering</td><td>powered, reading the card: booting</td><td>wait 1-3 min</td></tr>
+<tr><td>red steady, green never flickered</td><td>no OS found</td><td>reseat card / re-write / other card</td></tr>
+<tr><td>nothing lights up</td><td>no power</td><td>other cable or charger</td></tr>
+<tr><td>random restarts</td><td>weak power supply</td><td>use the proper charger (Pi 4 5 V/3 A, Pi 5 5 V/5 A)</td></tr></table>
+<div class="ybox small"><b>Heat:</b> idling is cool, but a Pi 5 (and a Pi 4 under load) gets hot in long runs: fit a heatsink or fan (active cooler on a Pi 5).</div>
+<div class="mn" style="height:50px"></div>
 
-</div><div class="reading">B-36-37</div><div class="folio">Edge AI study course &middot; Day 01 &middot; figures adapted from Rovai (2025)</div></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
 <div class="pg"><div class="content">
-<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 8</div></div>
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 12</div></div>
 <div class="title">First SSH login</div>
 
-<div class="sh g">20. Logging in from Windows (20 min)</div>
-<ul class="bl"><li><b>SSH</b> = Secure SHell: the Pi's command line in a window on my laptop, over Wi-Fi, encrypted. Both machines on the <b>same network</b>.</li>
-<li>Windows tools: PowerShell or Command Prompt (older option: PuTTY). Mac/Linux: Terminal.</li>
-<li>I can use the IP address (<code>ssh piuser@192.168.x.x</code>) or the name (<code>ssh piuser@raspi4.local</code>).</li></ul>
+<div class="sh g">30. What is SSH?</div>
+<ul class="bl small"><li><b>SSH</b> (Secure Shell): the Pi's command line in a window on my laptop. An SSH <b>server</b> on the Pi (port 22) and an SSH <b>client</b> on the laptop; everything travels <b>encrypted</b>. No monitor, keyboard or mouse needed on the Pi.</li>
+<li>Both machines must be on the <b>same network</b>.</li></ul>
+<div class="mn" style="height:44px"></div>
+<div class="sh y">31. Steps on Windows</div>
 <div class="cols">
  <div class="c1"><ol class="st small">
-  <li>Start -&gt; <b>PowerShell</b>. Test: <code>ssh -V</code></li>
-  <li>Connect (below). First time: type <code>yes</code>.</li>
-  <li>Password: <b>nothing shows</b> as I type - normal!</li>
+  <li>Start -&gt; <b>PowerShell</b>. Test: <code>ssh -V</code>. (Missing? Settings -&gt; Apps -&gt; Optional features -&gt; OpenSSH Client.)</li>
+  <li>Connect (below), by name or IP.</li>
+  <li>First time: type the whole word <code>yes</code> to trust this Pi.</li>
+  <li>Password: <b>nothing shows</b> as I type: normal!</li>
   <li>Prompt <code>piuser@raspi4:~ $</code> = I am <b>inside the Pi</b>.</li></ol></div>
- <div class="c2" style="text-align:center"><div class="fig"><img src="../../_assets/book/ssh_first_login.png" width="250"></div><div class="cap">first login (example on a Mac)</div></div>
+ <div class="c2" style="text-align:center"><div class="fig"><img src="../../_assets/figures_adapted/ssh_first_login.png" width="250"></div><div class="cap">a first login (example on a Mac)</div></div>
 </div>
-<div class="term"><span class="dim">PS C:\&gt;</span> ssh piuser@raspi4.local<br><span class="dim">Are you sure you want to continue connecting (yes/no)?</span> yes<br>password: <span class="dim">(invisible)</span><br><span class="g2">piuser@raspi4:~ $</span> _</div>
-<div class="mn" style="height:56px"></div>
-<div class="sh b">21. First commands, updates, shutdown</div>
-<table class="t small"><tr><th style="width:34%">Command</th><th>What it does / what I should see</th></tr>
-<tr><td><code>hostname -I</code></td><td>the Pi's IP address - write it down</td></tr>
-<tr><td><code>uname -m</code></td><td>want <b>aarch64</b> (= 64-bit); <code>armv7l</code> means 32-bit</td></tr>
-<tr><td><code>cat /etc/os-release</code></td><td>OS version - note it</td></tr>
-<tr><td><code>python3 --version</code></td><td>needed on Day 4 (TFLite is picky)</td></tr>
-<tr><td><code>free -h</code></td><td>memory: close to 4 GB</td></tr>
-<tr><td><code>sudo apt-get update</code><br><code>sudo apt upgrade</code></td><td>update the package list, then the system - do it regularly</td></tr></table>
-<div class="fbox"><b class="red">ALWAYS shut down properly:</b> &nbsp;<code>sudo shutdown -h now</code><br>The Pi may still be writing to the card. Wait until the <b>LED stops blinking and goes dark</b>, then unplug. Pulling the plug can lose data or corrupt the card.<br>Start again: <b>Pi 4</b> unplug + replug; <b>Pi 5</b> press the power button.</div>
-<div class="small">Moving files between laptop and Pi: pen drive, <code>scp</code> in the terminal, or an FTP/SFTP program (Day 2).</div>
-<div class="mn" style="height:56px"></div>
+<div class="term"><span class="dim">PS C:\&gt;</span> ssh piuser@raspi4.local &nbsp;<span class="dim">(or ssh piuser@192.168.1.57)</span><br><span class="dim">Are you sure you want to continue connecting (yes/no/[fingerprint])?</span> yes<br>piuser@raspi4.local's password: <span class="dim">(invisible)</span><br><span class="g2">piuser@raspi4:~ $</span> _</div>
+<div class="small">Mac / Linux: Terminal, same command. PuTTY is an older graphical option on Windows.</div>
+<div class="mn" style="height:44px"></div>
+<div class="sh b">32. Reading the prompt</div>
+<table class="t small"><tr><td style="width:36%"><code>piuser</code> @ <code>raspi4</code> : <code>~</code> <code>$</code></td><td>user @ host-name of the machine I am on (<b>the Pi</b>) : current folder (<code>~</code> = home) and <code>$</code> = ready for a command. <code>exit</code> leaves.</td></tr></table>
+<div class="mn" style="height:44px"></div>
 
-</div><div class="reading">B-38-39</div><div class="folio">Edge AI study course &middot; Day 01 &middot; figures adapted from Rovai (2025)</div></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
 <div class="pg"><div class="content">
-<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 9</div></div>
-<div class="title">Troubleshooting &amp; two Pis</div>
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 13</div></div>
+<div class="title">Commands, updates, shutdown</div>
 
-<div class="sh p">22. When it does not work</div>
-<table class="t small"><tr><th style="width:30%">I see</th><th style="width:32%">probably</th><th>try</th></tr>
-<tr><td><code>Could not resolve hostname</code></td><td>Pi not on the network yet, Wi-Fi typo, <code>.local</code> blocked</td><td>wait 5 min, check Wi-Fi, use the IP, Ethernet / hotspot</td></tr>
-<tr><td><code>Connection timed out</code></td><td>different networks, VPN, guest Wi-Fi</td><td>same Wi-Fi, VPN off</td></tr>
-<tr><td><code>Permission denied</code></td><td>wrong user or password</td><td>retype (case!) or re-flash</td></tr>
-<tr><td><code>HOST IDENTIFICATION HAS CHANGED</code></td><td>I re-flashed the card</td><td><code>ssh-keygen -R raspi4.local</code></td></tr>
-<tr><td>red LED, green never flickers</td><td>no OS found on the card</td><td>reseat, re-flash, other card</td></tr>
-<tr><td>no LEDs at all</td><td>no power</td><td>other cable / charger (5 V / 3 A)</td></tr></table>
-<div class="mn" style="height:96px"></div>
-<div class="sh v">23. Two Pis, two laptops</div>
-<ul class="bl small"><li>Office laptop + home laptop = two <b>windows</b> into a Pi. Code and notes live on the Pi and in my GitHub repo. <code>raspi4.local</code> only works <span class="hl">inside one network</span>.</li></ul>
+<div class="sh b">33. My first commands</div>
+<table class="t small"><tr><th style="width:30%">Command</th><th style="width:34%">What it does</th><th>Typical output</th></tr>
+<tr><td><code>hostname -I</code></td><td>the Pi's IP address</td><td><code>192.168.1.57</code></td></tr>
+<tr><td><code>uname -m</code></td><td>processor architecture</td><td><b>aarch64</b> = 64-bit</td></tr>
+<tr><td><code>cat /etc/os-release</code></td><td>which OS and release</td><td>Debian ... (e.g. 12 bookworm)</td></tr>
+<tr><td><code>python3 --version</code></td><td>Python version</td><td>Python 3.x.y: write it down</td></tr>
+<tr><td><code>free -h</code></td><td>memory</td><td>close to 4 GB on a 4 GB board</td></tr>
+<tr><td><code>vcgencmd measure_temp</code></td><td>CPU temperature</td><td><code>temp=46.2'C</code></td></tr></table>
+<div class="mn" style="height:44px"></div>
+<div class="sh g">34. Updating the system</div>
+<ul class="bl small"><li>Software comes in <b>packages</b> handled by <code>apt</code>. <code>sudo</code> = "run as administrator" (asks my password).</li></ul>
+<div class="term">sudo apt-get update &nbsp;<span class="dim"># refresh the package list</span><br>sudo apt upgrade &nbsp;<span class="dim"># install newer versions; answer Y when asked</span></div>
+<div class="small">Needs Internet; may take minutes the first time; do it regularly; <code>sudo reboot</code> after a kernel update.</div>
+<div class="mn" style="height:44px"></div>
+<div class="sh p">35. Shut down safely, every time</div>
+<div class="fbox"><b class="red">Never just pull the plug.</b> The Pi may still be writing to the card: data loss or a corrupted card.<br><code>sudo shutdown -h now</code> &nbsp;(halt) &nbsp;&nbsp; <code>sudo reboot</code> &nbsp;(restart)<br>Wait until the <b>green LED stops flashing and stays dark</b>, then unplug.</div>
+<ul class="bl small"><li>Start a halted <b>Pi 4</b> again: unplug + replug. <b>Pi 5:</b> press the power button.</li>
+<li>Files between laptop and Pi (Day 2): USB drive, <code>scp</code>, or SFTP (FileZilla / WinSCP).</li></ul>
+<div class="mn" style="height:44px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 14</div></div>
+<div class="title">When something does not work</div>
+
+<div class="sh p">36. Troubleshooting</div>
+<table class="t small"><tr><th style="width:27%">I see</th><th style="width:33%">probably</th><th>try</th></tr>
+<tr><td><code>Could not resolve hostname</code></td><td>Pi not on the network yet; Wi-Fi typo; <code>.local</code> blocked</td><td>wait 5 min; check Wi-Fi; use the IP from the router's device list; Ethernet / hotspot</td></tr>
+<tr><td><code>Connection timed out</code></td><td>different networks; VPN; guest / office Wi-Fi isolates devices</td><td>same Wi-Fi; VPN off; hotspot</td></tr>
+<tr><td><code>Permission denied</code></td><td>wrong user or password</td><td>case matters; retype; or re-write the card</td></tr>
+<tr><td><code>HOST IDENTIFICATION HAS CHANGED</code></td><td>I re-wrote the card: the Pi has a new identity</td><td><code>ssh-keygen -R raspi4.local</code></td></tr>
+<tr><td><code>ssh</code> not recognized</td><td>OpenSSH client missing</td><td>Settings -&gt; Apps -&gt; Optional features</td></tr>
+<tr><td>red LED, green never flickers</td><td>no OS found</td><td>reseat; re-write; other card</td></tr>
+<tr><td>nothing lights up</td><td>no power</td><td>other cable / charger</td></tr>
+<tr><td>Pi never on the network</td><td>Wi-Fi typo, wrong country, hidden / enterprise / portal network</td><td>re-write with corrections; Ethernet or hotspot</td></tr>
+<tr><td>worked yesterday, not today</td><td>router gave a new IP, or other network</td><td>use <code>raspi4.local</code> or find the new IP</td></tr></table>
+<div class="mn" style="height:110px"></div>
+<div class="sh y">37. More than one Pi or laptop</div>
+<ul class="bl small"><li>The Pi is the <b>shared workspace</b>; each laptop is a <b>window</b> into it. Code and notes live on the Pi and in an online repository.</li>
+<li>Learn on one Pi, then <b>repeat on the other from my notes only</b>. Different host names (<code>raspi-lab</code>, <code>raspi-home</code>), same user. One connection card per Pi.</li></ul>
 <div data-draw="net"></div>
-<ul class="bl small"><li><b>Pass 1:</b> learn on one Pi (about 2 hours). <b>Pass 2:</b> repeat on the other Pi from my notes only.</li>
-<li>Different host names (<code>raspi-office</code>, <code>raspi-home</code>), same user, <code>git pull</code> everywhere.</li></ul>
-<div class="mn" style="height:70px"></div>
+<div class="mn" style="height:44px"></div>
 
-</div><div class="folio">Edge AI study course &middot; Day 01 &middot; figures adapted from Rovai (2025)</div></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
 <div class="pg"><div class="content">
-<div class="top"><div class="t">Day 1: Meet your Raspberry Pi 4</div><div class="p">PAGE 10</div></div>
-<div class="title">Quiz &amp; wrap-up</div>
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 15</div></div>
+<div class="title">Quiz &amp; glossary</div>
 
-<div class="sh y">24. Quick quiz (answer here first!)</div>
+<div class="sh y">38. Check myself (answer here first!)</div>
 <ol class="st small">
-<li>What is the difference between cloud AI and Edge AI?</li>
-<li>Name three advantages of running AI at the edge.</li>
-<li>Image classification: fixed-function or generative? Give one example of the other kind.</li>
-<li>Name three things an operating system manages.</li>
-<li>Why enable SSH in Imager <i>before</i> writing the card?</li>
+<li>Cloud AI versus Edge AI: what is the difference?</li>
+<li>Three advantages of the edge, and one price paid for it.</li>
+<li>Training versus inference: which one happens on the Pi in this course?</li>
+<li>Image classification: fixed-function or generative? One example of the other kind.</li>
+<li>What is a single-board computer? Why does a Pi need a microSD card?</li>
+<li>Three things an operating system manages.</li>
+<li>What is an IP address? What is DHCP? Why does <code>raspi4.local</code> work only inside one network?</li>
+<li>Why choose 64-bit Raspberry Pi OS? Which command shows which I have?</li>
+<li>Why enable SSH in Imager before writing the card?</li>
 <li>Red LED steady = ? Green LED flickering = ?</li>
-<li>What can go wrong if I unplug the Pi without shutting it down?</li>
-<li>Which command shows the IP address? Which shows whether the OS is 64-bit?</li></ol>
+<li>What can go wrong if I unplug without shutting down? How do I restart a halted Pi 4? A Pi 5?</li>
+<li>Three differences between the Pi 4 and the Pi 5.</li></ol>
 <div class="mn" style="height:120px"></div>
-<div class="sh b">25. My connection card</div>
-<table class="t small"><tr><td style="width:38%">hostname</td><td>&nbsp;</td></tr><tr><td>user name</td><td>&nbsp;</td></tr><tr><td>password hint (not the password!)</td><td>&nbsp;</td></tr>
-<tr><td>Wi-Fi 1 / Wi-Fi 2</td><td>&nbsp;</td></tr><tr><td>IP address (it can change)</td><td>&nbsp;</td></tr>
-<tr><td>OS release / Python version</td><td>&nbsp;</td></tr><tr><td>uname -m / microSD size</td><td>&nbsp;</td></tr><tr><td>date flashed</td><td>&nbsp;</td></tr></table>
-<div class="mn" style="height:46px"></div>
-<div class="sh g">26. Day 1 is done when...</div>
-<ul class="ck small"><li>the Pi boots: red LED steady, green flickers</li><li>PowerShell shows <code>piuser@raspi4:~ $</code></li>
-<li>all commands ran and I wrote down OS + Python</li><li>I shut down with <code>sudo shutdown -h now</code></li><li>the connection card is filled in</li></ul>
-<div class="mn" style="height:46px"></div>
-<div class="note">Tomorrow, Day 2: remote access like a pro (files, remote desktop, two networks).</div>
+<div class="sh b">39. Answers</div>
+<div class="small bbox">1 cloud sends data to a data centre; edge computes next to the sensor. 2 latency, privacy, offline operation, bandwidth, energy; price: limited CPU / RAM / power, so small optimised models. 3 training builds the model (laptop/cloud); inference uses it (Pi). 4 fixed-function; generative: language models, image generators. 5 a whole computer on one board; no built-in disk, OS and files on the card. 6 processes, memory, files, devices, user interface. 7 a device's number; router service that hands out addresses; <code>.local</code> is announced only inside the local network. 8 many AI packages are 64-bit only; <code>uname -m</code> = aarch64. 9 so the Pi accepts remote logins with no monitor. 10 power OK; reading the card. 11 data loss / corrupted card; Pi 4 replug; Pi 5 power button. 12 e.g. speed, power button, power supply, cooling, camera connector, RAM options.</div>
+<div class="mn" style="height:60px"></div>
 
-</div><div class="folio">Edge AI study course &middot; Day 01 &middot; figures adapted from Rovai (2025)</div></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 16</div></div>
+<div class="title">Glossary, card &amp; wrap-up</div>
+
+<div class="sh g">40. Glossary</div>
+<table class="t small" style="font-size:13.5px"><tr><th style="width:27%">Term</th><th>Meaning</th></tr>
+<tr><td>Edge / cloud AI</td><td>AI on the device next to the data / in a remote data centre</td></tr>
+<tr><td>Training / inference</td><td>building a model from examples / using it on new data</td></tr>
+<tr><td>SBC, SoC</td><td>single-board computer; system on a chip</td></tr>
+<tr><td>GPIO, CSI, DSI</td><td>general-purpose pins; camera connector; display connector</td></tr>
+<tr><td>Image, Imager</td><td>a complete OS copy; the tool that writes it to a card</td></tr>
+<tr><td>Kernel, shell</td><td>the OS core; where I type commands</td></tr>
+<tr><td>64-bit, aarch64</td><td>full 64-bit processor use; 64-bit ARM</td></tr>
+<tr><td>Headless</td><td>no monitor, keyboard or mouse on the computer</td></tr>
+<tr><td>Router, IP, DHCP</td><td>connects a network; a device's number; assigns numbers</td></tr>
+<tr><td>Host name, mDNS</td><td>a device's name; how names are announced locally (<code>.local</code>)</td></tr>
+<tr><td>SSID</td><td>a Wi-Fi network's name</td></tr>
+<tr><td>SSH, terminal</td><td>secure remote command line; text window for commands</td></tr>
+<tr><td><code>sudo</code>, <code>apt</code></td><td>run as administrator; the package manager</td></tr>
+<tr><td>Firmware</td><td>built-in software that starts the boot</td></tr></table>
+<div class="mn" style="height:44px"></div>
+<div class="sh b">41. Connection card (one per Pi)</div>
+<table class="t small"><tr><td style="width:38%">board (Pi 4 / Pi 5, RAM)</td><td>&nbsp;</td></tr><tr><td>host name / user name</td><td>&nbsp;</td></tr><tr><td>password hint (not the password!)</td><td>&nbsp;</td></tr>
+<tr><td>Wi-Fi 1 / Wi-Fi 2</td><td>&nbsp;</td></tr><tr><td>IP address (it can change)</td><td>&nbsp;</td></tr><tr><td>OS release / Python version</td><td>&nbsp;</td></tr><tr><td>uname -m / microSD size</td><td>&nbsp;</td></tr></table>
+<div class="mn" style="height:40px"></div>
+<div class="sh g">42. Day 1 is done when...</div>
+<ul class="ck small"><li>the Pi boots: red LED steady, green flickers</li><li>PowerShell shows <code>piuser@raspi4:~ $</code></li><li>all commands ran and I wrote down OS + Python</li><li>I shut down with <code>sudo shutdown -h now</code></li><li>the connection card is filled in</li></ul>
+<div class="mn" style="height:40px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 17</div></div>
+<div class="title">Instructor notes</div>
+
+<div class="sh y">43. A 45-minute class version</div>
+<div class="ybox small"><b>Before class:</b> each pair gets a Pi, a card, a reader, a power supply, and a hotspot or router; Imager pre-installed.<br><b>10 min</b> big picture (cloud vs edge, two families). <b>15 min</b> flash the cards live. <b>10 min</b> boot + LEDs. <b>10 min</b> SSH + first commands.</div>
+<ul class="bl small"><li><b>Typical mistakes:</b> wrong storage device; Wi-Fi typo; SSH not enabled; guest / enterprise network; unplugging without shutdown; "host identification changed" after re-flashing.</li>
+<li><b>Mini-assessment:</b> a screenshot with <code>hostname -I</code>, <code>uname -m</code>, <code>free -h</code> (Wi-Fi details hidden).</li>
+<li><b>Mixed boards:</b> use the Pi 4 / Pi 5 table; let students swap boards for the second pass.</li></ul>
+<div class="mn" style="height:150px"></div>
+<div class="sh b">44. My own notes, ideas, questions</div>
+<div class="mn" style="height:300px"></div>
+<div class="note">Tomorrow, Day 2: remote access like a pro (files, remote desktop, more than one network).</div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Day 1: Meet the Raspberry Pi</div><div class="p">PAGE 18</div></div>
+<div class="title">Acknowledgments &amp; references</div>
+
+<div class="small">This course is a compilation: it combines material from the sources below with new explanations, examples, diagrams, exercises and comments written for this course. The original authors are gratefully acknowledged.</div>
+<ol class="refs">
+<li>Rovai, M. (2025). <i>Edge AI Engineering: Hands-on with the Raspberry Pi.</i> Open textbook for the course IESTI05, Federal University of Itajubá (UNIFEI), Brazil. Version of 23 October 2025. Online edition: https://mjrovai.github.io/EdgeML_Made_Ease_ebook/</li>
+<li>Rovai, M. (2026). <i>IESTI05 - Edge AI: Edge Machine Learning Systems Engineering.</i> Course slides, notebooks and video lectures (second semester 2026), UNIFEI, Brazil. Course videos listed by the author: Class 1 (course introduction) https://youtu.be/QAb3MFHwe78 ; Class 2 (Introduction to Linux) https://youtu.be/QkIHILtl0h4 ; Class 3 (Raspberry Pi setup walkthrough) https://youtu.be/YtjsM36LzVE (lectures in Portuguese).</li>
+<li>Rovai, M. (2026). <i>IESTI01 - TinyML: Machine Learning for Embedding Devices.</i> Course materials (first semester 2026), UNIFEI, Brazil. https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML</li>
+<li>Rovai, M. <i>TinyML4D:</i> lectures, books, papers and tutorials for embedded machine-learning education. https://github.com/Mjrovai/TinyML4D</li>
+<li>Raspberry Pi Imager: download page and software. https://www.raspberrypi.com/software/</li>
+<li>Raspberry Pi Ltd. <i>Raspberry Pi documentation</i> (hardware specifications of the Raspberry Pi 4 and Raspberry Pi 5, operating system, remote access). https://www.raspberrypi.com/documentation/</li></ol>
+<div class="small" style="margin-top:8px"><i>The screenshots of Raspberry Pi Imager and of the first SSH login are adapted from reference [1]. All other figures and the animation were created for this course.</i></div>
+<div class="mn" style="height:300px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Day 01 &middot; notebook notes</div></div>
 
 </body></html>

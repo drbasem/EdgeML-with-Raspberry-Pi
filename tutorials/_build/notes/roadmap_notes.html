@@ -1,120 +1,98 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Roadmap - sketch notes</title>
-<link rel="stylesheet" href="notes_common.css">
-<style>
-.ph { font-family: "Marker"; font-size: 16.5px; margin: 8px 0 3px 0; line-height: 1.1; }
-.ph .dd2 { font-family: "Caveat"; font-size: 17px; color: #555; }
-.r { position: relative; min-height: 21px; padding-left: 30px; margin: 0 0 2px 0; font-size: 13.9px; line-height: 1.1; }
-.dn { position: absolute; left: 0; top: 1px; width: 23px; height: 19px; border-radius: 9px; color: #fff; font-family: "Marker"; font-size: 11.5px; text-align: center; line-height: 19px; }
-.sr { display: block; font-family: "Caveat"; font-size: 14.8px; color: #c51a4a; line-height: 1; }
-.cols { display: flex; gap: 18px; } .cols > div { flex: 1; }
-</style>
-<script src="../../_assets/js/rough.js"></script><script src="notes_common.js"></script></head><body>
+<!doctype html><html><head><meta charset="utf-8"><title>Course roadmap - notebook notes</title>
+<link rel="stylesheet" href="notes_b.css"><script src="notes_b.js"></script></head><body>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Course roadmap</div><div class="p">PAGE 1</div></div>
+<div class="title">46 days, six phases</div>
 
-<div class="pg"><div class="main">
-  <div class="h-title" data-ul="#c51a4a" style="position:relative;display:inline-block">My 46-day roadmap</div>
-  <div class="h-sub">Pi 4 (4 GB) &nbsp;|&nbsp; 2 Pis + 2 laptops &nbsp;|&nbsp; 2 hours a day &nbsp;|&nbsp; ~9 weeks</div>
-  <svg width="506" height="418" data-draw="stairs"></svg>
+<div class="small" style="margin-top:-2px">From absolute beginner to Edge AI engineer: about 2 hours a day, roughly nine weeks at five days a week, on a Raspberry Pi 4 or 5. Optional extension: Arduino UNO Q.</div>
+<div class="sh b">1. The course in one picture</div>
+<div data-draw="phases"></div>
+<div class="small"><b class="red">Stars = what I can demonstrate:</b> day 5 Pi ready &middot; day 13 first CNN &middot; day 18 own classifier on the Pi &middot; day 26 object counting &middot; day 32 RAG &middot; day 38 a language model drives GPIO &middot; day 46 capstone.</div>
+<div class="mn" style="height:48px"></div>
+<div class="sh g">2. The phases</div>
+<table class="t small"><tr><th style="width:22%">Phase</th><th style="width:8%">Days</th><th>What I learn</th><th style="width:24%">What I need</th></tr><tr><td><b>0</b> Pi bring-up</td><td>1-5</td><td>Flash, boot, remote access, Linux basics, camera, Python and Jupyter on the Pi</td><td>Raspberry Pi 4 or 5, microSD, power supply, laptop</td></tr><tr><td><b>1</b> ML foundations (Colab)</td><td>6-13</td><td>Neurons, deep neural networks, CNNs, datasets, metrics, overfitting, Edge Impulse first steps</td><td>Laptop and Google Colab; the Pi is not needed</td></tr><tr><td><b>2</b> Fixed-function AI on the Pi</td><td>14-26</td><td>Image classification, object detection (SSD, FOMO), YOLO, counting objects</td><td>Pi camera or USB webcam; Edge Impulse account</td></tr><tr><td><b>3</b> Generative AI on the Pi</td><td>27-38</td><td>RNN text, distillation, small language models, RAG, tools, agents, vision-language, audio, GPIO, IoT control</td><td>USB microphone and speaker; breadboard, LEDs, button, sensors</td></tr><tr><td><b>4</b> TinyML applications</td><td>39-42</td><td>Anomaly detection, keyword spotting, image applications on microcontrollers, responsible AI</td><td>Concepts only: no microcontroller board needed</td></tr><tr><td><b>5</b> Capstone + teaching plan</td><td>43-46</td><td>Your own project, the write-up, and the plan to teach it to students</td><td>Whatever the project needs</td></tr><tr><td><b>6</b> Optional: Arduino UNO Q</td><td>47-56</td><td>The same ideas on a second hardware platform, after the Pi and ML are mastered</td><td>Arduino UNO Q board (optional)</td></tr></table>
+<div class="mn" style="height:60px"></div>
 
-  <h2>Two Pis, two laptops: do every day twice</h2>
-  <div class="row">
-    <div class="col box" data-r data-fill="#d6ecff" data-stroke="#2b6cb0"><h3 style="margin-top:0;color:#2b6cb0">Pass 1 - learn</h3>on Pi A, ~2 hours: tutorial + animation + lab + notes</div>
-    <div class="col box" data-r data-fill="#dff5e1" data-stroke="#1f7a4d"><h3 style="margin-top:0;color:#1f7a4d">Pass 2 - consolidate</h3>on Pi B, from my notes only. Faster. Finds the hidden mistakes</div>
-  </div>
-  <ul class="dd" style="font-size:16px">
-    <li>different host names: <code>raspi-office</code> / <code>raspi-home</code>, same user</li>
-    <li>code + notes in GitHub, then <code>git pull</code> everywhere</li>
-    <li>Phase 1 needs no Pi (Colab) - good for travelling</li>
-  </ul>
-  <h2>Get ready (by day)</h2>
-  <ul class="cb" style="font-size:16px">
-    <li><b>1</b> Pi 4, microSD 32 GB+, 5 V / 3 A supply, card reader</li>
-    <li><b>4</b> Pi camera (CSI) or USB webcam</li>
-    <li><b>6</b> Google account (Colab) &nbsp; <b>13</b> Edge Impulse account</li>
-    <li><b>35</b> USB mic + speaker</li>
-    <li><b>36</b> breadboard, wires, LEDs + resistors, button, DHT + BMP280 sensors</li>
-  </ul>
-  <div class="box" data-r data-fill="#ffe0e8" data-stroke="#c51a4a" style="margin-top:4px"><b class="red">Honest limits:</b> 4 GB = small language models only, slower than the book's Pi 5. Check Python vs TFLite on day 4-5. Day splits are estimates.</div>
-</div>
-<div class="side" data-prompts="my start date|which Pi first"></div>
-<div class="folio">Roadmap &middot; sketch notes &middot; page 1</div></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Course roadmap &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Course roadmap</div><div class="p">PAGE 2</div></div>
+<div class="title">How the course works</div>
 
-<div class="pg"><div class="main" style="width:186mm;left:12mm">
-  <div class="h-title" style="font-size:27px">Day by day</div>
-  <div class="h-sub" style="font-size:17px">C = class number in the course repos (IESTI05 Edge AI, IESTI01 TinyML) &middot; pp. = PDF pages of the book (printed + 1)</div>
-  <div class="cols"><div><div class="ph" style="color:#1F3A5F">P0 &middot; Pi bring-up <span class="dd2">days 1-5</span></div>
-<div class="r"><span class="dn" style="background:#1F3A5F">1</span><span class="tp">Meet the Pi 4, flash the microSD, first SSH</span><span class="sr">IESTI05 C3 &middot; pp. 20-21, 25-27, 29-39</span></div>
-<div class="r"><span class="dn" style="background:#1F3A5F">2</span><span class="tp">Remote access: file transfer, remote desktop, two Pis and two networks</span><span class="sr">IESTI05 C3 &middot; pp. 38-44, 56-61</span></div>
-<div class="r"><span class="dn" style="background:#1F3A5F">3</span><span class="tp">Linux command line</span><span class="sr">IESTI05 C2 (slides + linux_intro.pdf)</span></div>
-<div class="r"><span class="dn" style="background:#1F3A5F">4</span><span class="tp">Camera, swap memory, updates</span><span class="sr">IESTI05 C3 slide 10 &middot; pp. 43-55, 62-64</span></div>
-<div class="r"><span class="dn" style="background:#1F3A5F">5</span><span class="tp">Python virtual environment + Jupyter on the Pi</span><span class="sr">IESTI05 C4 &middot; pp. 65-75</span></div>
-<div class="ph" style="color:#7A4FA0">P1 &middot; ML foundations (Colab) <span class="dd2">days 6-13</span></div>
-<div class="r"><span class="dn" style="background:#7A4FA0">6</span><span class="tp">Colab and Python review; what is TinyML</span><span class="sr">IESTI01 C2-C4b</span></div>
-<div class="r"><span class="dn" style="background:#7A4FA0">7</span><span class="tp">The machine-learning paradigm</span><span class="sr">IESTI01 C5</span></div>
-<div class="r"><span class="dn" style="background:#7A4FA0">8</span><span class="tp">Neural-network building blocks</span><span class="sr">IESTI01 C6</span></div>
-<div class="r"><span class="dn" style="background:#7A4FA0">9</span><span class="tp">Regression with a DNN</span><span class="sr">IESTI01 C7</span></div>
-<div class="r"><span class="dn" style="background:#7A4FA0">10</span><span class="tp">Classification with a DNN</span><span class="sr">IESTI01 C8</span></div>
-<div class="r"><span class="dn" style="background:#7A4FA0">11</span><span class="tp">Datasets, splits and metrics</span><span class="sr">IESTI01 C9</span></div>
-<div class="r"><span class="dn" style="background:#7A4FA0">12</span><span class="tp">Convolutions; image classification with a CNN</span><span class="sr">IESTI01 C10-C11</span></div>
-<div class="r"><span class="dn" style="background:#7A4FA0">13</span><span class="tp">Edge Impulse intro (Cifar-10); preventing overfitting</span><span class="sr">IESTI01 C12-C13</span></div>
-<div class="ph" style="color:#C51A4A">P2 &middot; Fixed-function AI on the Pi <span class="dd2">days 14-26</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">14</span><span class="tp">TensorFlow Lite + MobileNetV2 inference</span><span class="sr">IESTI05 C5 &middot; pp. 75-86</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">15</span><span class="tp">Live camera classification; a model trained from zero</span><span class="sr">IESTI05 C5 &middot; pp. 86-93</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">16</span><span class="tp">Custom classifier: goal and data collection</span><span class="sr">IESTI05 C6 &middot; pp. 94-102</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">17</span><span class="tp">Train in Edge Impulse</span><span class="sr">IESTI05 C7 &middot; pp. 103-111</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">18</span><span class="tp">Test, deploy and run live on the Pi</span><span class="sr">IESTI05 C7 &middot; pp. 112-130</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">19</span><span class="tp">Object detection fundamentals</span><span class="sr">IESTI05 C8 &middot; pp. 131-145</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">20</span><span class="tp">Pre-trained detectors and live stream</span><span class="sr">IESTI05 C8 &middot; pp. 146-153</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">21</span><span class="tp">Custom detection: data and labeling</span><span class="sr">IESTI05 C9 &middot; pp. 154-168</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">22</span><span class="tp">SSD MobileNet in Edge Impulse; deploy</span><span class="sr">IESTI05 C10 &middot; pp. 169-187</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">23</span><span class="tp">FOMO (lightweight detection)</span><span class="sr">IESTI05 C10 &middot; pp. 188-202</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">24</span><span class="tp">YOLO with Ultralytics on the Pi</span><span class="sr">IESTI05 C11 &middot; pp. 203-219</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">25</span><span class="tp">YOLO: custom training and deployment</span><span class="sr">IESTI05 C12 &middot; pp. 220-237</span></div>
-<div class="r"><span class="dn" style="background:#C51A4A">26</span><span class="tp">Counting objects (bees) + Part 1 mini-project</span><span class="sr">IESTI05 C13-C14, Part 1 assignment &middot; pp. 238-264</span></div></div><div><div class="ph" style="color:#2E8B57">P3 &middot; Generative AI on the Pi <span class="dd2">days 27-38</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">27</span><span class="tp">Text generation with an RNN (VerneBot)</span><span class="sr">IESTI05 C15 &middot; pp. 265-289</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">28</span><span class="tp">Knowledge distillation in practice</span><span class="sr">book chapter &middot; pp. 290-308</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">29</span><span class="tp">Small language models: first model with Ollama</span><span class="sr">IESTI05 C16-C17 &middot; pp. 309-335</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">30</span><span class="tp">Ollama with Python</span><span class="sr">IESTI05 C18 &middot; pp. 336-360</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">31</span><span class="tp">Function (tool) calling</span><span class="sr">IESTI05 C19 &middot; pp. 361-375</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">32</span><span class="tp">Retrieval-augmented generation (RAG)</span><span class="sr">IESTI05 C20 &middot; pp. 376-388</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">33</span><span class="tp">Agents with small models</span><span class="sr">IESTI05 C20a &middot; pp. 560 onward</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">34</span><span class="tp">Vision-language models (Florence-2)</span><span class="sr">book chapter &middot; pp. 389-433</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">35</span><span class="tp">Audio and vision AI pipeline</span><span class="sr">book chapter &middot; pp. 434-458</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">36</span><span class="tp">GPIO and physical computing: LEDs, buttons</span><span class="sr">IESTI05 C21 &middot; pp. 459-485</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">37</span><span class="tp">Sensors and notebooks</span><span class="sr">IESTI05 C21 &middot; pp. 486-510</span></div>
-<div class="r"><span class="dn" style="background:#2E8B57">38</span><span class="tp">SLMs for IoT control</span><span class="sr">IESTI05 C22 &middot; pp. 511-557</span></div>
-<div class="ph" style="color:#D98E04">P4 &middot; TinyML applications <span class="dd2">days 39-42</span></div>
-<div class="r"><span class="dn" style="background:#D98E04">39</span><span class="tp">Anomaly detection and K-means</span><span class="sr">IESTI01 C21-C22</span></div>
-<div class="r"><span class="dn" style="background:#D98E04">40</span><span class="tp">Keyword spotting (concepts)</span><span class="sr">IESTI01 C23-C24</span></div>
-<div class="r"><span class="dn" style="background:#D98E04">41</span><span class="tp">Image apps on microcontrollers; data collection</span><span class="sr">IESTI01 C25-C27</span></div>
-<div class="r"><span class="dn" style="background:#D98E04">42</span><span class="tp">Responsible AI; going further with Edge AI</span><span class="sr">IESTI01 C28-C29</span></div>
-<div class="ph" style="color:#0F8B8D">P5 &middot; Capstone + teaching plan <span class="dd2">days 43-46</span></div>
-<div class="r"><span class="dn" style="background:#0F8B8D">43</span><span class="tp">Choose and plan the project</span><span class="sr">IESTI05 Part 1 / Part 2 assignments</span></div>
-<div class="r"><span class="dn" style="background:#0F8B8D">44</span><span class="tp">Build</span></div>
-<div class="r"><span class="dn" style="background:#0F8B8D">45</span><span class="tp">Build, test and measure</span></div>
-<div class="r"><span class="dn" style="background:#0F8B8D">46</span><span class="tp">Present, write up, and plan how to teach it</span></div>
-<div class="ph" style="color:#6B7785">P6 &middot; Optional: Arduino UNO Q <span class="dd2">days 47-56</span></div>
-<div class="r"><span class="dn" style="background:#6B7785">47</span><span class="tp">UNO Q: foundations and setup</span><span class="sr">IESTI05 UNO Q Ch0-Ch1</span></div>
-<div class="r"><span class="dn" style="background:#6B7785">50</span><span class="tp">SLMs on the UNO Q; benchmarking; Python</span><span class="sr">IESTI05 UNO Q Ch2 (C19-C21)</span></div>
-<div class="r"><span class="dn" style="background:#6B7785">53</span><span class="tp">Multimodal and agentic AI</span><span class="sr">IESTI05 UNO Q Ch3, Ch5</span></div>
-<div class="r"><span class="dn" style="background:#6B7785">55</span><span class="tp">Physical AI: Bridge between the two processors</span><span class="sr">IESTI05 UNO Q Ch4</span></div></div></div>
-</div><div class="folio">Roadmap &middot; sketch notes &middot; page 2</div></div>
+<div class="sh y">3. The rules of the game</div>
+<ul class="bl small">
+<li><b>One day = about 2 hours.</b> Every day has a full tutorial (complete in itself: no book or website needed), a narrated animation where it helps, hands-on steps, a quiz, and notebook notes with space for my own comments.</li>
+<li><b>Pi 4 and Pi 5:</b> every day works on both boards. Where they differ (speed, memory, power, camera cable, model sizes) the lesson says so.</li>
+<li><b>Learn it twice:</b> with two Pis, learn on one, then repeat on the other from my notes only. Different host names (<code>raspi-lab</code>, <code>raspi-home</code>), same user, code and notes in a shared online repository.</li>
+<li><b>Phase 1 needs no Pi</b>, only Google Colab: do it anywhere.</li>
+<li>Day sizes are estimates; a long day simply continues the next day.</li></ul>
+<div class="mn" style="height:52px"></div>
+<div class="sh p">4. Notes on hardware and software</div>
+<div class="pbox small"><b>Speed and memory:</b> vision runs well on both boards. In the language-model phase a Pi 5 (8 GB best) runs larger models; a Pi 4 uses smaller models and longer waits.<br><b>Python:</b> a newer Raspberry Pi OS may ship a newer Python than some ML packages support; days 4-5 include the check and the remedy.<br><b>Online services</b> (Colab, Edge Impulse, model downloads) need Internet; use a phone hotspot if the network restricts them.<br><b>UNO Q</b> is an optional extension.</div>
+<div class="mn" style="height:52px"></div>
+<div class="sh g">5. Get ready (by day)</div>
+<ul class="ck small"><li><b>day 1</b> &nbsp;Raspberry Pi 4 or 5, microSD (32 GB or more), the matching USB-C power supply, card reader, Wi-Fi details</li><li><b>day 4</b> &nbsp;Pi camera module (check the camera cable: it differs between Pi 4 and Pi 5) or a USB webcam</li><li><b>day 6</b> &nbsp;Google account</li><li><b>day 13</b> &nbsp;Edge Impulse account (check the current free tier)</li><li><b>day 27</b> &nbsp;Internet on the Pi for model downloads; enough free space on the card</li><li><b>day 35</b> &nbsp;USB microphone and speaker</li><li><b>day 36</b> &nbsp;Breadboard, jumper wires, LEDs with resistors, push button, DHT temperature sensor, BMP280 pressure sensor (confirm the exact parts in the lessons before buying)</li><li><b>day 47+</b> &nbsp;Arduino UNO Q (optional)</li></ul>
+<div class="mn" style="height:60px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Course roadmap &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Course roadmap</div><div class="p">PAGE 3</div></div>
+<div class="title">Day by day (1)</div>
+<div class="sh b">Phase 0: Pi bring-up <span class="small">(days 1-5)</span></div>
+<table class="t" style="font-size:13.5px"><tr><th>Day</th><th>Topic</th><th>What you do</th><th>You will have</th></tr><tr><td style="width:6%"><b>1</b></td><td style="width:28%">Meet the Raspberry Pi; flash the microSD; first boot and SSH</td><td>Learn Edge AI and the Pi 4 / Pi 5; write the OS to a card; boot; log in from your laptop</td><td style="width:22%">A Pi you can log into remotely</td></tr><tr><td style="width:6%"><b>2</b></td><td style="width:28%">Remote access in depth</td><td>Copy files both ways (scp, SFTP); open the desktop remotely; add a second Wi-Fi network; work with more than one Pi</td><td style="width:22%">Files and desktop reachable from your laptop</td></tr><tr><td style="width:6%"><b>3</b></td><td style="width:28%">The Linux command line</td><td>Navigate, create, edit and delete files; permissions; processes; monitoring with htop</td><td style="width:22%">Confidence in the terminal</td></tr><tr><td style="width:6%"><b>4</b></td><td style="width:28%">Camera, swap memory and updates</td><td>Connect a Pi camera or USB webcam; capture a photo; adjust swap; update the system</td><td style="width:22%">First photo captured on the Pi</td></tr><tr><td style="width:6%"><b>5</b></td><td style="width:28%">Python environment and Jupyter on the Pi</td><td>Create a virtual environment; install packages; run Jupyter remotely</td><td style="width:22%">A notebook running on the Pi</td></tr></table><div class="mn" style="height:52px"></div>
+<div class="sh v">Phase 1: ML foundations (Colab) <span class="small">(days 6-13)</span></div>
+<table class="t" style="font-size:13.5px"><tr><th>Day</th><th>Topic</th><th>What you do</th><th>You will have</th></tr><tr><td style="width:6%"><b>6</b></td><td style="width:28%">Google Colab, Python refresher, what TinyML is</td><td>Run notebooks in the cloud; revise Python and NumPy</td><td style="width:22%">A working Colab setup</td></tr><tr><td style="width:6%"><b>7</b></td><td style="width:28%">The machine-learning paradigm</td><td>Fit a first model from data and compare it with rule-based code</td><td style="width:22%">Your first trained model</td></tr><tr><td style="width:6%"><b>8</b></td><td style="width:28%">Neural-network building blocks</td><td>Neurons, layers, activations, loss, gradient descent; build a small network</td><td style="width:22%">A small network trained from scratch</td></tr><tr><td style="width:6%"><b>9</b></td><td style="width:28%">Regression with a deep neural network</td><td>Predict a number from data; plot predictions</td><td style="width:22%">A regression model</td></tr><tr><td style="width:6%"><b>10</b></td><td style="width:28%">Classification with a deep neural network</td><td>Predict classes; read a confusion matrix</td><td style="width:22%">A classifier with metrics</td></tr><tr><td style="width:6%"><b>11</b></td><td style="width:28%">Datasets, splits and metrics</td><td>Train / validation / test splits; accuracy, precision, recall, F1</td><td style="width:22%">Correct model evaluation</td></tr><tr><td style="width:6%"><b>12</b></td><td style="width:28%">Convolutions; image classification with a CNN</td><td>Filters and pooling; build and train a CNN</td><td style="width:22%">A CNN trained in Colab</td></tr><tr><td style="width:6%"><b>13</b></td><td style="width:28%">Edge Impulse first project; preventing overfitting</td><td>Train in the browser; dropout and data augmentation</td><td style="width:22%">A model ready to export</td></tr></table><div class="mn" style="height:52px"></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Course roadmap &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Course roadmap</div><div class="p">PAGE 4</div></div>
+<div class="title">Day by day (2)</div>
+<div class="sh p">Phase 2: Fixed-function AI on the Pi <span class="small">(days 14-26)</span></div>
+<table class="t" style="font-size:13.5px"><tr><th>Day</th><th>Topic</th><th>What you do</th><th>You will have</th></tr><tr><td style="width:6%"><b>14</b></td><td style="width:28%">TensorFlow Lite and the first inference on the Pi</td><td>Install TensorFlow Lite; run a pre-trained image classifier</td><td style="width:22%">An image classified on the Pi</td></tr><tr><td style="width:6%"><b>15</b></td><td style="width:28%">Live camera classification; a model trained from scratch</td><td>Classify live camera frames; run a small CIFAR-10 model</td><td style="width:22%">Live classification</td></tr><tr><td style="width:6%"><b>16</b></td><td style="width:28%">Custom classifier: goal and data collection</td><td>Define the problem; collect and organise your own images</td><td style="width:22%">Your own dataset</td></tr><tr><td style="width:6%"><b>17</b></td><td style="width:28%">Training in Edge Impulse</td><td>Impulse design, pre-processing, training, accuracy versus speed</td><td style="width:22%">A trained, quantised model</td></tr><tr><td style="width:6%"><b>18</b></td><td style="width:28%">Test, deploy and run live on the Pi</td><td>Test the model; deploy it; run live inference</td><td style="width:22%">Your own classifier on the Pi</td></tr><tr><td style="width:6%"><b>19</b></td><td style="width:28%">Object detection fundamentals</td><td>Bounding boxes, labels, post-processing; a pre-trained detector</td><td style="width:22%">Detection on still images</td></tr><tr><td style="width:6%"><b>20</b></td><td style="width:28%">Detection on a live stream</td><td>Run a detector on the camera stream</td><td style="width:22%">Live object detection</td></tr><tr><td style="width:6%"><b>21</b></td><td style="width:28%">Custom detection: data and labelling</td><td>Collect and label images for detection</td><td style="width:22%">A labelled detection dataset</td></tr><tr><td style="width:6%"><b>22</b></td><td style="width:28%">SSD MobileNet in Edge Impulse; deployment</td><td>Train, deploy and post-process an SSD model</td><td style="width:22%">A detector on the Pi</td></tr><tr><td style="width:6%"><b>23</b></td><td style="width:28%">FOMO: lightweight detection</td><td>Train and deploy a FOMO model</td><td style="width:22%">FOMO running on the Pi</td></tr><tr><td style="width:6%"><b>24</b></td><td style="width:28%">YOLO with Ultralytics on the Pi</td><td>Run YOLO; export to an efficient format</td><td style="width:22%">YOLO inference on the Pi</td></tr><tr><td style="width:6%"><b>25</b></td><td style="width:28%">YOLO: custom training and deployment</td><td>Train YOLO on your data; deploy it</td><td style="width:22%">A custom YOLO model</td></tr><tr><td style="width:6%"><b>26</b></td><td style="width:28%">Counting objects; Phase 2 mini-project</td><td>Build a counting pipeline; complete a small project</td><td style="width:22%">A counting system</td></tr></table><div class="mn" style="height:52px"></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Course roadmap &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Course roadmap</div><div class="p">PAGE 5</div></div>
+<div class="title">Day by day (3)</div>
+<div class="sh g">Phase 3: Generative AI on the Pi <span class="small">(days 27-38)</span></div>
+<table class="t" style="font-size:13.5px"><tr><th>Day</th><th>Topic</th><th>What you do</th><th>You will have</th></tr><tr><td style="width:6%"><b>27</b></td><td style="width:28%">Text generation with an RNN</td><td>Tokens, embeddings, training a small text generator</td><td style="width:22%">A tiny text generator</td></tr><tr><td style="width:6%"><b>28</b></td><td style="width:28%">Knowledge distillation</td><td>Teach a small student model from a larger teacher</td><td style="width:22%">A distilled model</td></tr><tr><td style="width:6%"><b>29</b></td><td style="width:28%">Small language models: first model with Ollama</td><td>Install Ollama; choose a model that fits your board; chat</td><td style="width:22%">A language model answering on the Pi</td></tr><tr><td style="width:6%"><b>30</b></td><td style="width:28%">Ollama with Python</td><td>Use the Python library; build a chat script</td><td style="width:22%">A Python chat program</td></tr><tr><td style="width:6%"><b>31</b></td><td style="width:28%">Function (tool) calling</td><td>Let the model call Python functions</td><td style="width:22%">A tool-using model</td></tr><tr><td style="width:6%"><b>32</b></td><td style="width:28%">Retrieval-augmented generation (RAG)</td><td>Build a vector store; retrieve context for answers</td><td style="width:22%">Question answering over your documents</td></tr><tr><td style="width:6%"><b>33</b></td><td style="width:28%">Agents with small models</td><td>Design a tool set; build a simple agent loop</td><td style="width:22%">A working agent</td></tr><tr><td style="width:6%"><b>34</b></td><td style="width:28%">Vision-language models</td><td>Run a vision-language model (Florence-2) for captioning and detection</td><td style="width:22%">Image captioning on the Pi</td></tr><tr><td style="width:6%"><b>35</b></td><td style="width:28%">Audio and vision AI pipeline</td><td>Microphone to speech-to-text to language model to speech</td><td style="width:22%">Speech in, answer out</td></tr><tr><td style="width:6%"><b>36</b></td><td style="width:28%">GPIO and physical computing: LEDs and buttons</td><td>Wire a circuit; control it from Python</td><td style="width:22%">An LED and button under code control</td></tr><tr><td style="width:6%"><b>37</b></td><td style="width:28%">Sensors and notebooks</td><td>Read temperature, humidity and pressure sensors; log data</td><td style="width:22%">Sensor data logged</td></tr><tr><td style="width:6%"><b>38</b></td><td style="width:28%">Small language models for IoT control</td><td>Let a language model switch real hardware</td><td style="width:22%">Language-model-driven hardware</td></tr></table><div class="mn" style="height:52px"></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Course roadmap &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Course roadmap</div><div class="p">PAGE 6</div></div>
+<div class="title">Day by day (4)</div>
+<div class="sh y">Phase 4: TinyML applications <span class="small">(days 39-42)</span></div>
+<table class="t" style="font-size:13.5px"><tr><th>Day</th><th>Topic</th><th>What you do</th><th>You will have</th></tr><tr><td style="width:6%"><b>39</b></td><td style="width:28%">Anomaly detection and K-means</td><td>Cluster data; detect anomalies</td><td style="width:22%">An anomaly detector (concept + notebook)</td></tr><tr><td style="width:6%"><b>40</b></td><td style="width:28%">Keyword spotting (concepts)</td><td>Audio features and the keyword-spotting pipeline</td><td style="width:22%">The pipeline understood</td></tr><tr><td style="width:6%"><b>41</b></td><td style="width:28%">Image applications on microcontrollers; data collection</td><td>Person detection concept; ways to collect data</td><td style="width:22%">A data-collection plan</td></tr><tr><td style="width:6%"><b>42</b></td><td style="width:28%">Responsible AI; going further with Edge AI</td><td>Fairness, privacy, safety, lifecycle</td><td style="width:22%">A responsible-deployment checklist</td></tr></table><div class="mn" style="height:52px"></div>
+<div class="sh b">Phase 5: Capstone + teaching plan <span class="small">(days 43-46)</span></div>
+<table class="t" style="font-size:13.5px"><tr><th>Day</th><th>Topic</th><th>What you do</th><th>You will have</th></tr><tr><td style="width:6%"><b>43</b></td><td style="width:28%">Choose and plan the project</td><td>Define the goal, data, model and hardware</td><td style="width:22%">A one-page project plan</td></tr><tr><td style="width:6%"><b>44</b></td><td style="width:28%">Build</td><td>Implement the system</td><td style="width:22%">A working prototype</td></tr><tr><td style="width:6%"><b>45</b></td><td style="width:28%">Build, test and measure</td><td>Measure accuracy, speed and resource use honestly</td><td style="width:22%">Measured results</td></tr><tr><td style="width:6%"><b>46</b></td><td style="width:28%">Present, write up, plan how to teach it</td><td>Report, demo, lesson plan</td><td style="width:22%">Report + teaching plan</td></tr></table><div class="mn" style="height:52px"></div>
+<div class="sh v">Phase 6: Optional: Arduino UNO Q <span class="small">(days 47-56)</span></div>
+<table class="t" style="font-size:13.5px"><tr><th>Day</th><th>Topic</th><th>What you do</th><th>You will have</th></tr><tr><td style="width:6%"><b>47</b></td><td style="width:28%">UNO Q: foundations and setup</td><td>Understand the board; set it up</td><td style="width:22%">Board working</td></tr><tr><td style="width:6%"><b>50</b></td><td style="width:28%">Language models on the UNO Q; benchmarking; Python</td><td>Run and benchmark models; script them</td><td style="width:22%">Model running</td></tr><tr><td style="width:6%"><b>53</b></td><td style="width:28%">Multimodal and agentic AI on the UNO Q</td><td>Combine vision, language and tools</td><td style="width:22%">An agent running</td></tr><tr><td style="width:6%"><b>55</b></td><td style="width:28%">Physical AI: the two processors working together</td><td>Connect a language model to hardware through the bridge</td><td style="width:22%">A language model driving hardware</td></tr></table><div class="mn" style="height:52px"></div>
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Course roadmap &middot; notebook notes</div></div>
+<div class="pg"><div class="content">
+<div class="top"><div class="t">Course roadmap</div><div class="p">PAGE 7</div></div>
+<div class="title">Checkpoints &amp; references</div>
+
+<div class="sh y">What I can demonstrate</div>
+<ul class="ck small"><li>day 5: Pi ready</li><li>day 13: first CNN</li><li>day 18: own classifier on the Pi</li><li>day 26: object counting</li><li>day 32: RAG</li><li>day 38: language model drives GPIO</li><li>day 46: capstone</li></ul>
+<div class="mn" style="height:150px"></div>
+<div class="sh b">Acknowledgments and references</div>
+<div class="small">This course is a compilation: it combines material from the sources below with new explanations, examples, diagrams, exercises and comments written for this course. The original authors are gratefully acknowledged.</div>
+<ol class="refs"><li>Rovai, M. (2025). Edge AI Engineering: Hands-on with the Raspberry Pi. Open textbook for the course IESTI05, Federal University of Itajubá (UNIFEI), Brazil. Version of 23 October 2025. Online edition: https://mjrovai.github.io/EdgeML_Made_Ease_ebook/</li><li>Rovai, M. (2026). IESTI05 - Edge AI: Edge Machine Learning Systems Engineering. Course slides, notebooks and video lectures (second semester 2026), UNIFEI, Brazil. Course videos listed by the author: Class 1 (course introduction) https://youtu.be/QAb3MFHwe78 ; Class 2 (Introduction to Linux) https://youtu.be/QkIHILtl0h4 ; Class 3 (Raspberry Pi setup walkthrough) https://youtu.be/YtjsM36LzVE (lectures in Portuguese).</li><li>Rovai, M. (2026). IESTI01 - TinyML: Machine Learning for Embedding Devices. Course materials (first semester 2026), UNIFEI, Brazil. https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML</li><li>Rovai, M. TinyML4D: lectures, books, papers and tutorials for embedded machine-learning education. https://github.com/Mjrovai/TinyML4D</li><li>Raspberry Pi Imager: download page and software. https://www.raspberrypi.com/software/</li><li>Raspberry Pi Ltd. Raspberry Pi documentation (hardware specifications of the Raspberry Pi 4 and Raspberry Pi 5, operating system, remote access). https://www.raspberrypi.com/documentation/</li></ol>
+<div class="mn" style="height:120px"></div>
+
+</div><div class="folio">Edge AI with the Raspberry Pi &middot; Course roadmap &middot; notebook notes</div></div>
 
 <script>
-DRAW.stairs = (rc, s) => {
-  const st = [["0","Pi\nbring-up","days 1-5","#1F3A5F","#bcd4ff"],["1","ML basics\n(Colab)","days 6-13","#7A4FA0","#e3d1ff"],["2","Vision AI\non the Pi","days 14-26","#C51A4A","#ffc4d3"],
-              ["3","GenAI\non the Pi","days 27-38","#2E8B57","#c8efd3"],["4","TinyML\napps","days 39-42","#c77a00","#ffe3a3"],["5","Capstone\n+ teaching","days 43-46","#0F8B8D","#bdeaea"]];
-  st.forEach(([n, t, d, col, fill], i) => {
-    const x = 4 + i * 84, y = 276 - i * 46;
-    R(rc, s, x, y, 80, 92, { fill: fill, fillStyle: "solid", stroke: col, strokeWidth: 2.4 });
-    T(s, x + 10, y + 28, n, { font: "Marker", size: 26, fill: col });
-    T(s, x + 8, y + 50, t, { size: 16, fill: "#1d2f6f", lh: 15 });
-    T(s, x + 40, y + 86, d, { size: 16, fill: col, weight: 700, anchor: "middle" });
-    if ([0, 1, 2, 3, 5].includes(i)) { s.appendChild(rc.line(x + 60, y, x + 60, y - 12, { stroke: "#c51a4a", strokeWidth: 2, roughness: 1, seed: sd() })); star(rc, s, x + 60, y - 20, 8); }
+DRAW.phases = (host) => {
+  const s = S(694, 240), ph = [["0", "Pi bring-up", 1, 5, "#1F3A5F"], ["1", "ML foundations (Colab)", 6, 13, "#7A4FA0"], ["2", "Fixed-function AI on the Pi", 14, 26, "#C51A4A"], ["3", "Generative AI on the Pi", 27, 38, "#2E8B57"], ["4", "TinyML applications", 39, 42, "#D98E04"], ["5", "Capstone + teaching plan", 43, 46, "#0F8B8D"], ["6", "Optional: Arduino UNO Q", 47, 56, "#6B7785"]], ms = [[5, "Pi ready"], [13, "first CNN"], [18, "own classifier on the Pi"], [26, "object counting"], [32, "RAG"], [38, "language model drives GPIO"], [46, "capstone"]]; const X = d => 6 + (d - 1) * 12.2;
+  ph.forEach(([n, t, a, b, col], i) => {
+    const x = X(a), w = (b - a + 1) * 12.2 - 3, opt = n === "6";
+    R(s, x, 74, w, 46, { fill: opt ? "#fff" : col, stroke: col, sw: 2, dash: opt ? "6 4" : "" });
+    T(s, x + w / 2, 105, n, { size: 24, anchor: "middle", fill: opt ? col : "#fff", weight: "bold" });
+    const yy = 146 + (i % 3) * 30; L(s, x + w / 2, 120, x + w / 2, yy - 14, { stroke: col, sw: 1.2 });
+    T(s, x + w / 2, yy, t + "\ndays " + a + "-" + b, { size: 13.5, anchor: "middle", lh: 13 });
   });
-  R(rc, s, 330, 2, 86, 40, { stroke: "#6B7785", strokeLineDash: [7, 6], strokeWidth: 2 });
-  T(s, 373, 19, "optional", { size: 14, anchor: "middle", fill: "#6B7785" }); T(s, 373, 36, "UNO Q 47+", { size: 15, anchor: "middle", fill: "#6B7785", weight: 700 });
-  T(s, 4, 22, "climb one step at a time", { size: 22, fill: "#1d2f6f" });
-  s.appendChild(rc.curve([[4, 30], [60, 40], [130, 36], [180, 20]], { stroke: "#c51a4a", strokeWidth: 2, roughness: 1, seed: sd() }));
-  T(s, 4, 392, "stars = what I can show: Pi ready (5) - first CNN (13) - own classifier on the Pi (18)\nYOLO counting (26) - RAG (32) - SLM drives GPIO (38) - capstone (46)", { size: 16, fill: "#c51a4a", lh: 17 });
+  ms.forEach(([d, lab], i) => {
+    const x = X(d) + 6; L(s, x, 74, x, 38 - (i % 2) * 0, { stroke: "#c0194a", sw: 1.2, dash: "3 3" });
+    E(s, "polygon", { points: (() => { let p = []; for (let k = 0; k < 10; k++) { const r = k % 2 ? 4.5 : 10, a = -Math.PI / 2 + k * Math.PI / 5; p.push((x + r * Math.cos(a)) + "," + (28 + r * Math.sin(a))); } return p.join(" "); })(), fill: "#f5b700", stroke: "#b07d00", "stroke-width": 1.3 });
+    T(s, x, 12, "day " + d, { size: 13, anchor: "middle", fill: "#c0194a" });
+  });
+  host.appendChild(s);
 };
 </script></body></html>

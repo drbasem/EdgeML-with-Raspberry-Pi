@@ -1,96 +1,72 @@
-# EdgeAI-with-Raspberry-Pi
-DL and GenAI Hands-On with the Raspberry Pi
+# Edge AI with the Raspberry Pi: a hands-on course
 
-This repository holds the code and notebooks that accompany the book
-*Edge AI Engineering: Hands-on with the Raspberry Pi* (M. Rovai, 2025), plus a
-**step-by-step study course** (`tutorials/`) built on top of it for learning the material from
-absolute zero and for teaching it later.
+**Course author:** Prof. Basem M. ElHalawany
 
----
+A complete, self-contained course that takes you from an empty microSD card to working Edge AI systems
+on a **Raspberry Pi 4 or Raspberry Pi 5**: setup, Linux, machine-learning foundations, computer vision,
+small language models, vision-language models, physical computing, a capstone project, and how to teach it.
+Every lesson is written so that **no book or website is needed**; the sources it builds on are acknowledged
+in the references at the end of this page and of every lesson.
 
-## Study course: `tutorials/`
+## The course at a glance
 
-A day-by-day, beginner-first path through the Raspberry Pi book and the two UNIFEI courses
-(IESTI05 *Edge AI* and IESTI01 *TinyML*). One study day = about 2 hours.
+| Phase | Days | Content |
+|---|---|---|
+| 0. Pi bring-up | 1-5 | Flash, boot, remote access, Linux basics, camera, Python and Jupyter on the Pi |
+| 1. ML foundations (Colab) | 6-13 | Neurons, deep networks, CNNs, datasets, metrics, overfitting, Edge Impulse |
+| 2. Fixed-function AI | 14-26 | Image classification, object detection (SSD, FOMO), YOLO, counting objects |
+| 3. Generative AI | 27-38 | RNN text, distillation, small language models, RAG, tools, agents, vision-language, audio, GPIO, IoT control |
+| 4. TinyML applications | 39-42 | Anomaly detection, keyword spotting, microcontroller image applications, responsible AI |
+| 5. Capstone | 43-46 | Your own project, write-up, teaching plan |
+| 6. Optional extension | 47-56 | The same ideas on the Arduino UNO Q |
 
-**Setup this course is written for**
+One day is about two hours. The full syllabus is in [`tutorials/00_roadmap/`](tutorials/00_roadmap).
 
-| Item | Choice |
-|---|---|
-| Boards | Raspberry Pi 4 Model B, 4 GB (two units: one at the office, one at home) |
-| Laptops | Windows (office + home), connecting to the Pi over SSH |
-| Order | Pi first (setup, Linux, Python), then ML foundations, then vision, then generative AI |
-| Hardware extras | Arduino UNO Q is covered at the very end, as an alternative platform |
-| Style | English; every day has a full tutorial and a sketch-note study edition |
-
-**What every study day contains** (`tutorials/dayNN/`)
+## What every day contains (`tutorials/dayNN/`)
 
 | File | What it is |
 |---|---|
-| `DayNN_<title>.docx` / `.pdf` | Full tutorial, A4, 300 dpi figures, book pages cited, quiz, teaching tips |
-| `DayNN_<title>_SKETCH-NOTES.pdf` / `.docx` | Handwriting style A: doodles and a "my notes" column on the right of every page |
-| `DayNN_<title>_NOTEBOOK-NOTES.pdf` / `.docx` | Handwriting style B: stand-alone ruled-notebook notes (key points summarised, no need to open the book) with colour-highlighted headings, boxes and tables, a blank "my notes" area after every part, and a reading code at the bottom of a page such as `B-20-21, 27` = optional book PDF pages to read. (Both handwriting editions: the PDF is vector with embedded fonts; the `.docx` holds each A4 page as an image) |
-| `animations/` | Narrated MP4 (English voice-over + subtitles), a silent MP4, a GIF, the `.srt` subtitles and the narration script |
-| `figures/` | All diagrams, key frames and screenshot placeholders |
+| `DayNN_<title>.docx` / `.pdf` | The full tutorial, A4, 300 dpi figures: explanations from first principles, step-by-step labs, troubleshooting, quiz with answers, instructor notes, glossary, references |
+| `DayNN_<title>_NOTEBOOK-NOTES.pdf` / `.docx` | The same lesson as ruled-notebook study notes: colour-highlighted headings, boxes and tables, clean diagrams, and a blank **my notes** area after every part. The notes are complete on their own. The PDF is vector with embedded fonts; the `.docx` holds each A4 page as an image so that you can annotate it with a pen |
+| `animations/` | A narrated animation (English voice-over and subtitles), a silent copy, a GIF, subtitles and the narration script |
+| `figures/` | All diagrams, animation key frames and screenshot placeholders |
 
-**Progress**
+**Pi 4 and Pi 5.** Every lesson covers both boards. Steps are marked **Pi 4** / **Pi 5** where they differ,
+and Day 1 has a side-by-side comparison (speed, memory, power supply, power button, cooling, camera ports, operating system, Imager choice).
 
-| Day | Topic | Status |
-|---|---|---|
-| 01 | Meet the Pi 4, flash the microSD, first boot, first SSH login | built: [`tutorials/day01/`](tutorials/day01) |
-| 02-05 | Remote access (two networks, two Pis), Linux basics, camera/swap/updates, Python + Jupyter | planned |
-| 06-13 | ML foundations on Google Colab (IESTI01) | planned |
-| 14-26 | Fixed-function AI on the Pi: image classification, object detection, YOLO, counting | planned |
-| 27-38 | Generative AI on the Pi: RNN text, distillation, SLMs with Ollama, RAG, agents, vision-language, audio, GPIO, IoT control | planned |
-| 39-46 | Selected TinyML applications, responsible AI, capstone project | planned |
-| 47+ | Optional: Arduino UNO Q track | planned |
+**Learn it twice.** With two Pis, do each day once on one Pi (the learning pass) and again on the other from
+your notes only (the consolidation pass). Use different host names (for example `raspi-lab`, `raspi-home`),
+the same user name, and keep code and notes in this repository.
 
-The full roadmap (46 core days plus the optional UNO Q track, with class numbers and book page numbers) is in
-[`tutorials/00_roadmap/`](tutorials/00_roadmap): a 4-page standard plan (`Roadmap_Edge_AI_Study_Plan.pdf/.docx`) and a 2-page sketch-note version
-(`..._SKETCH-NOTES.pdf/.docx`).
+## Progress
 
-**Pi 4 and Pi 5.** The book is written around the Raspberry Pi 5, this course is done on a Pi 4, and students may have either. Every tutorial covers both boards: steps are marked **Pi 4** / **Pi 5** where they differ, and Day 1 has a side-by-side comparison table (speed, RAM, power supply, power button, cooling, camera ports, OS, Imager choice).
+| Item | Status |
+|---|---|
+| Course roadmap | done: [`tutorials/00_roadmap/`](tutorials/00_roadmap) |
+| Day 01: Meet the Raspberry Pi and bring it to life | done: [`tutorials/day01/`](tutorials/day01) |
+| Days 02 to 46 and the optional extension | planned |
 
-**Working with two Pis and two laptops.** Do each day once on one Pi (the learning pass), then
-repeat it on the other Pi from your notes only (the consolidation pass). Keep the same user name
-and use distinct host names, for example `raspi-office` and `raspi-home`. Code and notes live in this
-repository, so both laptops and both Pis stay in sync with `git pull`.
+## Adding your own screenshots
 
-### Adding your own screenshots
+Each tutorial has marked *capture slots* for screenshots of your own screen. Save a capture into
+`tutorials/my_screenshots/dayNN/` with the file name printed in the slot (for example `S1_imager_windows.png`),
+then rebuild the day. The placeholder is replaced by your image. Hide passwords and personal details first.
 
-Each tutorial has marked *capture slots* for screenshots of your own screen (Imager, PowerShell,
-Colab, Edge Impulse, photos of your board). Save a capture into
-`tutorials/my_screenshots/dayNN/` using the file name printed in the slot (for example
-`S1_imager_windows.png`), then rebuild the day (below). The placeholder is replaced by your image.
-Hide Wi-Fi passwords and any personal details before saving.
+## Rebuilding
 
-### Rebuilding a day
-
-Everything is generated by scripts in `tutorials/_build/`, so edits are reproducible:
+All documents are generated by the scripts in `tutorials/_build/`:
 
 ```bash
 cd tutorials/_build
-PY=/path/to/python ./build_day01.sh     # figures, animation, DOCX, PDF, sketch notes
-PY=/path/to/python ./build_roadmap.sh   # roadmap (standard + sketch notes)
+PY=/path/to/python ./build_day01.sh      # figures, animation, tutorial, notebook notes
+PY=/path/to/python ./build_roadmap.sh    # roadmap (standard + notebook notes)
 ```
 
-Needs Python 3 with `matplotlib`, `python-docx`, `pillow`, `pymupdf`, `fonttools` (plus `brotli`);
-Node.js with `playwright` and Chromium; `ffmpeg`; and LibreOffice (for DOCX to PDF).
-The handwriting fonts (Caveat, Patrick Hand, Permanent Marker, Architects Daughter; SIL Open Font
-License) and `rough.js` are kept in `tutorials/_assets/`.
+They need Python 3 (`matplotlib`, `python-docx`, `pillow`, `fonttools`, `brotli`), Node.js with `playwright`
+and Chromium, `ffmpeg`, and LibreOffice. The handwriting fonts (Caveat, Patrick Hand, Architects Daughter;
+SIL Open Font License) are kept in `tutorials/_assets/fonts/`.
 
-### Sources and credits
-
-* Figures and screenshots taken from the book are credited on the page where they appear
-  (book PDF page numbers are used, which are one higher than the printed page numbers).
-* Course slides and video links come from the UNIFEI course repositories
-  (`UNIFEI-IESTI05-EDGE_AI`, `UNIFEI-IESTI01-TinyML`). The videos are in Portuguese.
-* The animation voice-over is synthetic speech generated with ElevenLabs (voice "Aaron - Educational").
-* Please check the licence of the book and course materials before making this repository public.
-
----
-
-## Code in this repository (by book chapter, approximately)
+## Code and notebooks in this repository (by topic)
 
 | Folder | Topic |
 |---|---|
@@ -98,8 +74,24 @@ License) and `rough.js` are kept in `tutorials/_assets/`.
 | `OBJ_DETEC/` | Object detection: SSD, FOMO, YOLO |
 | `KD-Knowledge_Destilation/` | Knowledge distillation |
 | `OLLAMA_SLMs/` | Small language models with Ollama: Python library, function calling |
-| `Advancing_EdgeAI/` | RAG, agents and further SLM techniques |
+| `Advancing_EdgeAI/` | RAG, agents and further small-language-model techniques |
 | `FLORENCE-2/` | Vision-language model (Florence-2) |
-| `Audio_AI_Pipeline/` | Audio capture, transcription, SLM and speech pipeline |
+| `Audio_AI_Pipeline/` | Audio capture, transcription, language model and speech pipeline |
 | `PHYSICAL_COMPUTING/` | GPIO, sensors, notebooks |
-| `SLMs_for_IoT_CONTROL/` | SLMs controlling hardware |
+| `SLMs_for_IoT_CONTROL/` | Language models controlling hardware |
+
+## Acknowledgments and references
+
+This course is a compilation: it combines material from the sources below with new explanations, examples,
+diagrams, exercises and comments written for this course. The original authors are gratefully acknowledged.
+
+1. Rovai, M. (2025). *Edge AI Engineering: Hands-on with the Raspberry Pi*. Open textbook for the course IESTI05, Federal University of Itajubá (UNIFEI), Brazil. Version of 23 October 2025. Online edition: https://mjrovai.github.io/EdgeML_Made_Ease_ebook/
+2. Rovai, M. (2026). *IESTI05 - Edge AI: Edge Machine Learning Systems Engineering*. Course slides, notebooks and video lectures (second semester 2026), UNIFEI, Brazil. Course videos listed by the author: Class 1 (course introduction) https://youtu.be/QAb3MFHwe78 ; Class 2 (Introduction to Linux) https://youtu.be/QkIHILtl0h4 ; Class 3 (Raspberry Pi setup walkthrough) https://youtu.be/YtjsM36LzVE (lectures in Portuguese).
+3. Rovai, M. (2026). *IESTI01 - TinyML: Machine Learning for Embedding Devices*. Course materials (first semester 2026), UNIFEI, Brazil. https://github.com/Mjrovai/UNIFEI-IESTI01-TinyML
+4. Rovai, M. *TinyML4D*: lectures, books, papers and tutorials for embedded machine-learning education. https://github.com/Mjrovai/TinyML4D
+5. Raspberry Pi Imager: download page and software. https://www.raspberrypi.com/software/
+6. Raspberry Pi Ltd. *Raspberry Pi documentation* (hardware specifications of the Raspberry Pi 4 and Raspberry Pi 5, operating system, remote access). https://www.raspberrypi.com/documentation/
+
+The screenshots of Raspberry Pi Imager and of a first SSH login, and the labelled photograph of the Raspberry Pi 5,
+are adapted from reference [1]. All other figures and the animations were created for this course. The animation
+voice-over is synthetic speech. Please check the licences of the source materials before redistributing this repository.
